@@ -6,7 +6,7 @@ class CalendarEventsController < ApplicationController
 	def index
     # Get the list of calendar events.
     response = $client.execute(:api_method => @calendar.events.list,
-                              :parameters => {'calendarId' => params[:calendar_id]})
+                              :parameters => {'calendarId' => params[:calendar_id] })
 
     render json: response.data.to_json
   end

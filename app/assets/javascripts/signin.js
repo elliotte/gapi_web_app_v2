@@ -40,11 +40,11 @@ var helper = (function() {
     renderProfile: function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
-        console.log(profile);
+
         $.ajax({
           type: 'POST',
           url: '/signin/save_user',
-          data: {id: profile.id, email: profile.emails[0].value},
+          data: {id: profile.id, email: profile.url},
           success: function(result) {
             console.log(result);
             helper.circles();
@@ -165,6 +165,7 @@ var helper = (function() {
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
       });
     },
+
     /**
      * Calls the server endpoint to get the list of events in calendar.
      */
@@ -176,10 +177,28 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           helper.appendCalendar(result);
+          helper.setStorage('Events', result);
         },
         processData: false
       });
     },
+
+    setStorage: function(key, result) {
+      localStorage.setItem(key, JSON.stringify(result));
+    },
+
+    returnStorage: function(key) {
+      return JSON.parse( localStorage.getItem(key) )
+    },
+
+    cycleStorage: function(key) {
+      var items = helper.returnStorage(key).items;
+      for (i in items) {
+        //new Date (items[i].created)
+        console.log(items[i])
+      }
+    },
+
     /**
      * Calls the server endpoint to get the list of files in google drive.
      */
@@ -269,7 +288,7 @@ var helper = (function() {
         $('#circle').show();
         circle = circles[c];
         $('#circle').append(
-          '<div class="col-md-6">'+
+          '<div class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-support"></i>'+
@@ -302,12 +321,12 @@ var helper = (function() {
         $('#calendarEvent').show();
         if(event.hangoutLink) {
           $('#calendarEvent').append(
-            '<div class="col-md-6">'+
+            '<div class="col-md-3">'+
               '<div class="feature-box-style2">'+
                 '<div class="feature-box-title">'+
                   '<i class="fa fa-calendar"></i>'+
                 '</div>'+
-                '<div class="feature-box-containt">'+
+                '<div class="feature-box-containt" style="height:250px; overflow:scroll;">'+
                   '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
                   '<p>' + event.description + '</p>'+
                   '<p>'+
@@ -321,12 +340,12 @@ var helper = (function() {
           );
         } else {
           $('#calendarEvent').append(
-            '<div class="col-md-6">'+
+            '<div class="col-md-3">'+
               '<div class="feature-box-style2">'+
                 '<div class="feature-box-title">'+
                   '<i class="fa fa-calendar"></i>'+
                 '</div>'+
-                '<div class="feature-box-containt">'+
+                '<div class="feature-box-containt" style="height:250px; overflow:scroll;">'+
                   '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
                   '<p>' + event.description + '</p>'+
                   '<p>'+
@@ -473,7 +492,7 @@ var helper = (function() {
         taskList = taskLists.items[taskListIndex];
         $('#task_list_id').val(taskList.id);
         $('#taskLists').append(
-          '<div class="col-md-6">'+
+          '<div class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-tasks"></i>'+

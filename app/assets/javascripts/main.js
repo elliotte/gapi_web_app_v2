@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+	$("#go-home").click(function(e) {
+		e.preventDefault();
+		window.location.href = '/';
+	});
 	$("#quick_add_event").click(function() {
 		$("#modal-window-quick-create-event").modal("show");
 	});
