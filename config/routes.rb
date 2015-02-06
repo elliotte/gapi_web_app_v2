@@ -67,6 +67,7 @@ GooglePlay::Application.routes.draw do
       get :share
     end
     collection do
+      post :insert_new_document
       post :share_files
       get :circle_files
     end

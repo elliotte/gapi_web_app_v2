@@ -69,6 +69,28 @@ class FilesController < ApplicationController
 	    end
 	end
 
+	def insert_new_document
+	  # Insert a file
+	  file = @drive.files.insert.request_schema.new({
+	    'title' => params[:title],
+	    'mimeType' => 'application/vnd.google-apps.document'
+	  })
+
+	  media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/document.txt", 'text/plain')
+	  result = $client.execute(
+	    :api_method => @drive.files.insert,
+	    :body_object => file,
+	    :media => media,
+	    :parameters => {
+	      'uploadType' => 'multipart',
+	      'alt' => 'json'})
+
+	  # Pretty print the API result
+      respond_to do |format|
+	      format.js { @file = result.data }
+	   end
+	end
+
 	def update
 	    file = @response.data
 
@@ -166,6 +188,8 @@ class FilesController < ApplicationController
 
 	    render json: response.data.to_json
 	end
+
+
 
 	private
 

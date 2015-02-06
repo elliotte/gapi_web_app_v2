@@ -76,10 +76,10 @@ class CalendarEventsController < ApplicationController
     response = $client.execute(:api_method => @calendar.events.quick_add,
                               :parameters => {'calendarId' => params[:calendar_id],
                                               'text' => params[:event][:text]})
-      respond_to do |format|
-        format.js { @event = response.data }
-        format.html { redirect_to root_path }
-      end
+    respond_to do |format|
+      format.js { @event = response.data }
+      format.html { redirect_to root_path }
+    end
    
   end
 

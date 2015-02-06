@@ -10,6 +10,9 @@ $(document).ready(function () {
 	$("#add_event").click(function() {
 		$("#modal-window-create-event").modal("show");
 	});
+	$("#new_doc").click(function() {
+		$("#modal-window-new-doc").modal("show");
+	});
 	$("#create_circle").click(function() {
 		$("#modal-window-create-circle").modal("show");
 	});
@@ -95,9 +98,12 @@ $(document).ready(function () {
 	    }
 	});
 
-	$('#quick_create_button_close').click(function(e){
+	$('#quick_create_button_close').click(function(){
 		$('#quick-events-modal-body').empty();
 		$('#modal-window-quick-create-event').modal('close');
+	});
+	$('#new-doc-insert-close').click(function(){
+		$('#new-doc-modal-body').empty();
 	});
 	$('#create_button_event').click(function(){
 		$('#create_event_form').submit();
