@@ -67,3 +67,27 @@
 .capitalize {
 	text-transform:capitalize;
 }
+#bbc-widget {
+	border-style: none;
+	border-width: 0;
+	border-color: #FFFFFF;
+	overflow: scroll;
+	max-height: 325px;
+}
+
+#newsblock41461078 {
+	word-wrap: break-word; 
+	padding: 5px; 
+	background-color: #FFFFFF;
+}
+
+#more-feed {
+	overflow: scroll;
+	max-height: 325px;
+	background-color: #FFFFFF;
+}
+
+#more-feed a {
+	display: block;
+}
+

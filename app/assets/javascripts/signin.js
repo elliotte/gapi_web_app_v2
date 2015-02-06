@@ -25,6 +25,9 @@ var helper = (function() {
         helper.connectServer();
         // After loading the Google+ API, render the profile data from Google+.
         gapi.client.load('plus','v1',this.renderProfile);
+        helper.loadBBCFeed();
+        helper.loadGoogleSourcedFeeds();
+
       } else if (authResult['error']) {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
@@ -164,6 +167,67 @@ var helper = (function() {
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
       });
+    },
+
+    loadGoogleSourcedFeeds: function() {
+        var feed = new google.feeds.Feed("http://feeds.reuters.com/news/economy");
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var breakLine = document.createElement("br");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+             container.appendChild(breakLine);
+            }
+          }
+        });
+        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/businessNews");
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var breakLine = document.createElement("br");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+             container.appendChild(breakLine);
+            }
+          }
+        });
+        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/globalmarketsNews");
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var breakLine = document.createElement("br");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+             container.appendChild(breakLine);
+            }
+          }
+        });
+    },
+    
+    loadBBCFeed: function() {
+      var script = document.createElement('script');
+      _protocol = document.location.protocol
+      script.src = _protocol + '//www.poweringnews.com/newsjavascript.aspx?feedurl=http%3A//newsrss.bbc.co.uk/rss/newsonline_world_edition/business/rss.xml&maxitems=-1&showfeedtitle=0&showtitle=1&showdate=1&showsummary=1&showauthor=0&showactionsbox=0&showrsslink=0&showcopyright=1&opennewwindow=0&inheritstyles=0&bgcolor=%23FFFFFF&titlefontsize=10&summaryfontsize=10&fontfamily=Arial%2CHelvetica&titlecolor=%230000CC&summarycolor=%23000000&sepstyle=none&sepcolor=%23A0A0A0&objectid=newsblock41461078';
+      document.getElementById('newsblock41461078').appendChild(script);
     },
 
     /**

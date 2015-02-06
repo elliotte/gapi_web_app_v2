@@ -35,6 +35,11 @@ class SigninController < ApplicationController
     end
   end
 
+  def refresh_connection
+      reset_session
+      redirect_to root_path
+  end
+
   def disconnect
     # Using either the refresh or access token to revoke if present.
     token = session[:token]

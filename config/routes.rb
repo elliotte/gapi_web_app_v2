@@ -4,6 +4,7 @@ GooglePlay::Application.routes.draw do
       post :connect
       post :disconnect
       post :save_user
+      get :refresh_connection
     end
   end
 

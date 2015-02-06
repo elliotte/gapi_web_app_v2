@@ -12,16 +12,23 @@
 </section><!-- /home-section -->
 <!-- white-section -->
 <section id="white-section">
+	<!-- hideNot-signedIn -->
+	<div id="authOps" style="display:none;">
     <!-- container -->
     <div class="container">
         <!-- row -->
         <div class="row">
         	<!-- col-md-12 -->
 		    <div class="col-md-12">
-		    	<div id="authOps" style="display:none;">
 					<h2>You are now signed into monea.build using Google+</h2>
 					<p>If you chooses to disconnect, the app deletes all stored information retrieved from Google.</p>
+					<br>
 					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o" id="disconnect">Sign Out</a>
+					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">Upcoming Events</a>
+					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">yourTasks</a>
+					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">yourFiles</a>
+					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">moneaLedgers</a>
+					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">moneaReports</a>
 
 					<!--####################################### Profile Information ###################### -->
 					<!-- col-md-12 -->
@@ -30,6 +37,7 @@
 	                    <div class="section-title">
 	                        <!-- main-title -->
 	                        <div class="main-title">
+								<br>
 	                            <h2>yourProfile monea.build </h2>
 	                        </div><!-- /main-title -->
 	                    </div><!-- /section-title -->
@@ -41,15 +49,59 @@
 		                </div>
 	                </div><!-- /feature-boxs-wrapper -->
 	                <!--####################################### /Profile Information ###################### -->
-
-	                <!--####################################### Friends ###################### -->
+	    	</div>
+	    </div>           <!--####################################### Friends ###################### -->
+	    <div class="row">
+			    	 <div class="col-md-12">
+			    	 	 <div class="section-title">
+			    	 	 <div class="main-title">
+			    	 	 	<h2> Business ( Food )</h2>
+	                        <br>
+			    	 	 </div>
+			    	 	</div>
+			    	 </div>
+	                <div class="col-md-6">
+	                    <!-- section-title -->
+	                    <div class="section-title">
+	                        <!-- main-title -->
+	                        <div class="main-title">
+	                            <h4>BBC</h4>
+	                            <br>
+	                            <div id="bbc-widget">
+	                            	<div id="newsblock41461078">
+									<!-- DO NOT ALTER, REMOVE, OR IN ANY WAY TRY TO HIDE THE FOLLOWING TAG OR ITS CONTENTS OR BLASTCASTA WILL NOT FUNCTION PROPERLY. -->
+										<div align="center" style="font-size: 8pt;">
+											<br />
+											<a href="http://www.blastcasta.com/" style="text-decoration: none; color: #0000CC;" target="_blank">
+												<b>News Widgets &amp; Tickers</b><br />Powered by BlastCasta
+											</a>
+										</div>
+									</div>
+								</div><!-- /bbc-widget -->
+	                        </div><!-- /main-title -->
+	                    </div><!-- /section-title -->
+			        </div><!-- /col-md-6 -->
+			        <div class="col-md-6">
+	                    <!-- section-title -->
+	                    <div class="section-title">
+	                        <!-- main-title -->
+	                        <div class="main-title">
+	                            <h4>Reuters</h4>
+	                            <br>
+	                            <div id="more-feed">
+	                            </div>
+	                        </div><!-- /main-title -->
+	                    </div><!-- /section-title -->
+			        </div><!-- /col-md-6 -->
+		</div>
+		<div class="row">        
 	                <!-- col-md-12 -->
 			        <div class="col-md-12">
 	                    <!-- section-title -->
 	                    <div class="section-title">
 	                        <!-- main-title -->
 	                        <div class="main-title">
-	                            <h2><a class="" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples">Networks</a></h2>
+	                            <h2><a class="" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples">Networks ( people ) </a></h2>
 	                        </div><!-- /main-title -->
 	                    </div><!-- /section-title -->
 			        </div><!-- /col-md-12 -->
@@ -69,7 +121,7 @@
 	                    <div class="section-title">
 	                        <!-- main-title -->
 	                        <div class="main-title">
-	                            <h2>Teams(circles)</h2>
+	                            <h2>Teams ( circles )</h2>
 	                        </div><!-- /main-title -->
 	                    </div><!-- /section-title -->
 			        </div><!-- /col-md-12 -->
@@ -284,12 +336,12 @@
 
 					<!-- <div class="g-hangout" data-render="createhangout"></div> -->
 
-					<%= render "modals" %>
-				</div>
-			</div><!-- /col-md-12 -->
-		</div> <!-- /row -->
-	</div><!-- /container -->
+			</div><!-- /row -->
+		</div> <!-- /container -->
+	</div> <!-- /authOps -->
 </section><!-- /white-section -->
+
+<%= render "modals" %>
 
 <script type="text/javascript">
     $('#home-section').backstretch([
