@@ -5,11 +5,21 @@ class CalendarEventsController < ApplicationController
 
 	def index
     # Get the list of calendar events.
+    time_filter = Date.yesterday.strftime('%FT%T%:z')
     response = $client.execute(:api_method => @calendar.events.list,
-                              :parameters => {'calendarId' => params[:calendar_id] })
+                              :parameters => {'calendarId' => params[:calendar_id], 'maxResults' => 15, 'timeMin' => time_filter } )
 
     render json: response.data.to_json
   end
+
+   # def events
+   #    event_lookup()
+   #  end
+
+   #  def find_events(query)
+   #    event_lookup("?q=#{query}")
+   #  end
+
 
   def show
     respond_to do |format|
@@ -66,9 +76,11 @@ class CalendarEventsController < ApplicationController
     response = $client.execute(:api_method => @calendar.events.quick_add,
                               :parameters => {'calendarId' => params[:calendar_id],
                                               'text' => params[:event][:text]})
-
-    # render json: response.data.to_json
-    redirect_to root_path
+      respond_to do |format|
+        format.js { @event = response.data }
+        format.html { redirect_to root_path }
+      end
+   
   end
 
   def update

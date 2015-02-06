@@ -171,6 +171,7 @@ var helper = (function() {
 
     loadGoogleSourcedFeeds: function() {
         var feed = new google.feeds.Feed("http://feeds.reuters.com/news/economy");
+        feed.setNumEntries(10)
         feed.load(function(result) {
         if (!result.error) {
           var container = document.getElementById("more-feed");
@@ -188,6 +189,7 @@ var helper = (function() {
           }
         });
         var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/businessNews");
+        feed.setNumEntries(10)
         feed.load(function(result) {
         if (!result.error) {
           var container = document.getElementById("more-feed");
@@ -205,6 +207,7 @@ var helper = (function() {
           }
         });
         var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/globalmarketsNews");
+        feed.setNumEntries(10)
         feed.load(function(result) {
         if (!result.error) {
           var container = document.getElementById("more-feed");
@@ -224,10 +227,24 @@ var helper = (function() {
     },
     
     loadBBCFeed: function() {
-      var script = document.createElement('script');
-      _protocol = document.location.protocol
-      script.src = _protocol + '//www.poweringnews.com/newsjavascript.aspx?feedurl=http%3A//newsrss.bbc.co.uk/rss/newsonline_world_edition/business/rss.xml&maxitems=-1&showfeedtitle=0&showtitle=1&showdate=1&showsummary=1&showauthor=0&showactionsbox=0&showrsslink=0&showcopyright=1&opennewwindow=0&inheritstyles=0&bgcolor=%23FFFFFF&titlefontsize=10&summaryfontsize=10&fontfamily=Arial%2CHelvetica&titlecolor=%230000CC&summarycolor=%23000000&sepstyle=none&sepcolor=%23A0A0A0&objectid=newsblock41461078';
-      document.getElementById('newsblock41461078').appendChild(script);
+      var feed = new google.feeds.Feed("http://feeds.bbci.co.uk/news/business/rss.xml?maxitems=-1");
+        feed.setNumEntries(20)
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("bbc-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var breakLine = document.createElement("br");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+            container.appendChild(breakLine);
+            }
+          }
+        });
     },
 
     /**
@@ -431,6 +448,7 @@ var helper = (function() {
      */
     appendDrive: function(drive) {
       var fileCount = 0;
+
       $('#driveFiles').empty();
       var count = 0;
       for (var itemIndex in drive.items) {

@@ -95,8 +95,9 @@ $(document).ready(function () {
 	    }
 	});
 
-	$('#quick_create_button_event').click(function(){
-		$('#quick_create_event_form').submit();
+	$('#quick_create_button_close').click(function(e){
+		$('#quick-events-modal-body').empty();
+		$('#modal-window-quick-create-event').modal('close');
 	});
 	$('#create_button_event').click(function(){
 		$('#create_event_form').submit();
@@ -122,6 +123,23 @@ $(document).ready(function () {
 	    format: "yyyy/mm/dd",
 	    autoclose: true
 	});
+
+	$('#go-to-events').on('click', function(e) {
+		e.preventDefault();
+		var top = $('#events-anchor').offset().top - 75
+		$('html, body').animate({ scrollTop: top }, 1000)
+	});
+	$('#go-to-files').on('click', function(e) {
+		e.preventDefault();
+		var top = $('#files-anchor').offset().top - 75
+		$('html, body').animate({ scrollTop: top }, 1000)
+	});
+	$('#go-to-tasks').on('click', function(e) {
+		e.preventDefault();
+		var top = $('#tasks-anchor').offset().top - 75
+		$('html, body').animate({ scrollTop: top }, 1000)
+	});
+
 });
 
 

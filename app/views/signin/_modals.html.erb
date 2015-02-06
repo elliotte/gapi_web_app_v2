@@ -10,17 +10,17 @@
 				<h3 id="myModalLabel">Quickly Add Event</h3>
 				<p>Uses same principles as google quick add.  E.g 10am deliver report</h3>
 			</div>
-			<div class="modal-body">
-				<%= form_tag("/calendars/primary/events/quick_add", :id => "quick_create_event_form", :method => "post") do %>
+			<div id="quick-events-modal-body" class="modal-body">
+				<%= form_tag("/calendars/primary/events/quick_add", :method => "post", remote: true) do %>
 					<div class="form-group">
 						Text: <%= text_field_tag "event[text]", "", class: "form-control", placeholder: "Text", id: "text" %>
 						<%= hidden_field_tag "event[circle_id]", params[:id] %>
 					</div>
+				  <%= submit_tag("add") %>
 				<% end %>
 			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button class="btn btn-primary" id="quick_create_button_event">Add</button>
+			<div id="quick_create_event_footer" class="modal-footer" style="display:none;">
+				<button id="quick_create_button_close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 			</div>
 		</div>
 	</div>

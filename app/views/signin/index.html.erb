@@ -20,16 +20,19 @@
         <div class="row">
         	<!-- col-md-12 -->
 		    <div class="col-md-12">
+		    		<br>
 					<h2>You are now signed into monea.build using Google+</h2>
+					<br>
 					<p>If you chooses to disconnect, the app deletes all stored information retrieved from Google.</p>
 					<br>
 					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o" id="disconnect">Sign Out</a>
-					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">Upcoming Events</a>
-					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">yourTasks</a>
-					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">yourFiles</a>
-					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">moneaLedgers</a>
-					<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o">moneaReports</a>
-
+					<a id="go-to-events" class="btn btn-sm btn-main-o">Upcoming Events</a>
+					<a id="go-to-tasks" class="btn btn-sm btn-main-o">yourTasks</a>
+					<a id="go-to-files" class="btn btn-sm btn-main-o">yourFiles</a>
+					<a href="https://fathomless-brushlands-5645.herokuapp.com/ledgers" target="_blank" class="btn btn-sm btn-main-o">moneaLedgers</a>
+					<a href="https://fathomless-brushlands-5645.herokuapp.com/reports" target="_blank" class="btn btn-sm btn-main-o">moneaReports</a>
+					<br>
+					<br>
 					<!--####################################### Profile Information ###################### -->
 					<!-- col-md-12 -->
 			        <div class="col-md-12">
@@ -67,17 +70,8 @@
 	                        <div class="main-title">
 	                            <h4>BBC</h4>
 	                            <br>
-	                            <div id="bbc-widget">
-	                            	<div id="newsblock41461078">
-									<!-- DO NOT ALTER, REMOVE, OR IN ANY WAY TRY TO HIDE THE FOLLOWING TAG OR ITS CONTENTS OR BLASTCASTA WILL NOT FUNCTION PROPERLY. -->
-										<div align="center" style="font-size: 8pt;">
-											<br />
-											<a href="http://www.blastcasta.com/" style="text-decoration: none; color: #0000CC;" target="_blank">
-												<b>News Widgets &amp; Tickers</b><br />Powered by BlastCasta
-											</a>
-										</div>
-									</div>
-								</div><!-- /bbc-widget -->
+                            	<div id="bbc-feed">
+								</div>
 	                        </div><!-- /main-title -->
 	                    </div><!-- /section-title -->
 			        </div><!-- /col-md-6 -->
@@ -147,7 +141,7 @@
 
 	                <!--####################################### Task Lists ###################### -->
 	                <!-- col-md-12 -->
-			        <div class="col-md-12">
+			        <div class="col-md-12" id="tasks-anchor">
 	                    <!-- section-title -->
 	                    <div class="section-title">
 	                        <!-- main-title -->
@@ -241,7 +235,7 @@
 
 	                <!--####################################### Calendar Events ###################### -->
 	                <!-- col-md-12 -->
-			        <div class="col-md-12">
+			        <div class="col-md-12" id ="events-anchor">
 	                    <!-- section-title -->
 	                    <div class="section-title">
 	                        <!-- main-title -->
@@ -272,7 +266,7 @@
 
 	                <!--####################################### Drive Files ###################### -->
 					<!-- col-md-12 -->
-			        <div class="col-md-12">
+			        <div class="col-md-12" id="files-anchor" >
 	                    <!-- section-title -->
 	                    <div class="section-title">
 	                        <!-- main-title -->
