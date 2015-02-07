@@ -162,7 +162,6 @@ var helper = (function() {
           helper.calendar();
           helper.files();
           helper.task_lists();
-          helper.activities();
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -323,21 +322,6 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           helper.appendTasks(result, taskListId);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the list of Activities.
-     */
-    activities: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/activities',
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          console.log(result);
-          helper.appendActivity(result);
         },
         processData: false
       });
@@ -615,11 +599,17 @@ var helper = (function() {
                 ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
               '</p>'
             );
-          } else if(task.status == "needsAction" && task.due) {
+          } else if(task.status == "needsAction") {
             taskPendingCount++;
             $('#pendingTasks').show();
+            var dateIfEntered = ""
+            if ( !task.due ) {
+              dateIfEntered = "None-SetBy-User"
+            } else {
+              dateIfEntered = task.due.substring(0, task.title.lastIndexOf("["))
+            };
             $('#tasksPending').append(
-              '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Due Date: ' + task.due.substring(0, 10) + '</p>'+
+              '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
               '<p>'+
                 ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
                 ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
@@ -638,11 +628,17 @@ var helper = (function() {
                 ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
               '</p>'
             );
-          } else if(task.status == "needsAction" && task.due) {
+          } else if(task.status == "needsAction") {
             taskPendingCount++;
             $('#pendingTasks').show();
+            var dateIfEntered = ""
+            if ( !task.due ) {
+              dateIfEntered = "None-SetBy-User"
+            } else {
+              dateIfEntered = task.due.substring(0,10)
+            };
             $('#tasksPending').append(
-              '<p>'+ '- Title: ' + task.title + ', Notes: ' + task.notes + ', Due Date: ' + task.due.substring(0, 10) + '</p>'+
+              '<p>'+ '- Title: ' + task.title + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
               '<p>'+
                 ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
                 ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
@@ -651,33 +647,6 @@ var helper = (function() {
             );
           }
         }
-      }
-    },
-    /**
-     * Displays available Activities retrieved from server.
-     */
-    appendActivity: function(activity) {
-      var activityCount = 0;
-      $('#activityFeeds').empty();
-      for (var activityIndex in activity.items) {
-        activityCount++;
-        $('#activityFeeds').show();
-        item = activity.items[activityIndex];
-        $('#activityFeeds').append(
-          '<div class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-archive"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3><a href="' + item.url + '" target="_blank">' + item.title + '</a></h3>'+
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-      }
-      if(activityCount == 0){
-        $('#noActivityFeeds').show();
       }
     },
     /**

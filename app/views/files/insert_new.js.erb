@@ -1,0 +1,7 @@
+<% if @file.mimeType == 'application/vnd.google-apps.document' %>
+	$("#new-doc-modal-body").html("<%= escape_javascript(render partial: 'new_insert', locals: { file: @file }) %>");
+	$("#new-doc-modal-footer").show();
+<% else %>
+	$("#new-ss-modal-body").html("<%= escape_javascript(render partial: 'new_insert', locals: { file: @file }) %>");
+	$("#new-ss-modal-footer").show();
+<% end %>

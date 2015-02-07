@@ -69,23 +69,27 @@ class FilesController < ApplicationController
 	    end
 	end
 
-	def insert_new_document
-	  # Insert a file
+	def insert_new
+	  # Insert a template file
 	  file = @drive.files.insert.request_schema.new({
 	    'title' => params[:title],
-	    'mimeType' => 'application/vnd.google-apps.document'
+	    'mimeType' => params[:mimeType]
 	  })
-
-	  media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/document.txt", 'text/plain')
+	  media = ""
+	  if params[:mimeType] == 'application/vnd.google-apps.spreadsheet'
+	  	media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/monea-build.csv", 'text/csv')
+	  else
+	  	media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/monea-build.txt", 'text/plain')
+	  end
 	  result = $client.execute(
 	    :api_method => @drive.files.insert,
 	    :body_object => file,
 	    :media => media,
 	    :parameters => {
 	      'uploadType' => 'multipart',
-	      'alt' => 'json'})
+	      'alt' => 'json',
+	      'convert' => true })
 
-	  # Pretty print the API result
       respond_to do |format|
 	      format.js { @file = result.data }
 	   end

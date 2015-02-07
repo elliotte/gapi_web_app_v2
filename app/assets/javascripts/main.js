@@ -13,6 +13,9 @@ $(document).ready(function () {
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
 	});
+	$("#new_ss").click(function() {
+		$("#modal-window-new-ss").modal("show");
+	});
 	$("#create_circle").click(function() {
 		$("#modal-window-create-circle").modal("show");
 	});
@@ -25,7 +28,6 @@ $(document).ready(function () {
 	$("#create_tasklist").click(function() {
 		$("#modal-window-create-tasklist").modal("show");
 	});
-
 	$("#add_team_member").click(function() {
 		$("#modal-window-add-circle-member").modal("show");
 	});

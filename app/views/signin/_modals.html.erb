@@ -16,7 +16,7 @@
 						Text: <%= text_field_tag "event[text]", "", class: "form-control", placeholder: "Text", id: "text" %>
 						<%= hidden_field_tag "event[circle_id]", params[:id] %>
 					</div>
-				  <%= submit_tag("add") %>
+				  <%= submit_tag "Add", class: "btn" %>
 				<% end %>
 			</div>
 			<div id="quick_create_event_footer" class="modal-footer" style="display:none;">
@@ -82,12 +82,35 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal-window-new-ss" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-medium-width">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">New SpreadSheet</h3>
+			</div>
+			<div id="new-ss-modal-body" class="modal-body">
+				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
+					<div class="form-group">
+						Text: <%= text_field_tag "title", "", class: "form-control", placeholder: "Enter a SS title", id: "title" %>
+						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.spreadsheet" %>
+					</div>
+				  <%= submit_tag "Add", class: "btn" %>
+				<% end %>
+			</div>
+			<div id="new-ss-modal-footer" class="modal-footer" style="display:none;">
+				<button id="new-ss-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade" id="modal-window-create-spreadsheet" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Create Spreadsheet</h3>
+				<h3 id="myModalLabel">Import Spreadsheet</h3>
 			</div>
 			<div class="modal-body">
 				<%= form_tag(files_path, :id => "create_spreadsheet_form", :method => "post", :multipart => true) do %>
@@ -113,12 +136,13 @@
 				<h3 id="myModalLabel">New Document</h3>
 			</div>
 			<div id="new-doc-modal-body" class="modal-body">
-				<%= form_tag(insert_new_document_files_path, :method => "post", remote: true) do %>
+				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
 					<div class="form-group">
 						Text: <%= text_field_tag "title", "", class: "form-control", placeholder: "Enter a document title", id: "title" %>
-						<%= hidden_field_tag "event[circle_id]", params[:id] %>
+						<%#= hidden_field_tag "event[circle_id]", params[:id] %>
+						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.document" %>
 					</div>
-				  <%= submit_tag("Add") %>
+				  <%= submit_tag "Add", class: "btn" %>
 				<% end %>
 			</div>
 			<div id="new-doc-modal-footer" class="modal-footer" style="display:none;">
@@ -133,7 +157,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Create Document</h3>
+				<h3 id="myModalLabel">Import Document</h3>
 			</div>
 			<div class="modal-body">
 				<%= form_tag(files_path, :id => "create_document_form", :method => "post", :multipart => true) do %>
