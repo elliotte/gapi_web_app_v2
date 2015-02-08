@@ -354,7 +354,7 @@ var helper = (function() {
         circle = circles[c];
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
-              '<div class="feature-box-containt">' +
+              '<div class="feature-box-containt monea-teams">' +
                 '<a style="color:#747474;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>'+
                 '<p>' + circle.description + '</p>'+
               '</div>' + 

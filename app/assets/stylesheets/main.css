@@ -68,6 +68,19 @@
 	text-transform:capitalize;
 }
 
+#profile {
+	overflow: scroll;
+	max-height: 325px;
+}
+#monea-teams {
+	display:none;
+	overflow: scroll;
+	max-height: 325px;
+}
+.monea-teams:hover {
+	background-color: #428bca;
+}
+
 #bbc-feed {
 	overflow: scroll;
 	max-height: 325px;
