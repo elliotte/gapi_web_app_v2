@@ -13,6 +13,10 @@ $(document).ready(function () {
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
 	});
+	$("#add-to-do").click(function() {
+		var route = $("#create-task-list-to-do").attr('href');
+		$.get(route);
+	});
 	$("#new_ss").click(function() {
 		$("#modal-window-new-ss").modal("show");
 	});

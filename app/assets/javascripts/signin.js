@@ -564,7 +564,7 @@ var helper = (function() {
                 '<i class="fa fa-tasks"></i>'+
               '</div>'+
               '<div class="feature-box-containt">'+
-                '<h3>' + taskList.title + ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Create Task</a></h3>'+
+                '<h3>' + taskList.title + ' <a id="create-task-list-to-do" class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Create Task</a></h3>'+
                 '<p>'+
                   ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/destroy">Delete</a>'+
                   ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '">Update</a>'+

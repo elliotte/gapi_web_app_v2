@@ -22,7 +22,6 @@ class TasksController < ApplicationController
 
 	def new
     	respond_to do |format|
-      		format.html
       		format.js { @task_list_id = params[:task_list_id] }
     	end
   	end
