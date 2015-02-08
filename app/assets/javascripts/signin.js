@@ -43,7 +43,9 @@ var helper = (function() {
     renderProfile: function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
-
+        $('#circle_user_id').val(profile.id);
+        user_google_id = profile.id;
+        
         $.ajax({
           type: 'POST',
           url: '/signin/save_user',
@@ -53,8 +55,7 @@ var helper = (function() {
             helper.circles();
           }
         });
-        $('#circle_user_id').val(profile.id);
-        user_google_id = profile.id;
+
         $('#profile').empty();
         if (profile.error) {
           $('#profile').append(profile.error);
