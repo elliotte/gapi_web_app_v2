@@ -29,7 +29,7 @@
 					<a id="go-to-events" class="btn btn-sm btn-main-o">Upcoming Events</a>
 					<a id="go-to-tasks" class="btn btn-sm btn-main-o">yourTasks</a>
 					<a id="go-to-files" class="btn btn-sm btn-main-o">yourFiles</a>
-					<a href="https://fathomless-brushlands-5645.herokuapp.com/ledgers" target="_blank" class="btn btn-sm btn-main-o">moneaLedgers</a>
+					<a href="https://fathomless-brushlands-5645.herokuapp.com/cash_ledgers" target="_blank" class="btn btn-sm btn-main-o">moneaLedgers</a>
 					<a href="https://fathomless-brushlands-5645.herokuapp.com/reports" target="_blank" class="btn btn-sm btn-main-o">moneaReports</a>
 					<br>
 					<br>
@@ -37,21 +37,65 @@
 					<!-- col-md-12 -->
 			        <div class="col-md-12">
 	                    <!-- section-title -->
+	                    <div class="col-md-6">
+	                    	<div class="section-title">
+		                        <!-- main-title -->
+		                        <div class="main-title">
+									<br>
+		                            <h2>your Profile</h2>
+		                        </div><!-- /main-title -->
+	                    	</div><!-- /section-title -->
+	                    </div><!-- /col-md-6 -->
+	                    <div class="col-md-6">
+	                      <!--####################################### Circles ###################### -->
+	                    	<div class="section-title">
+		                        <!-- main-title -->
+		                        <div class="main-title">
+									<br>
+		                            <h2>your moneaTeams </h2>
+		                        </div><!-- /main-title -->
+	                    	</div><!-- /section-title -->
+	                    </div><!-- /col-md-6 -->	
+			        </div><!-- /col-md-12 -->
+
+	                <!-- feature-boxs-wrapper -->
+	                <div class="feature-boxs-wrapper">
+	                	<div id="profile" class="col-md-6">
+		                </div>
+		                <div id="monea-teams" class="col-md-6" style="display:none;">
+		                </div>
+		                <div id="noCircle" style="display:none;">
+		                	<div class="col-md-12">
+		                		<div class="feature-box-style2">
+		                			<div class="feature-box-title">
+		                				<i class="fa fa-support"></i>
+		                			</div>
+		                			<div class="feature-box-containt">
+		                				<h3>No Teams!!!!</h3>
+		                			</div>
+		                		</div>
+		                	</div>
+		                </div>
+	                </div><!-- /feature-boxs-wrapper -->
+	                <!--####################################### /Profile Information ###################### -->
+	                  <!-- col-md-12 -->
+			        <div class="col-md-12">
+	                    <!-- section-title -->
 	                    <div class="section-title">
 	                        <!-- main-title -->
 	                        <div class="main-title">
-								<br>
-	                            <h2>yourProfile monea.build </h2>
+	                            <h2><a class="" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples">Networks ( people ) </a></h2>
 	                        </div><!-- /main-title -->
 	                    </div><!-- /section-title -->
 			        </div><!-- /col-md-12 -->
 
 	                <!-- feature-boxs-wrapper -->
 	                <div class="feature-boxs-wrapper">
-	                	<div id="profile">
+	                	<div id="visiblePeople">
 		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Profile Information ###################### -->
+	                </div>
+	                <!-- /feature-boxs-wrapper -->
+	                <!--####################################### /Friends ###################### -->
 	    	</div>
 	    </div>           <!--####################################### Friends ###################### -->
 	    <div class="row">
@@ -121,55 +165,9 @@
 			        </div><!-- /col-md-6 -->
 		</div>
 		<div class="row">        
-	                <!-- col-md-12 -->
-			        <div class="col-md-12">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2><a class="" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples">Networks ( people ) </a></h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
 
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="visiblePeople">
-		                </div>
-	                </div>
-	                <!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Friends ###################### -->
-
-	                <!--####################################### Circles ###################### -->
-	                <!-- col-md-12 -->
-			        <div class="col-md-12">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>Teams ( circles )</h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
-
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="circle" style="display:none;">
-		                </div>
-		                <div id="noCircle" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-support"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Teams!!!!</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Circles ###################### -->
+	              
+	             
 
 	                <!--####################################### Tasks ###################### -->
 					<!-- col-md-12 -->

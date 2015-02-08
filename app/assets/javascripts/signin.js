@@ -347,26 +347,17 @@ var helper = (function() {
      */
     appendCircles: function(circles) {
       var circleCount = 0;
-      $('#circle').empty();
+      $('#monea-teams').empty();
       for (var c in circles) {
         circleCount++;
-        $('#circle').show();
+        $('#monea-teams').show();
         circle = circles[c];
-        $('#circle').append(
-          '<div class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-support"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3><a href="/circles/' + circle.id + '">' + circle.display_name + '</a></h3>'+
+        $('#monea-teams').append(
+          '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
+              '<div class="feature-box-containt">' +
+                '<a style="color:#747474;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>'+
                 '<p>' + circle.description + '</p>'+
-                '<p>'+
-                  ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/circles/' + circle.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/circles/' + circle.id + '/edit">Update</a>'+
-                '</p>'+
-              '</div>'+
-            '</div>'+
+              '</div>' + 
           '</div>'
         );
       }
