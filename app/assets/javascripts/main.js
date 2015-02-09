@@ -154,17 +154,17 @@ $(document).ready(function () {
 
 });
 
-$(document).keydown(function(e) {
-    if (e.keyCode == 65 ) {
-    	$('#modal-window-friends-collaborate').modal('show');
-   		 var friends = JSON.parse(localStorage.friends);
-   		 console.log(friends);
-   		 var modal = $('#people-collaborate-modal-body')
-   		 $(friends).each(function(i) {
-   		 	$(modal).append('<p>' + friends[i].displayName + '</p>');
-   		 });
-    };
-});
+//$(document).keydown(function(e) {
+    // if (e.keyCode == 65 ) {
+    // 	$('#modal-window-friends-collaborate').modal('show');
+   	// 	 var friends = JSON.parse(localStorage.friends);
+   	// 	 console.log(friends);
+   	// 	 var modal = $('#people-collaborate-modal-body')
+   	// 	 $(friends).each(function(i) {
+   	// 	 	$(modal).append('<p>' + friends[i].displayName + '</p>');
+   	// 	 });
+    // };
+//});
 
 
 

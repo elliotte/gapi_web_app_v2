@@ -178,13 +178,13 @@ var helper = (function() {
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
             var storyLink = document.createElement("a");
-            var breakLine = document.createElement("br");
+            var snippet = document.createElement("p");
             storyLink.appendChild(document.createTextNode(entry.title));
-            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
             storyLink.href = entry.link
             storyLink.setAttribute('target', '_blank')
             container.appendChild(storyLink);
-             container.appendChild(breakLine);
+            container.appendChild(snippet);
             }
           }
         });
@@ -196,13 +196,13 @@ var helper = (function() {
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
             var storyLink = document.createElement("a");
-            var breakLine = document.createElement("br");
+            var snippet = document.createElement("p");
             storyLink.appendChild(document.createTextNode(entry.title));
-            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
             storyLink.href = entry.link
             storyLink.setAttribute('target', '_blank')
             container.appendChild(storyLink);
-             container.appendChild(breakLine);
+            container.appendChild(snippet);
             }
           }
         });
@@ -214,13 +214,13 @@ var helper = (function() {
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
             var storyLink = document.createElement("a");
-            var breakLine = document.createElement("br");
+            var snippet = document.createElement("p");
             storyLink.appendChild(document.createTextNode(entry.title));
-            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
             storyLink.href = entry.link
             storyLink.setAttribute('target', '_blank')
             container.appendChild(storyLink);
-             container.appendChild(breakLine);
+            container.appendChild(snippet);
             }
           }
         });
@@ -235,13 +235,13 @@ var helper = (function() {
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
             var storyLink = document.createElement("a");
-            var breakLine = document.createElement("br");
+            var snippet = document.createElement("p");
             storyLink.appendChild(document.createTextNode(entry.title));
-            storyLink.appendChild(document.createTextNode(entry.contentSnippet))
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
             storyLink.href = entry.link
             storyLink.setAttribute('target', '_blank')
             container.appendChild(storyLink);
-            container.appendChild(breakLine);
+            container.appendChild(snippet);
             }
           }
         });
@@ -387,8 +387,8 @@ var helper = (function() {
                   '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
                   '<p>' + event.description + '</p>'+
                   '<p>'+
-                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">Delete</a>'+
-                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">Update</a>'+
+                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"><i></a>'+
+                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
                     ' <a class="btn btn-primary" href="' + event.hangoutLink + '" target="_blank">Hangout</a>'+
                   '</p>'+
                 '</div>'+
@@ -402,12 +402,12 @@ var helper = (function() {
                 '<div class="feature-box-title">'+
                   '<i class="fa fa-calendar"></i>'+
                 '</div>'+
-                '<div class="feature-box-containt" style="height:250px; overflow:scroll;">'+
+                '<div class="feature-box-containt" style="max-height:250px; overflow:scroll;">'+
                   '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
                   '<p>' + event.description + '</p>'+
                   '<p>'+
-                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">Delete</a>'+
-                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">Update</a>'+
+                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
                   '</p>'+
                 '</div>'+
               '</div>'+
@@ -441,7 +441,7 @@ var helper = (function() {
               '<div class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
-                    '<i class="fa fa-file"></i>'+
+                    '<i class="fa fa-file-text"></i>'+
                   '</div>'+
                   '<div class="feature-box-containt">'+
                     '<p>Owner: '+ item.ownerNames[0] + '</p>'+
@@ -454,17 +454,16 @@ var helper = (function() {
                       '</ul>'+
                     '</h3>'+
                     '<p>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">Delete</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">Copy</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">Comments</a>'+
+                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
+                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
                     '</p>'+
+                    '<p style="margin-bottom: 10px;">'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank">Users.share</a>'+
+                    '</p>'+
+                    //appends after this code block..
                     '<div id="export-links-' + item.id + '"></div>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share"><i class="fa fa-google-plus"></i> Share with teams</a>'+
-                    '</p>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank"><i class="fa fa-google-plus"></i> Share with users</a>'+
-                    '</p>'+
                   '</div>'+
                 '</div>'+
               '</div>'
@@ -491,7 +490,7 @@ var helper = (function() {
               '<div class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
-                    '<i class="fa fa-file"></i>'+
+                    '<i class="fa fa-folder"></i>'+
                   '</div>'+
                   '<div class="feature-box-containt">'+
                     '<p>Owner: '+ item.ownerNames[0] + '</p>'+
@@ -504,17 +503,15 @@ var helper = (function() {
                       '</ul>'+
                     '</h3>'+
                     '<p>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">Delete</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">Copy</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">Comments</a>'+
+                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
+                      ' <a class="btn btn-sm btn-main-0" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
+                    '</p>'+
+                    '<p style="margin-bottom: 10px;">'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank">Users.share</a>'+
                     '</p>'+
                     '<div id="export-links-' + item.id + '"></div>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share"><i class="fa fa-google-plus"></i> Share with teams</a>'+
-                    '</p>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank"><i class="fa fa-google-plus"></i> Share with users</a>'+
-                    '</p>'+
                   '</div>'+
                 '</div>'+
               '</div>'
@@ -556,10 +553,13 @@ var helper = (function() {
                 '<i class="fa fa-tasks"></i>'+
               '</div>'+
               '<div class="feature-box-containt">'+
-                '<h3>' + taskList.title + ' <a id="create-task-list-to-do" class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Create Task</a></h3>'+
+                '<h3>' + taskList.title + '</h3>' +
+
+                '<p>' + ' <a id="create-task-list-to-do" class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Task.new</a>' +
+                  
                 '<p>'+
-                  ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '">Update</a>'+
+                  ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                  ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '"><i class="fa fa-edit"></i></a>'+
                 '</p>'+
               '</div>'+
             '</div>'+
