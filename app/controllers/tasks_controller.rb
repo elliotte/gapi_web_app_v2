@@ -34,13 +34,15 @@ class TasksController < ApplicationController
 				}
 
     	# Create the task in task list.
-    	response = $client.execute(:api_method => @tasks.tasks.insert,
+    	result = $client.execute(:api_method => @tasks.tasks.insert,
     							:parameters => {'tasklist' => params[:task_list_id]},
     							:body_object => task,
 								:headers => {'Content-Type' => 'application/json'})
 
     	# render json: response.data.to_json
-    	redirect_to root_path
+        respond_to do |format|
+            format.js { @task = result.data }
+        end
 	end
 
 	def update
@@ -62,8 +64,8 @@ class TasksController < ApplicationController
         elsif params[:task][:status] == "completed"
             task = @response.data
         	task.title = "#{params[:task][:title]}[#{params[:task][:circle_id]}]"
-        	task.notes = params[:task][:notes]
-        	task.due = params[:task][:due].to_datetime
+        	task.notes = params[:task][:notes] unless nil
+        	task.due = params[:task][:due].to_datetime unless nil
         	task.status = params[:task][:status]
 
         	# Update the task in task list.
@@ -82,7 +84,9 @@ class TasksController < ApplicationController
     							:parameters => {'tasklist' => params[:task_list_id], 'task' => params[:id]})
 
     	# render json: response.data.to_json
-    	redirect_to root_path
+        respond_to do |format|
+            format.js { @result = response.data }
+        end
 	end
 
 	def destroy_show

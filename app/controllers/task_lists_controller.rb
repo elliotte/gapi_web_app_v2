@@ -43,7 +43,7 @@ class TaskListsController < ApplicationController
                                 :headers => {'Content-Type' => 'application/json'})
 
         # render json: response.data.to_json
-        redirect_to root_path
+        redirect_to root_path 
     end
 
 	def update
