@@ -28,7 +28,7 @@ class TasksController < ApplicationController
 
 	def create
     	task = {
-    			title: "#{params[:task][:title]}[#{params[:task][:circle_id]}]" ,
+    			title: "#{params[:task][:title]}" ,
     			notes: params[:task][:notes] ,
     			due: params[:task][:due].to_datetime
 				}
@@ -85,7 +85,7 @@ class TasksController < ApplicationController
 
     	# render json: response.data.to_json
         respond_to do |format|
-            format.js { @result = response.data }
+            format.js { @result = response, @div_id = params[:id] }
         end
 	end
 

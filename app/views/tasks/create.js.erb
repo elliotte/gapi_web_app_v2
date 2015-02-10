@@ -1,10 +1,11 @@
 
 $('#js-task-create-result-body').empty();
 
-var title = '<%= @task.title %>'
-var caveat = '<p>' +  'The task will not appear until you refresh the page, as it is then fetched our Google backEnd.  Making unncessary calls costs your business money so be prudent.' + '</p>'
-var html = '<p>' + ' Task added successfully :) ' + '</p>' + 
-		   '<p>' + title + '</p>' + caveat
+var title = '<%= @task.title %>';
+var caveat = '<p>' +  'The task will not appear until you refresh the page, be prudent when making calls to server.' + '</p>'
+var html = '<p>' + ' Task added successfully ' + title + 
+			' <i class="fa fa-check"><i>' + '</p>' + caveat
+		   	 
 			
 $('#js-task-create-result-footer').show();
 $('#js-task-create-result-body').append(html);

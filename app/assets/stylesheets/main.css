@@ -78,7 +78,8 @@
 	max-height: 325px;
 }
 .monea-teams:hover {
-	background-color: #428bca;
+	border-left-color: #428bca;
+	border-right-color: #428bca;
 }
 
 #bbc-feed {

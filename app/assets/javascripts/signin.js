@@ -356,7 +356,7 @@ var helper = (function() {
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
               '<div class="feature-box-containt monea-teams">' +
-                '<a style="color:#747474;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>'+
+                 '<a style="color:#e10707;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>' + 
                 '<p>' + circle.description + '</p>'+
               '</div>' + 
           '</div>'
@@ -601,12 +601,14 @@ var helper = (function() {
               dateIfEntered = task.due.substring(0, task.title.lastIndexOf("["))
             };
             $('#tasksPending').append(
-              '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
-              '<p>'+
-                ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
-              '</p>'
+              '<div id=' + task.id + '>' +
+                '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
+                '<p>'+
+                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
+                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
+                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
+                '</p>' +
+              '</div>'
             );
           }
         } else {
@@ -630,12 +632,14 @@ var helper = (function() {
               dateIfEntered = task.due.substring(0,10)
             };
             $('#tasksPending').append(
-              '<p>'+ '- Title: ' + task.title + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
-              '<p>'+
-                ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
-              '</p>'
+              '<div id=' + task.id + '>' +
+                '<p>'+ '- Title: ' + task.title + ', Notes: ' + task.notes + ', Due Date: ' + dateIfEntered + '</p>'+
+                '<p>'+
+                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
+                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
+                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
+                '</p>' +
+              '</div>'
             );
           }
         }
