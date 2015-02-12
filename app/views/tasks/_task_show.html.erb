@@ -4,10 +4,10 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">Task Details</h3>
     </div>
-    <div class="modal-body">
-      <%= form_tag(task_list_task_path(task_list_id, task.id), :id => "update_task", :method => "put") do %>
+    <div id="js-update-task-modal-body" class="modal-body">
+      <%= form_tag(task_list_task_path(task_list_id, task.id), :id => "update_task", :method => "put", remote: true) do %>
         <div class="form-group">
-          Title: <%= text_field_tag "task[title]", task.title.reverse.sub(/]\d+\[/,"").reverse, class: "form-control", placeholder: "Title" %>
+          Title: <%= text_field_tag "task[title]", task.title, class: "form-control", placeholder: "Title" %>
           Notes: <%= text_field_tag "task[notes]", task.notes, class: "form-control", placeholder: "Notes" %>
           <% if task.status == "completed" %>
             Completed Date: <%= text_field_tag "task[due]", task.completed, class: "form-control", placeholder: "Completed Date" %>
@@ -18,16 +18,11 @@
           <% end %>
           <%= hidden_field_tag "task[circle_id]", task.title[/.*\[([^\]]*)/,1] %>
         </div>
+        <%= submit_tag "Update Task", class: 'btn btn-main-o' %>
       <% end %>
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-primary" id="update_button">Update</button>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  $('#update_button').click(function(){
-    $('#update_task').submit();
-  });
-</script>

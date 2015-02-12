@@ -2,10 +2,30 @@
 $('#js-task-create-result-body').empty();
 
 var title = '<%= @task.title %>';
-var caveat = '<p>' +  'The task will not appear until you refresh the page, be prudent when making calls to server.' + '</p>'
 var html = '<p>' + ' Task added successfully ' + title + 
-			' <i class="fa fa-check"><i>' + '</p>' + caveat
-		   	 
+			' <i class="fa fa-check"><i>' + '</p>' 
 			
 $('#js-task-create-result-footer').show();
 $('#js-task-create-result-body').append(html);
+
+var task_id = '<%= @task.id %>'
+var status = '<%= @task.status %>'
+var title = '<%= @task.title %>'
+var notes = '<%= @task.notes %>'
+var taskListId = '<%= @task_list_id %>'
+var dueDate = '<%= @task.due %>'
+
+
+$('#pendingTasks').show();
+$('#tasksPending').append(
+      '<div id=' + task_id + '>' +
+        '<p>'+ '- Title: ' + title + ', Notes: ' + notes + ', Due Date: ' + dueDate + '</p>'+
+        '<p>'+
+          ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/destroy">Delete</a>'+
+          ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '">Update</a>'+
+          ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/complete">Complete</a>'+
+        '</p>' +
+      '</div>'
+);
+
+
