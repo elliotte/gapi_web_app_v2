@@ -378,7 +378,7 @@ var helper = (function() {
         $('#calendarEvent').show();
         if(event.hangoutLink) {
           $('#calendarEvent').append(
-            '<div class="col-md-3">'+
+            '<div id="'+ event.id +'" class="col-md-3">'+
               '<div class="feature-box-style2">'+
                 '<div class="feature-box-title">'+
                   '<i class="fa fa-calendar"></i>'+
@@ -397,7 +397,7 @@ var helper = (function() {
           );
         } else {
           $('#calendarEvent').append(
-            '<div class="col-md-3">'+
+            '<div id="'+ event.id +'" class="col-md-3">'+
               '<div class="feature-box-style2">'+
                 '<div class="feature-box-title">'+
                   '<i class="fa fa-calendar"></i>'+

@@ -9,6 +9,12 @@ $(document).ready(function () {
 	});
 	$("#add_event").click(function() {
 		$("#modal-window-create-event").modal("show");
+		 // var friends = JSON.parse(localStorage.friends);
+   // 		 console.log(friends);
+   // 		 var form = $('form#create_event_form')
+   // 		 $(friends).each(function(i) {
+   // 		 	$(form).append('<input>' + friends[i].displayName + '</input>');
+   // 		 });
 	});
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
@@ -127,14 +133,15 @@ $(document).ready(function () {
 	    $('#create_tasklist_form').submit();
 	});
 
-	$('#start_time_event').datepicker({
-	    format: "yyyy/mm/dd",
-	    autoclose: true
-	});
-	$('#end_time_event').datepicker({
-	    format: "yyyy/mm/dd",
-	    autoclose: true
-	});
+	// cancelling time option so commented out for now..
+	// $('#start_time_event').datepicker({
+	//     format: "yyyy/mm/dd",
+	//     autoclose: true
+	// });
+	// $('#end_time_event').datepicker({
+	//     format: "yyyy/mm/dd",
+	//     autoclose: true
+	// });
 
 	$('#go-to-events').on('click', function(e) {
 		e.preventDefault();

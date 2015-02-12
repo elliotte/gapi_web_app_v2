@@ -37,6 +37,13 @@ class CalendarEventsController < ApplicationController
 
   def create
     # Creates an event.
+    attendee_email = ''
+    if params[:event][:attendee_email] == ""
+      attendee_email = 'noEmailWasEntered@gmail.com'
+    else
+      attendee_email = params[:event][:attendee_email]
+    end
+
     event = {
       'summary' => params[:event][:summary],
       'location' => params[:event][:location],
@@ -47,12 +54,14 @@ class CalendarEventsController < ApplicationController
       'end' => {
         'dateTime' => params[:event][:end_time].to_datetime
       },
+      
       'attendees' => [
         {
-          'email' => params[:event][:attendee_email],
-          'displayName' => params[:event][:attendee_name]
+          'optional' => true,
+          'email' => attendee_email
         }
       ],
+
       "extendedProperties" => {
         "private" => {
           "circle_id" => params[:event][:circle_id]
@@ -68,7 +77,16 @@ class CalendarEventsController < ApplicationController
                               :headers => {'Content-Type' => 'application/json'})
 
     # render json: response.data.to_json
-    redirect_to root_path
+    #redirect_to root_path
+    if response.data['error']
+      respond_to do |format|
+        redirect_to root_path, notice: 'SomethingWent Wrong'
+      end
+    else 
+      respond_to do |format|
+        format.js  { @event = response.data }
+      end
+    end
   end
 
   def quick_add
@@ -129,7 +147,10 @@ class CalendarEventsController < ApplicationController
                               :parameters => {'calendarId' => params[:calendar_id], 'eventId' => params[:id]})
 
     # render json: response.data.to_json
-    redirect_to root_path
+    @div_id = params[:id]
+    respond_to do |format|
+      format.js 
+    end
   end
 
   def destroy_show

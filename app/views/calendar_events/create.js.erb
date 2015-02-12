@@ -1,0 +1,29 @@
+
+    var htmlLink = '<%= @event.htmlLink %>'
+    var summary = '<%= @event.summary %>'
+    var description = '<%= @event.description %>'
+    var event_id = '<%= @event.id %>'
+
+    $('#calendarEvent').append(
+      '<div id="'+event_id+'" class="col-md-3">'+
+        '<div class="feature-box-style2">'+
+          '<div class="feature-box-title">'+
+            '<i class="fa fa-calendar"></i>'+
+          '</div>'+
+          '<div class="feature-box-containt" style="max-height:250px; overflow:scroll;">'+
+            '<h3><a href="' + htmlLink + '" target="_blank"> ' + summary + '</a></h3>'+
+            '<p>' + description + '</p>'+
+            '<p>'+
+              ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event_id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+              ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event_id + '"><i class="fa fa-edit"></i></a>'+
+            '</p>'+
+          '</div>'+
+        '</div>'+
+      '</div>'
+    );
+
+    var modalHTML = '<p>' + 'Success, event added.' + '</p>' + '<p>' + 'View event:' + '<a href="'+ htmlLink+'" target="blank" >' + summary + '</a>' + '</p>';
+    $('#js-add-event-content-body').html(modalHTML);
+
+
+
