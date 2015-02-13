@@ -18,6 +18,8 @@
                     <div class="feature-box-containt">
                       <h3><a href="<%= people.url %>" target="_blank"><%= people.displayName %></a></h3>
                       <p><a href="<%= people.url %>" target="_blank"><img src="<%= people.image.url %>"></a></p>
+                      <a class="btn btn-sm btn-primary" onclick="helper.loadHangOut(this)" data-id="<%= people.id %>">Video.call</a>
+                      <br>
                     </div>
                   </div>
                 </div>
@@ -32,3 +34,4 @@
     </div>
   </div>
 </div>
+

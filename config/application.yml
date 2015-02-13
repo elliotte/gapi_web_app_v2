@@ -7,4 +7,4 @@ CLIENT_X509_CERT_URL: https://www.googleapis.com/robot/v1/metadata/x509/90150602
 CLIENT_ID: 833707550293-o4h3tc5306pvq7j2b607v8q5jnf4a08j.apps.googleusercontent.com
 AUTH_PROVIDER_X509_CERT_URL: https://www.googleapis.com/oauth2/v1/certs
 JAVASCRIPT_ORIGINS: http://localhost:3000
-PLUS_LOGIN_SCOPE: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/plus.circles.read
+PLUS_LOGIN_SCOPE: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/plus.circles.read https://www.googleapis.com/auth/plus.profile.emails.read https://www.googleapis.com/auth/contacts.readonly

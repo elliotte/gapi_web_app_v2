@@ -45,11 +45,11 @@ var helper = (function() {
       request.execute( function(profile) {
         $('#circle_user_id').val(profile.id);
         user_google_id = profile.id;
-        
+        email = profile.emails[0].value
         $.ajax({
           type: 'POST',
           url: '/signin/save_user',
-          data: {id: profile.id, email: profile.url},
+          data: {id: profile.id, email: email },
           success: function(result) {
             console.log(result);
             helper.circles();
@@ -258,7 +258,6 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           helper.appendCalendar(result);
-          helper.setStorage('Events', result);
         },
         processData: false
       });
@@ -372,6 +371,7 @@ var helper = (function() {
     appendCalendar: function(events) {
       var calendarCount = 0;
       $('#calendarEvent').empty();
+      console.log(events.items.length)
       for (var eventIndex in events.items) {
         event = events.items[eventIndex];
         calendarCount++;
@@ -419,6 +419,7 @@ var helper = (function() {
         $('#noCalendarEvent').show();
       }
     },
+
     /**
      * Displays available files in drive retrieved from server.
      */
@@ -460,12 +461,13 @@ var helper = (function() {
                     '</p>'+
                     '<p style="margin-bottom: 10px;">'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank">Users.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadSharing(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
                     '</p>'+
                     //appends after this code block..
                     '<div id="export-links-' + item.id + '"></div>'+
                   '</div>'+
                 '</div>'+
+
               '</div>'
             );
             if(item.exportLinks){
@@ -509,7 +511,7 @@ var helper = (function() {
                     '</p>'+
                     '<p style="margin-bottom: 10px;">'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + item.id + '/edit?usp=sharing" target="_blank">Users.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadSharing()" data-href="'+item.alternateLink+'">Users.share</a>'+
                     '</p>'+
                     '<div id="export-links-' + item.id + '"></div>'+
                   '</div>'+

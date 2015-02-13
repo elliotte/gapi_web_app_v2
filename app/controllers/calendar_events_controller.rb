@@ -5,9 +5,10 @@ class CalendarEventsController < ApplicationController
 
 	def index
     # Get the list of calendar events.
-    time_filter = Date.yesterday.strftime('%FT%T%:z')
+    time_start = DateTime.yesterday.to_datetime
+    time_end =  Date.today.end_of_month.to_datetime
     response = $client.execute(:api_method => @calendar.events.list,
-                              :parameters => {'calendarId' => params[:calendar_id], 'maxResults' => 15, 'timeMin' => time_filter } )
+                              :parameters => {'calendarId' => params[:calendar_id], 'maxResults' => 15, 'timeMin' => time_start, 'timeMax' => time_end } )
 
     render json: response.data.to_json
   end
@@ -19,7 +20,6 @@ class CalendarEventsController < ApplicationController
    #  def find_events(query)
    #    event_lookup("?q=#{query}")
    #  end
-
 
   def show
     respond_to do |format|
@@ -37,47 +37,37 @@ class CalendarEventsController < ApplicationController
 
   def create
     # Creates an event.
-    attendee_email = ''
-    if params[:event][:attendee_email] == ""
-      attendee_email = 'noEmailWasEntered@gmail.com'
-    else
-      attendee_email = params[:event][:attendee_email]
-    end
-
+    start = DateTime.parse(params[:event][:start_time])
+    endT = DateTime.parse(params[:event][:end_time])
+    
     event = {
-      'summary' => params[:event][:summary],
-      'location' => params[:event][:location],
-      'description' => params[:event][:description],
-      'start' => {
-        'dateTime' => params[:event][:start_time].to_datetime
-      },
-      'end' => {
-        'dateTime' => params[:event][:end_time].to_datetime
-      },
-      
-      'attendees' => [
-        {
-          'optional' => true,
-          'email' => attendee_email
-        }
-      ],
 
-      "extendedProperties" => {
-        "private" => {
-          "circle_id" => params[:event][:circle_id]
-        }
-      },
-      'status' => params[:event][:status],
-      'visibility' => params[:event][:visibility]
+        'summary' => params[:event][:summary],
+        'location' => params[:event][:location],
+        'description' => params[:event][:description],
+        'start' => {
+          'dateTime' => start
+        },
+        'creator' => {
+          'self' => 'true'
+        },
+        'organizer' => {
+          'self' => 'true'
+        },
+        'end' => {
+          'dateTime' => endT
+        },
+        "attendeesOmitted" => 'true',
+        
     }
 
     response = $client.execute(:api_method => @calendar.events.insert,
                               :parameters => {'calendarId' => params[:calendar_id]},
                               :body => JSON.dump(event),
                               :headers => {'Content-Type' => 'application/json'})
-
     # render json: response.data.to_json
     #redirect_to root_path
+
     if response.data['error']
       respond_to do |format|
         redirect_to root_path, notice: 'SomethingWent Wrong'

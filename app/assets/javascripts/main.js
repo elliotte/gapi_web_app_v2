@@ -1,3 +1,24 @@
+// function getPersonEmail(id) {
+	
+// 	route = '/peoples/' + id
+
+// 	var response = 'no-email';
+// 	$.ajax({ type: "GET",   
+// 	         url: route,   
+// 	         async: false,
+// 	         success : function(text)
+// 	         {
+// 	            if (typeof text.emails !== "undefined") {
+// 				    response = text.emails[0]['value']
+// 				}
+// 				return
+// 	         }
+// 	});
+// 	return response
+// };
+
+
+
 $(document).ready(function () {
 
 	$("#go-home").click(function(e) {
@@ -9,13 +30,22 @@ $(document).ready(function () {
 	});
 	$("#add_event").click(function() {
 		$("#modal-window-create-event").modal("show");
-		 // var friends = JSON.parse(localStorage.friends);
-   // 		 console.log(friends);
-   // 		 var form = $('form#create_event_form')
-   // 		 $(friends).each(function(i) {
-   // 		 	$(form).append('<input>' + friends[i].displayName + '</input>');
-   // 		 });
+		 var friends = JSON.parse(localStorage.friends);
+   		 $("#event_attendee_id_1").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
+   		 $("#event_attendee_id_2").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
+   		 $("#event_attendee_id_3").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
+   		 $("#event_attendee_id_4").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
+   		 $(friends).each(function(i) {
+   		 	if (typeof friends[i].emails !== "undefined") {
+   		 		email = friends[i].emails[0]['value']
+				$("#event_attendee_id_1").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	   		 	$("#event_attendee_id_2").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	   		 	$("#event_attendee_id_3").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	   		 	$("#event_attendee_id_4").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+   		 	}; 
+   		 });
 	});
+
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
 	});
@@ -160,6 +190,7 @@ $(document).ready(function () {
 	});
 
 });
+
 
 //$(document).keydown(function(e) {
     // if (e.keyCode == 65 ) {

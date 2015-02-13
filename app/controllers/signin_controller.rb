@@ -44,10 +44,7 @@ class SigninController < ApplicationController
     # Using either the refresh or access token to revoke if present.
     token = session[:token]
 
-    # Destroy session token
-    session.delete(:token)
-    # Destroy session user logged in with google id
-    session.delete(:user_google_id)
+    reset_session
 
     # Sending the revocation request and returning the result.
     revokePath = 'https://accounts.google.com/o/oauth2/revoke?token=' + token
@@ -61,7 +58,9 @@ class SigninController < ApplicationController
 
   def save_user
     # Save or find User
-    if User.find_by(google_id: params[:id])
+    @user =  User.find_by(google_id: params[:id])
+    if @user
+      session[:user_email] = @user.email
       render json: 'User is already saved.'.to_json
     else
       user = User.new(google_id: params[:id], email: params[:email])

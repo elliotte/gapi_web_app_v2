@@ -54,13 +54,16 @@
 				<%= form_tag("/calendars/primary/events", :id => "create_event_form", :method => "post", remote: true) do %>
 					<div class="form-group">
 						Summary: <%= text_field_tag "event[summary]", "", class: "form-control", placeholder: "Summary" %>
-						Start Time: <%= text_field_tag "event[start_time]", "#{Time.now.strftime('%d/%m/%Y %I:%M')}", class: "form-control", id: "start_time_event" %>
-						End Time: <%= text_field_tag "event[end_time]", "#{(Time.now+1.hour).strftime('%d/%m/%Y %I:%M')}", class: "form-control", placeholder: "End Time", id: "end_time_event" %>
+						Start Time: <%= text_field_tag "event[start_time]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "form-control", id: "start_time_event" %>
+						End Time: <%= text_field_tag "event[end_time]", "#{(DateTime.now+1.hour).strftime('%d/%m/%Y %H:%M')}", class: "form-control", placeholder: "End Time", id: "end_time_event" %>
+						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
 						Location: <%= text_field_tag "event[location]", "", class: "form-control", placeholder: "Location" %>
 						Attendees :-
-						Name: <%= text_field_tag "event[attendee_name]", "", class: "form-control", placeholder: "Attendee Name" %>
-						Email: <%= text_field_tag "event[attendee_email]", "", class: "form-control", placeholder: "Attendee Email" %>
-						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
+						Name: <%= select_tag "event[attendee_id_1]", "", class: "form-control", placeholder: "Attendee Name" %>
+						Name 1: <%= select_tag "event[attendee_id_2]", "", class: "form-control", placeholder: "Attendee Name" %>
+						Name 2: <%= select_tag "event[attendee_id_3]", "", class: "form-control", placeholder: "Attendee Name" %>
+						Name 3: <%= select_tag "event[attendee_id_4]", "", class: "form-control", placeholder: "Attendee Name" %>
+						Others :-
 						Status: <%= text_field_tag "event[status]", "confirmed", class: "form-control", placeholder: "Status" %>
 						Visibility: <%= text_field_tag "event[visibility]", "default", class: "form-control", placeholder: "Visibility" %>
           				<%= hidden_field_tag "event[circle_id]", params[:id] %>
@@ -89,6 +92,7 @@
 					<div class="form-group">
 						Name: <%= text_field_tag "circle[display_name]", "", class: "form-control", placeholder: "Enter Name", id: "name" %>
 						Description: <%= text_area_tag "circle[description]", "", class: "form-control", placeholder: "Description", id: "description" %>
+						<%= hidden_field_tag "circle[user_id]", "" %>
 					</div>
 				<% end %>
 			</div>
