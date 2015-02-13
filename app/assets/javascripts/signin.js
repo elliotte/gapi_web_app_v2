@@ -420,6 +420,13 @@ var helper = (function() {
       }
     },
 
+    loadFileShare: function(button) {
+      link = $(button).data('href');
+      var shareButton = '<script src="https://apis.google.com/js/platform.js" async defer></script>'+'<div class="g-plus" data-action="share" data-href="'+link+'" data-annotation="none" data-height="15"></div>'
+      container = $(button).parent();
+      $(container).append(shareButton);
+    },
+
     /**
      * Displays available files in drive retrieved from server.
      */
@@ -461,7 +468,7 @@ var helper = (function() {
                     '</p>'+
                     '<p style="margin-bottom: 10px;">'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadSharing(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
                     '</p>'+
                     //appends after this code block..
                     '<div id="export-links-' + item.id + '"></div>'+
@@ -511,7 +518,7 @@ var helper = (function() {
                     '</p>'+
                     '<p style="margin-bottom: 10px;">'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadSharing()" data-href="'+item.alternateLink+'">Users.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
                     '</p>'+
                     '<div id="export-links-' + item.id + '"></div>'+
                   '</div>'+
