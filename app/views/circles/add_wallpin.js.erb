@@ -1,0 +1,22 @@
+var summary = '<%= @pin.summary %>'
+
+$("#modal-body-circle-add-wallpin").html('<p>' + "Success, wallpin added." + '</p>' + summary);
+
+var added_by = '<%= @pin.added_by %>';
+var link = '<%= @pin.file_link %>';
+
+var html = '<div class="feature-box-style2">'+
+		          '<div class="feature-box-title">'+
+		            '<i class="fa fa-random" style="background-color:grey;"></i>'+
+		          '</div>'+
+		          '<div class="feature-box-containt">'+
+		            '<p>' + summary + '</p>'+
+		            '<p>' + added_by + '</p>'+
+		            '<p>' + '<a href="'+link+'" target="_blank">' + 'LinkToFile' + '</a>' + '</p>'+
+		            '<p>'+
+                    	' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href=""><i class="fa fa-trash-o"></i></a>'+
+                  	'</p>'+
+		     	  '</div>'+
+			'</div>';
+
+$("#circle-wallpins-container").prepend(html);

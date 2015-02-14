@@ -33,7 +33,9 @@ class CirclesController < ApplicationController
 	      session[:state] = state
 	    end
 	    @state = session[:state]
-	    
+	    @messages = @circle.messages.all
+	    @wallpins = @circle.wallpins.all
+	    @user = session[:user_email]
 		respond_to do |format|
 			format.html
 	    	format.js { @circle }
@@ -84,6 +86,54 @@ class CirclesController < ApplicationController
 	def destroy_show
 		respond_to do |format|
 	    	format.js { @circle }
+    	end
+	end
+
+	def add_message
+		@message = @circle.messages.new(text: params[:circle][:message], added_by: session[:user_email])
+		#{"utf8"=>"✓", "circle"=>{"message"=>""}, "commit"=>"Add Message", "action"=>"add_message", "controller"=>"circles", "id"=>"5"}
+		if @message.save
+			respond_to do |format|
+	    		format.js { @message }
+    		end
+    	else
+    		respond_to do |format|
+	    		format.js { @message = nil }
+    		end
+    	end
+	end
+
+	def add_wallpin
+		@pin = @circle.wallpins.new(summary: params[:circle][:summary], added_by: session[:user_email], file_link: params[:circle][:file_link] )
+		if @pin.save
+			respond_to do |format|
+	    		format.js { @pin }
+    		end
+    	else
+    		respond_to do |format|
+	    		format.js { @pin = nil }
+    		end
+    	end
+	end
+
+	def delete_item 
+		case 
+		when params[:circle][:item_type] == "pin" 
+			@item = @circle.wallpins.find_by(id: params[:circle][:item_id])
+			@type = "pin"
+		when params[:circle][:item_type] == "message" 
+			@item = @circle.messages.find_by(id: params[:circle][:item_id])
+			@type = "message"
+		end
+		@div_id = @type + '-' + @item.id.to_s
+		if @item.destroy
+			respond_to do |format|
+	    		format.js { @div_id }
+    		end
+    	else
+    		respond_to do |format|
+	    		format.js { @item = nil }
+    		end
     	end
 	end
 

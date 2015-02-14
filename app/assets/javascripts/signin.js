@@ -661,48 +661,6 @@ var helper = (function() {
     /**
      * Displays Search Results retrieved from server.
      */
-    appendSearchResult: function(search) {
-      var count_search = 0;
-      $('#search_result').empty();
-      $("#modal-window-add-circle-member").modal("hide");
-      for (var searchIndex in search.items) {
-        count_search++;
-        people = search.items[searchIndex];
-        $('#search_result').append(
-          '<div class="feature-boxs-wrapper">'+
-            '<div class="feature-box-style2" style="margin: 0 0 5px 0;">'+
-              '<div class="feature-box-containt" style="margin-top: 0px;padding: 5px 0px 0;">'+
-                '<h3 style="padding-bottom: 5px;">'+
-                  '<div class="form-group" style="margin-bottom: 0px;">'+
-                    '<input name="google_id[]" type="checkbox" value="'+people.id+'" style="margin-right: 7px;">'+
-                    '<a href="'+people.url+'" target="_blank" style="margin-right: 7px;">'+people.displayName+'</a>'+
-                    '<a href="'+people.url+'" target="_blank"><img src="'+people.image.url+'"></a>'+
-                  '</div'+
-                '</h3>'+
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-        if(search.nextPageToken) {
-          $('#next_results').html('<input id="next_page_token" name="next_page_token" type="hidden" value="'+search.nextPageToken+'">');
-        }
-      }
-      if(count_search == 0) {
-        $('#search_result').append(
-          '<div class="feature-boxs-wrapper">'+
-            '<div class="feature-box-style2" style="margin: 0 0 5px 0;">'+
-              '<div class="feature-box-containt" style="margin-top: 0px;padding: 5px 0px 0;">'+
-                '<h3 style="padding-bottom: 5px;">'+
-                  'No Result Found!!!!'+
-                '</h3>'+
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-        $("#next_button_circle_member_search").hide();
-      }
-      $("#modal-window-circle-members-result").modal("show");
-    },
   };
 })();
 
@@ -750,9 +708,14 @@ $(document).ready(function() {
 });
 
 function onSignInCallback(authResult) {
-  helper.onSignInCallback(authResult);
 
-}
+   var route = window.location.href 
+   if (route.indexOf("circle") > -1) {
+      teamHelper.onSignInCallback(authResult);
+   } else {
+      helper.onSignInCallback(authResult);
+   };
+};
 
 function deleteEvent(e_id){
   $.ajax({

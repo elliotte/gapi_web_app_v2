@@ -37,6 +37,9 @@ GooglePlay::Application.routes.draw do
   resources :circles do
     member do
       get :destroy_show, path: 'destroy'
+      post :add_message
+      post :add_wallpin
+      post :delete_item
     end
     collection do
       get :circles_names

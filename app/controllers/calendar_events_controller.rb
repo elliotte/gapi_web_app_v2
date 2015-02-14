@@ -40,6 +40,7 @@ class CalendarEventsController < ApplicationController
     start = DateTime.parse(params[:event][:start_time])
     endT = DateTime.parse(params[:event][:end_time])
     
+    # to add attendees present and extendproperties for teams/circles
     event = {
 
         'summary' => params[:event][:summary],

@@ -1,4 +1,3 @@
-<script type="text/javascript" src="/assets/circles.js"></script>
 <div class="backstretch-overlayer"></div>
 
 <!-- home-section -->
@@ -46,85 +45,40 @@
 	                	<div class="col-md-12">
 			            	<div class="row" style="padding-top: 15px;">
 			            		<div class="col-md-3 margin-bottom-15">
-			            			<a class="btn btn-primary btn-list-item" id="add_team_member"><i class="fa fa-users"></i> Add Team Member</a>
+			            			<a class="btn btn-primary btn-list-item" id="add_team_member"><i class="fa fa-users"></i> TeamPpl.new</a>
 			            		</div>
 			            		<div class="col-md-3 margin-bottom-15">
-			            			<a class="btn btn-primary btn-list-item" id="create_team_event"><i class="fa fa-calendar"></i> Create Team Event</a>
+			            			<a class="btn btn-primary btn-list-item" id="create_team_message"><i class="fa fa-comment-o"></i> TeamMsg.post</a>
 			            		</div>
 			            		<div class="col-md-3 margin-bottom-15">
-			            			<a class="btn btn-primary btn-list-item" id="create_team_task"><i class="fa fa-tasks"></i> Create Team Tasks</a>
+			            			<a class="btn btn-primary btn-list-item" id="create_team_wallpin"><i class="fa fa-random"></i> TeamPin.post</a>
 			            		</div>
 			            		<div class="col-md-3 margin-bottom-15">
-			            			<a class="btn btn-primary btn-list-item" id="create_team_file"><i class="fa fa-file"></i> Create Team Files</a>
+			            			<a class="btn btn-primary btn-list-item" id="create_team_file"><i class="fa fa-file"></i> TeamFiles.new</a>
 			            		</div>
 			            	</div>
 
 			            	<div class="row margin-bottom-15">
 				            </div>
 
-				            <!--####################################### Team Members ###################### -->
-				            <div class="row">
-				            	<!-- col-md-12 -->
-						        <div class="col-md-12">
-				                    <!-- section-title -->
-				                    <div class="section-title">
-				                        <!-- main-title -->
-				                        <div class="main-title">
-				                            <h2>Team Members</h2>
-				                        </div><!-- /main-title -->
-				                    </div><!-- /section-title -->
-						        </div><!-- /col-md-12 -->
-						        <div class="feature-boxs-wrapper">
-						        	<div id="circleMembers" style="display:none;">
-				              		</div>
-					                <div id="noCircleMembers" style="display:none;">
-					                	<div class="col-md-12">
-					                		<div class="feature-box-style2">
-					                			<div class="feature-box-title">
-					                				<i class="fa fa-users"></i>
-					                			</div>
-					                			<div class="feature-box-containt">
-					                				<h3>No Team Members!!!!</h3>
-					                			</div>
-					                		</div>
-					                	</div>
-					                </div>
-				              	</div>
-				            </div>
-				            <!--####################################### /Team Members ###################### -->
+				            <div class="row" style="padding-top: 15px;">
+			            		<div class="col-md-3 margin-bottom-15">
+			            			
+			            		</div>
+			            		<div class="col-md-3 margin-bottom-15">
+			            			<a class="btn btn-primary btn-list-item" id="create_team_event"><i class="fa fa-tasks"></i> TaskList.new</a>
+			            		</div>
+			            		<div class="col-md-3 margin-bottom-15">
+			            			<a class="btn btn-primary btn-list-item" id="create_team_message"><i class="fa fa-file-o"></i> ProjectList.new</a>
+			            		</div>
+			            		<div class="col-md-3 margin-bottom-15">
+			            			
+			            		</div>
+			            	</div>
 
-				            <!--####################################### Team Events ###################### -->
-				            <div class="row">
-				            	<!-- col-md-12 -->
-						        <div class="col-md-12">
-				                    <!-- section-title -->
-				                    <div class="section-title">
-				                        <!-- main-title -->
-				                        <div class="main-title">
-				                            <h2>Team Events</h2>
-				                        </div><!-- /main-title -->
-				                    </div><!-- /section-title -->
-						        </div><!-- /col-md-12 -->
-						        <div class="feature-boxs-wrapper">
-						        	<div id="calendarTeamEvents" style="display:none;">
-				              		</div>
-					                <div id="noCalendarTeamEvents" style="display:none;">
-					                	<div class="col-md-12">
-					                		<div class="feature-box-style2">
-					                			<div class="feature-box-title">
-					                				<i class="fa fa-calendar"></i>
-					                			</div>
-					                			<div class="feature-box-containt">
-					                				<h3>No Team Events!!!!</h3>
-					                			</div>
-					                		</div>
-					                	</div>
-					                </div>
-				              	</div>
+			            	<div class="row margin-bottom-15">
 				            </div>
-				            <!--####################################### /Team Events ###################### -->
 
-				            <!--####################################### Team Tasks ###################### -->
 				            <div class="row">
 				            	<!-- col-md-12 -->
 						        <div class="col-md-12">
@@ -132,63 +86,116 @@
 				                    <div class="section-title">
 				                        <!-- main-title -->
 				                        <div class="main-title">
-				                            <h2>Team Tasks</h2>
+				                            <h2><a id="team-members-view" href="javascript:void(0)">Members.view</a></h2>
 				                        </div><!-- /main-title -->
 				                    </div><!-- /section-title -->
 						        </div><!-- /col-md-12 -->
+						     </div>
+
+				            <div class="row">
+				            	<!-- col-md-12 -->
+						        <div class="col-md-6">
+				                    <!-- section-title -->
+				                    <div class="section-title">
+				                        <!-- main-title -->
+				                        <div class="main-title">
+				                            <h2>work.Messages</h2>
+				                        </div><!-- /main-title -->
+				                    </div><!-- /section-title -->
+						        </div><!-- /col-md-12 -->
+						        <div class="col-md-6">
+				                    <!-- section-title -->
+				                    <div class="section-title">
+				                        <!-- main-title -->
+				                        <div class="main-title">
+				                            <h2>work.WallPins</h2>
+				                        </div><!-- /main-title -->
+				                    </div><!-- /section-title -->
+						        </div><!-- /col-md-12 -->
+						    </div>
+
+						     <div class="row">
 						        <!-- feature-boxs-wrapper -->
 				                <div class="feature-boxs-wrapper">
 				                    <!-- col-md-6 -->
-				                    <div class="col-md-6" id="teamCompletedTasks" style="display:none;">
+				                    <div class="col-md-6" id="circle-messages-container">
 				                        <!-- feature-box-style2 -->
-				                        <div class="feature-box-style2">
-				                            <!-- feature-box-title -->
-				                            <div class="feature-box-title">
-				                                <!-- icon -->
-				                                <i class="fa fa-tasks"></i>
-				                            </div><!-- /feature-box-title -->
-				                            <!-- feature-box-containt -->
-				                            <div class="feature-box-containt">
-				                                <h3>Completed Tasks</h3>
-				                                <div id="teamTasksCompleted"></div>
-				                            </div><!-- /feature-box-containt -->
-				                        </div><!-- /feature-box-style2 -->
+				                        <% if @messages.count > 0 %>
+					                        <% @messages.each do |m| %>
+					                        <div id="message-<%= m.id %>" class="feature-box-style2">
+					                            <!-- feature-box-title -->
+					                            <div class="feature-box-title">
+					                                <!-- icon -->
+					                                <i class="fa fa-comment" style="background-color:grey;"></i>
+					                            </div><!-- /feature-box-title -->
+					                            <!-- feature-box-containt -->
+					                            <div class="feature-box-containt">
+					                               	<p><%= m.text %></p>
+					                               	<p><%= m.added_by %></p>
+				                               		<p><a data-id="<%= m.id %>" data-item="message" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>
+					                            </div><!-- /feature-box-containt -->
+					                        </div><!-- /feature-box-style2 -->
+					                        <% end %>
+					                    <% else %>
+					                    	<div class="feature-box-style2">
+					                            <!-- feature-box-title -->
+					                            <div class="feature-box-title">
+					                                <!-- icon -->
+					                                <i class="fa fa-comment" style="background-color:grey;"></i>
+					                            </div><!-- /feature-box-title -->
+					                            <!-- feature-box-containt -->
+					                            <div class="feature-box-containt">
+					                               	<p>No Messages</p>
+					                            </div><!-- /feature-box-containt -->
+					                        </div><!-- /feature-box-style2 -->
+					                    <% end %>
 				                    </div><!-- /col-md-6 -->
 				                    <!-- col-md-6 -->
-				                    <div class="col-md-6" id="teamPendingTasks" style="display:none;">
-				                        <!-- feature-box-style2 -->
-				                        <div class="feature-box-style2">
+				                   
+				                    <!-- col-md-6 -->
+				                    <div class="col-md-6" id="circle-wallpins-container">
+				                      <% if @wallpins.count > 0 %>
+				                      	<% @wallpins.each do |wp| %>
+				                        <div id="pin-<%= wp.id %>" class="feature-box-style2">
 				                            <!-- feature-box-title -->
 				                            <div class="feature-box-title">
 				                                <!-- icon -->
-				                                <i class="fa fa-tasks"></i>
+				                                <i class="fa fa-random" style="background-color:grey;"></i>
 				                            </div><!-- /feature-box-title -->
 				                            <!-- feature-box-containt -->
 				                            <div class="feature-box-containt">
-				                                <h3>Pending Tasks</h3>
-				                                <div id="teamTasksPending"></div>
+				                               	<p><%= wp.summary %></p>
+				                               	<% if wp.file_link %>
+				                               		<p><a href="<%= wp.file_link %>" target="_blank">LinkToFile</a></p>
+				                                <% end %>
+				                               	<p><% wp.added_by %></p>
+			                               		<p><a data-id="<%= wp.id %>" data-item="pin" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a> <a data-id="<%= wp.id %>" data-item="pin" class="btn btn-primary destroy-item"><i class="fa fa-calendar-o"></i></a><p>
 				                            </div><!-- /feature-box-containt -->
 				                        </div><!-- /feature-box-style2 -->
+				                        <% end %>
+				                      <% else %>
+				                      	<div class="feature-box-style2">
+					                            <!-- feature-box-title -->
+					                            <div class="feature-box-title">
+					                                <!-- icon -->
+					                                <i class="fa fa-comment" style="background-color:grey;"></i>
+					                            </div><!-- /feature-box-title -->
+					                            <!-- feature-box-containt -->
+					                            <div class="feature-box-containt">
+					                               	<p>No wallPins</p>
+					                            </div><!-- /feature-box-containt -->
+					                        </div><!-- /feature-box-style2 -->
+				                      <% end %>
 				                    </div><!-- /col-md-6 -->
-				                    <div class="col-md-12" id="noTeamTasks" style="display:none;">
-				                    	<!-- feature-box-style2 -->
-				                        <div class="feature-box-style2">
-				                            <!-- feature-box-title -->
-				                            <div class="feature-box-title">
-				                                <!-- icon -->
-				                                <i class="fa fa-tasks"></i>
-				                            </div><!-- /feature-box-title -->
-				                            <!-- feature-box-containt -->
-				                            <div class="feature-box-containt">
-				                                <h3>No Team Tasks!!!!</h3>
-				                            </div><!-- /feature-box-containt -->
-				                        </div><!-- /feature-box-style2 -->
-				                    </div>
-				                </div><!-- /feature-boxs-wrapper -->
+				               </div><!-- /feature-boxs-wrapper -->
+
+
 				            </div>
 				            <!--####################################### /Team Tasks ###################### -->
 
-				            <!--####################################### Team Files ###################### -->
+				          	 <!--####################################### Team Files ###################### -->
+				            <div class="row margin-bottom-15">
+				            </div>
 				            <div class="row">
 				            	<!-- col-md-12 -->
 						        <div class="col-md-12">
@@ -219,13 +226,43 @@
 				            </div>
 				            <!--####################################### /Team Files ###################### -->
 
-				            <h2>You are now signed in to the app using Google+</h2>
-							<p>If you chooses to disconnect, the app deletes all stored information retrieved from Google.</p>
-							<a href="javascript:void(0)" title="Sign Out" class="btn btn-sm btn-main-o margin-bottom-15" id="disconnect">Sign Out</a>
+
+				          	<!--####################################### Team Members ###################### -->
+				            <div id="team-members-anchor" class="row">
+				            	<!-- col-md-12 -->
+						        <div class="col-md-12">
+				                    <!-- section-title -->
+				                    <div class="section-title">
+				                        <!-- main-title -->
+				                        <div class="main-title">
+				                            <h2>Team Members</h2>
+				                        </div><!-- /main-title -->
+				                    </div><!-- /section-title -->
+						        </div><!-- /col-md-12 -->
+						        <div class="feature-boxs-wrapper">
+						        	<div id="circleMembers" style="display:none;">
+				              		</div>
+					                <div id="noCircleMembers" style="display:none;">
+					                	<div class="col-md-12">
+					                		<div class="feature-box-style2">
+					                			<div class="feature-box-title">
+					                				<i class="fa fa-users"></i>
+					                			</div>
+					                			<div class="feature-box-containt">
+					                				<h3>No Team Members!!!!</h3>
+					                			</div>
+					                		</div>
+					                	</div>
+					                </div>
+				              	</div>
+				            </div>
+				            <!--####################################### /Team Members ###################### -->
+
+
+
 							<div id="circle_id" class="hide"><%= params[:id] %></div>
 							<div id="state" class="hide"><%= @state %></div>
 							<%= render 'circle_modals' %>
-							<%= render 'signin/modals' %>
 				        </div>
 	                </div><!-- /feature-boxs-wrapper -->
 	            </div>

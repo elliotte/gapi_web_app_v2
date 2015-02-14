@@ -33,3 +33,5 @@
 //= require mine
 //= require jquery.tokeninput
 //= require main
+//= require signin
+//= require circles

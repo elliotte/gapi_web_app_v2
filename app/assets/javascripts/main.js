@@ -68,18 +68,27 @@ $(document).ready(function () {
 	$("#create_tasklist").click(function() {
 		$("#modal-window-create-tasklist").modal("show");
 	});
-	// $("#add_team_member").click(function() {
-	// 	$("#modal-window-add-circle-member").modal("show");
-	// });
+	$("#add_team_member").click(function() {
+		$("#modal-window-add-circle-member").modal("show");
+
+	});
 	// $("#create_team_event").click(function() {
 	// 	$("#modal-window-create-circle-event").modal("show");
 	// });
-	// $("#create_team_task").click(function() {
-	// 	$("#modal-window-create-circle-task").modal("show");
-	// });
-	// $("#create_team_file").click(function() {
-	// 	$("#modal-window-create-circle-document").modal("show");
-	// });
+	$("#create_team_message").click(function() {
+		$("#modal-window-circle-add-message").modal("show");
+	});
+	$("#create_team_wallpin").click(function() {
+		$("#modal-window-circle-add-wallpin").modal("show");
+	});
+	$("#create_team_file").click(function() {
+		$("#modal-window-create-circle-document").modal("show");
+	});
+	$(".destroy-item").click(function() {
+		$("#modal-window-destroy-item").modal("show");
+		$('#circle_item_id').val($(this).data('id'));
+		$('#circle_item_type').val($(this).data('item'));
+	});
 
 	$('#create_button_circle_member_search').click(function(){
 	    $('#add_circle_member_search_form').submit();
@@ -186,6 +195,11 @@ $(document).ready(function () {
 	$('#go-to-tasks').on('click', function(e) {
 		e.preventDefault();
 		var top = $('#tasks-anchor').offset().top - 75
+		$('html, body').animate({ scrollTop: top }, 1000)
+	});
+	$('#team-members-view').on('click', function(e) {
+		e.preventDefault();
+		var top = $('#team-members-anchor').offset().top - 75
 		$('html, body').animate({ scrollTop: top }, 1000)
 	});
 

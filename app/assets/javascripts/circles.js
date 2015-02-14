@@ -1,12 +1,5 @@
-(function() {
-  var po = document.createElement('script');
-  po.type = 'text/javascript'; po.async = true;
-  po.src = 'http://plus.google.com/js/client:plusone.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(po, s);
-})();
 
-var helper = (function() {
+var teamHelper = (function() {
   var authResult = undefined;
   var user_google_id = "";
   var taskTeamCompletedCount = 0;
@@ -21,7 +14,7 @@ var helper = (function() {
       if (authResult['access_token']) {
         // The user is signed in
         this.authResult = authResult;
-        helper.connectServer();
+        teamHelper.connectServer();
         // After loading the Google+ API, render the profile data from Google+.
         gapi.client.load('plus','v1',this.renderProfile);
       } else if (authResult['error']) {
@@ -46,29 +39,7 @@ var helper = (function() {
       $('#gConnect').hide();
       $('#share-button').show();
     },
-    /**
-     * Calls the server endpoint to disconnect the app for the user.
-     */
-    disconnectServer: function() {
-      // Revoke the server tokens
-      $.ajax({
-        type: 'POST',
-        url: '/signin/disconnect',
-        async: false,
-        success: function(result) {
-          console.log('revoke response: ' + result);
-          $('#authOps').hide();
-          $('#gConnect').show();
-          $('#share-button').hide();
-        },
-        error: function(e) {
-          console.log(e);
-        }
-      });
-    },
-    /**
-     * Calls the server endpoint to connect the app for the user.
-     */
+
     connectServer: function() {
       console.log(this.authResult.code);
       $.ajax({
@@ -77,17 +48,20 @@ var helper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          helper.calendar();
-          helper.task_lists();
-          helper.circleMembers();
-          helper.circleFiles();
+          teamHelper.loadPage();
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
       });
     },
-    /**
-     * Calls the server endpoint to get the list of events in calendar.
+
+    loadPage: function() {
+        teamHelper.circleMembers();
+        teamHelper.circleFiles();
+    },
+     // dont delete use for retrieving userCal events extendedProperties circleID
+     /*
+       * Calls the server endpoint to get the list of events in calendar.
      */
     calendar: function() {
       $.ajax({
@@ -96,39 +70,7 @@ var helper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          helper.appendCalendar(result);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the task lists.
-     */
-    task_lists: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/task_lists',
-        contentType: 'application/octet-stream; charset=utf-8',
-        async: false,
-        success: function(result) {
-          console.log(result);
-          helper.appendTaskLists(result);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the list of tasks.
-     */
-    tasks: function(taskListId) {
-      $.ajax({
-        type: 'GET',
-        url: '/task_lists/' + taskListId + '/tasks',
-        contentType: 'application/octet-stream; charset=utf-8',
-        async: false,
-        success: function(result) {
-          console.log(result);
-          helper.appendTasks(result, taskListId);
+          teamHelper.appendCalendar(result);
         },
         processData: false
       });
@@ -145,7 +87,7 @@ var helper = (function() {
         data: {id: $("#circle_id").text()},
         success: function(result) {
           console.log(result);
-          helper.getCircleMembers(result);
+          teamHelper.getCircleMembers(result);
         }
       });
     },
@@ -161,7 +103,7 @@ var helper = (function() {
         data: {id: $("#circle_id").text()},
         success: function(result) {
           console.log(result);
-          helper.getCircleFiles(result);
+          teamHelper.getCircleFiles(result);
         }
       });
     },
@@ -182,7 +124,7 @@ var helper = (function() {
           contentType: 'application/json',
           success: function(result) {
             console.log(result);
-            helper.appendCircleMembers(result);
+            teamHelper.appendCircleMembers(result);
           }
         });
       }
@@ -207,7 +149,7 @@ var helper = (function() {
           contentType: 'application/json',
           success: function(result) {
             console.log(result);
-            helper.appendCircleFiles(result);
+            teamHelper.appendCircleFiles(result);
           }
         });
       }
@@ -221,7 +163,7 @@ var helper = (function() {
     appendCircleMembers: function(member) {
       if(member.gender == "male") {
         $('#circleMembers').append(
-          '<div class="col-md-6">'+
+          '<div class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-male"></i>'+
@@ -235,7 +177,7 @@ var helper = (function() {
         );
       } else if(member.gender == "female") {
         $('#circleMembers').append(
-          '<div class="col-md-6">'+
+          '<div class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-female"></i>'+
@@ -249,7 +191,7 @@ var helper = (function() {
         );
       } else {
         $('#circleMembers').append(
-          '<div class="col-md-6">'+
+          '<div class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-users"></i>'+
@@ -375,7 +317,7 @@ var helper = (function() {
       for (var taskListIndex in taskLists.items) {
         taskList = taskLists.items[taskListIndex];
         $('#task_list_id').val(taskList.id);
-        helper.tasks(taskList.id);
+        teamHelper.tasks(taskList.id);
       }
       if(taskTeamCompletedCount == 0 && taskTeamPendingCount == 0){
         $('#noTeamTasks').show();
@@ -464,7 +406,7 @@ var helper = (function() {
 })();
 
 $(document).ready(function() {
-  $('#disconnect').click(helper.disconnectServer);
+  $('#disconnect').click(teamHelper.disconnectServer);
   $('#create_button_circle_member').click(function(){
     $('form#add_circle_member_form .error').remove();
     var hasError = false;
@@ -486,7 +428,7 @@ $(document).ready(function() {
         data: {query: $("#add_circle_member_form #query").val()},
         success: function(result) {
           console.log(result);
-          helper.appendSearchResult(result);
+          teamHelper.appendSearchResult(result);
         }
       });
     }
@@ -500,12 +442,8 @@ $(document).ready(function() {
       data: {query: $("#add_circle_member_form #query").val(), next_page_token: $("#add_circle_member_search_form #next_page_token").val()},
       success: function(result) {
         console.log(result);
-        helper.appendSearchResult(result);
+        teamHelper.appendSearchResult(result);
       }
     });
   });
 });
-
-function onSignInCallback(authResult) {
-  helper.onSignInCallback(authResult);
-}

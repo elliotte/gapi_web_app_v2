@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910111934) do
+ActiveRecord::Schema.define(version: 20150214171356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20140910111934) do
     t.datetime "updated_at"
     t.integer  "user_id"
   end
+
+  create_table "messages", force: true do |t|
+    t.integer  "circle_id"
+    t.string   "text"
+    t.string   "added_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["circle_id"], name: "index_messages_on_circle_id", using: :btree
 
   create_table "team_files", force: true do |t|
     t.integer  "circle_id"
@@ -44,5 +54,16 @@ ActiveRecord::Schema.define(version: 20140910111934) do
     t.datetime "updated_at"
     t.string   "email"
   end
+
+  create_table "wallpins", force: true do |t|
+    t.integer  "circle_id"
+    t.string   "summary"
+    t.string   "added_by"
+    t.string   "file_link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wallpins", ["circle_id"], name: "index_wallpins_on_circle_id", using: :btree
 
 end

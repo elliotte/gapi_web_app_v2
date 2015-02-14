@@ -1,0 +1,19 @@
+$("#modal-body-circle-add-message").html("Success, message added.");
+
+var text = '<%= @message.text %>'
+var added_by = '<%= @message.added_by %>'
+var html =  '<div class="feature-box-style2">'+
+		          '<div class="feature-box-title">'+
+		            '<i style="background-color:grey;" class="fa fa-envelope"></i>'+
+		          '</div>'+
+		          '<div class="feature-box-containt">'+
+		            '<p>' + text + '</p>'+
+		            '<p>' + added_by + '</p>'+
+		            '<p>'+
+                    	' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="#"><i class="fa fa-trash-o"></i></a>'+
+                  	'</p>'+
+		     	  '</div>'+
+		     	  
+			'</div>'
+
+$("#circle-messages-container").prepend(html);
