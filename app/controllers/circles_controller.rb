@@ -47,15 +47,18 @@ class CirclesController < ApplicationController
 	end
 
 	def create
-		circle = Circle.new(circle_params)
-		circle.user_id = User.find_by(google_id: params[:circle][:user_id]).id
-		if circle.save
-			# render json: circle
-			redirect_to circle_path(circle.id)
-		else
-			# render json: "Circle not saved"
-			redirect_to root_path
-		end
+		case
+		when !params[:circle][:user_id]
+			redirect_to root_path, notice: 'Cannot find user, trying signing in and out'
+		when params[:circle][:user_id]
+			circle = Circle.new(circle_params)
+			circle.user_id = User.find_by(google_id: params[:circle][:user_id]).id
+			if circle.save
+				redirect_to circle_path(circle.id)
+			else
+				redirect_to root_path , notice: 'Something went wrong trying to add circle boss' 
+			end
+		end 
 	end
 
 	def update

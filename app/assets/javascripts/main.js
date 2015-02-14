@@ -68,18 +68,18 @@ $(document).ready(function () {
 	$("#create_tasklist").click(function() {
 		$("#modal-window-create-tasklist").modal("show");
 	});
-	$("#add_team_member").click(function() {
-		$("#modal-window-add-circle-member").modal("show");
-	});
-	$("#create_team_event").click(function() {
-		$("#modal-window-create-circle-event").modal("show");
-	});
-	$("#create_team_task").click(function() {
-		$("#modal-window-create-circle-task").modal("show");
-	});
-	$("#create_team_file").click(function() {
-		$("#modal-window-create-circle-document").modal("show");
-	});
+	// $("#add_team_member").click(function() {
+	// 	$("#modal-window-add-circle-member").modal("show");
+	// });
+	// $("#create_team_event").click(function() {
+	// 	$("#modal-window-create-circle-event").modal("show");
+	// });
+	// $("#create_team_task").click(function() {
+	// 	$("#modal-window-create-circle-task").modal("show");
+	// });
+	// $("#create_team_file").click(function() {
+	// 	$("#modal-window-create-circle-document").modal("show");
+	// });
 
 	$('#create_button_circle_member_search').click(function(){
 	    $('#add_circle_member_search_form').submit();
