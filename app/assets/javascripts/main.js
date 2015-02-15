@@ -192,6 +192,11 @@ $(document).ready(function () {
 		var top = $('#files-anchor').offset().top - 75
 		$('html, body').animate({ scrollTop: top }, 1000)
 	});
+	$('#go-to-shared-files').on('click', function(e) {
+		e.preventDefault();
+		var top = $('#shared-files-anchor').offset().top - 75
+		$('html, body').animate({ scrollTop: top }, 1000)
+	});
 	$('#go-to-tasks').on('click', function(e) {
 		e.preventDefault();
 		var top = $('#tasks-anchor').offset().top - 75
@@ -200,7 +205,7 @@ $(document).ready(function () {
 	$('#team-members-view').on('click', function(e) {
 		e.preventDefault();
 		var top = $('#team-members-anchor').offset().top - 75
-		$('html, body').animate({ scrollTop: top }, 1000)
+		$('html, body').animate({ scrollTop: top }, 1500)
 	});
 
 });

@@ -158,10 +158,10 @@ var helper = (function() {
         url: '/signin/connect?state=' + $("#state").text(),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
-          console.log(result);
-          helper.calendar();
+          //console.log(result);
+          //helper.calendar();
           helper.files();
-          helper.task_lists();
+          //helper.task_lists();
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -462,21 +462,36 @@ var helper = (function() {
      */
     appendDrive: function(drive) {
       var fileCount = 0;
+      var countShared = 0;
 
       $('#driveFiles').empty();
-      var count = 0;
       for (var itemIndex in drive.items) {
         item = drive.items[itemIndex];
+        var container = "";
+        $('#driveFiles').show();
+        $('#shared-driveFiles').show();
         if(!item.explicitlyTrashed) {
-          count++;
-          fileCount++;
-          $('#driveFiles').show();
+
           if(item.thumbnailLink) {
-            if(fileCount%4 == 1) {
-              $('#driveFiles').append('<div class="row">');
-            }
-            $('#driveFiles').append(
-              '<div class="col-md-3">'+
+              containerInstance = "";
+              if(item.sharingUser) {
+                  container = $('#shared-driveFiles')
+                  containerInstance = "shared";
+                  countShared++;
+                  if(countShared%4 == 1) {
+                    container.append('<div class="row">');
+                  }
+              } else {
+                  container = $('#driveFiles')
+                  containerInstance = "user";
+                  fileCount++;
+                  if(fileCount%4 == 1) {
+                    container.append('<div class="row">');
+                  }
+              };
+
+              container.append(
+               '<div class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
                     '<i class="fa fa-file-text"></i>'+
@@ -518,14 +533,37 @@ var helper = (function() {
                 );
               });
             }
-            if(fileCount%4 == 0) {
-              $('#driveFiles').append('</div>');
+            if (containerInstance == "shared") {
+                if(countShared%4 == 0) {
+                  $('#shared-driveFiles').append('</div>');
+                }
             }
+            if (containerInstance == "user") {
+                if(fileCount%4 == 0) {
+                  $('#driveFiles').append('</div>');
+                }
+            }
+            
           } else {
-            if(fileCount%4 == 1) {
-              $('#driveFiles').append('<div class="row">');
-            }
-            $('#driveFiles').append(
+            
+            containerInstance = "";
+              if(item.sharingUser) {
+                  container = $('#shared-driveFiles')
+                  containerInstance = "shared";
+                  countShared++;
+                  if(countShared%4 == 1) {
+                    container.append('<div class="row">');
+                  }
+              } else {
+                  container = $('#driveFiles')
+                  containerInstance = "user";
+                  fileCount++;
+                  if(fileCount%4 == 1) {
+                    container.append('<div class="row">');
+                  }
+              };
+
+            container.append(
               '<div class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
@@ -566,15 +604,25 @@ var helper = (function() {
                 );
               });
             }
-            if(fileCount%4 == 0) {
-              $('#driveFiles').append('</div>');
+            
+            if (containerInstance == "shared") {
+                if(countShared%4 == 0) {
+                  $('#shared-driveFiles').append('</div>');
+                }
             }
+            if (containerInstance == "user") {
+                if(fileCount%4 == 0) {
+                  $('#driveFiles').append('</div>');
+                }
+            }
+
           }
         }
       }
       if(fileCount == 0){
         $('#noDriveFiles').show();
       }
+
     },
     /**
      * Displays available Task Lists retrieved from server.
@@ -695,46 +743,9 @@ var helper = (function() {
 })();
 
 $(document).ready(function() {
+
   $('#disconnect').click(helper.disconnectServer);
-  $('#create_button_circle_member').click(function(){
-    $('form#add_circle_member_form .error').remove();
-    var hasError = false;
-    $('form#add_circle_member_form .requiredField').each(function () {
-      if (jQuery.trim($(this).val()) === '') {
-        $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-        $(this).addClass('inputError');
-        hasError = true;
-      }
-    });
-    if (hasError) {
-      return false;
-    } else {
-      $.ajax({
-        type: 'GET',
-        url: '/peoples/search',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: {query: $("#add_circle_member_form #query").val()},
-        success: function(result) {
-          console.log(result);
-          helper.appendSearchResult(result);
-        }
-      });
-    }
-  });
-  $('#next_button_circle_member_search').click(function(){
-    $.ajax({
-      type: 'GET',
-      url: '/peoples/search',
-      dataType: 'json',
-      contentType: 'application/json',
-      data: {query: $("#add_circle_member_form #query").val(), next_page_token: $("#add_circle_member_search_form #next_page_token").val()},
-      success: function(result) {
-        console.log(result);
-        helper.appendSearchResult(result);
-      }
-    });
-  });
+  
 });
 
 function onSignInCallback(authResult) {
@@ -747,36 +758,5 @@ function onSignInCallback(authResult) {
    };
 };
 
-function deleteEvent(e_id){
-  $.ajax({
-        url: "/signin/delete_calendar_event/" + e_id ,
-        type: "post",
-        dataType: "json",
-        data: {"_method":"delete"},
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          alert("event deleted");
-          // console.log(result);
-          //:success => "$(this).up('.postS').remove();"
-          $('#calendarEvent').up(e_id).remove();
-        },
-        processData: false
-      });
-}
 
-function updateEvent(e_id){
-  //alert("bhimasen");
-  $.ajax({
-        url: "/signin/update_calendar_event/" + e_id ,
-        type: "put",
-        //dataType: "json",
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          alert("update event")
-          // console.log(result);
-          // helper.appendCalender(result);
-        },
-        processData: false
-      });
-}
 
