@@ -41,8 +41,8 @@ class FilesController < ApplicationController
 
 	  	if params[:circle_id].present?
 		  	TeamFile.create(circle_id: params[:circle_id], file_id: response.data.id)
-
-		  	team_members = Circle.find(params[:circle_id]).team_members
+		  	@circle = Circle.find(params[:circle_id])
+		  	team_members = @circle.team_members
 		    if team_members.present?
 		    	team_members.each do |team_member|
 		    		user = User.find_by(google_id: team_member.google_id)
@@ -58,6 +58,17 @@ class FilesController < ApplicationController
 											    :parameters => { 'fileId' => response.data.id })
 		    		end
 		    	end
+		    end
+		    unless current_user.id == @circle.user_id
+		    	@circle_owner = User.find(@circle.user_id)
+		    	new_permission = @drive.permissions.insert.request_schema.new({
+						    'value' => @circle_owner.email,
+						    'type' => "user",
+						    'role' => "reader"
+						})
+				result = $client.execute(:api_method => @drive.permissions.insert,
+											    :body_object => new_permission,
+											    :parameters => { 'fileId' => response.data.id })
 		    end
 		end
 

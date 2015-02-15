@@ -19,5 +19,10 @@ class ApplicationController < ActionController::Base
 	    else
 	    	$client.authorization.access_token = session[:token]
 	    end
-	end
+	  end
+
+    def current_user
+      User.find_by(google_id: session[:user_google_id])
+    end
+
 end
