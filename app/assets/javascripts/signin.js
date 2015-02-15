@@ -51,9 +51,7 @@ var helper = (function() {
           url: '/signin/save_user',
           data: {id: profile.id, email: email },
           success: function(result) {
-            console.log(result);
             helper.circles();
-            helper.team_member_circles();
           }
         });
 
@@ -340,6 +338,7 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           helper.appendCircles(result);
+          helper.team_member_circles();
         }
       });
     },
@@ -386,7 +385,6 @@ var helper = (function() {
       for (var c in circles) {
         circleCount++;
         circle = circles[c];
-        console.log(circle.circle_id)
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
               '<div class="feature-box-containt monea-teams">' +
@@ -395,9 +393,6 @@ var helper = (function() {
               '</div>' + 
           '</div>'
         );
-      }
-      if(circleCount==0){
-        $('#noCircle').show();
       }
     },
     /**

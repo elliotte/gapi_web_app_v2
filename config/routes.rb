@@ -84,6 +84,7 @@ GooglePlay::Application.routes.draw do
       get :list_by_activity
       get :circle_peoples
       post :add_people
+      post :remove_team_member
     end
   end
 

@@ -60,7 +60,8 @@ class PeoplesController < ApplicationController
 	end
 
 	def add_people
-	    if !params[:user_id]
+	    case 
+	    when !params[:user_id]
 			if params[:google_id].present?
 				params[:google_id].each do |google_id|
 					unless TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id).present?
@@ -89,9 +90,37 @@ class PeoplesController < ApplicationController
 		else
 		  user = User.find_by(id: params[:user_id])
 		  team_member = TeamMember.create(circle_id: params[:circle_id], google_id: user.google_id)
+		  if user
+			  	drive = $client.discovered_api('drive', 'v2')
+			  	teamfiles = team_member.circle.team_files
+			  	if teamfiles
+	              	teamfiles.each do |teamfile|
+		                new_permission = drive.permissions.insert.request_schema.new({
+		                  	'value' => user.email,
+		                  	'type' => "user",
+		                  	'role' => "reader"
+		                })
+
+	                	result = $client.execute(:api_method => drive.permissions.insert,
+	                        :body_object => new_permission,
+	                        :parameters => { 'fileId' => teamfile.file_id })
+	              	end
+	            end
+			  end
 		end
 		redirect_to circle_path(params[:circle_id])
 	end
+
+	def remove_team_member
+		@member = TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id)
+		if @member.destroy
+			@message = "Success".to_json
+			render json: @message
+		else
+			@message = "Failure".to_json
+			render json: @message
+		end
+	end	
 
 	private
 

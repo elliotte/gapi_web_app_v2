@@ -40,6 +40,8 @@ var teamHelper = (function() {
       $('#share-button').show();
     },
 
+
+
     connectServer: function() {
       console.log(this.authResult.code);
       $.ajax({
@@ -58,6 +60,22 @@ var teamHelper = (function() {
     loadPage: function() {
         teamHelper.circleMembers();
         teamHelper.circleFiles();
+    },
+
+    removeTeamMember: function(button) {
+       
+       var id = $(button).data('id');
+          $.ajax({
+            type: 'POST',
+            url: '/peoples/remove_team_member/?google_id='+ id +'&circle_id='+ $("#circle_id").text(),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(result) {
+               console.log(result)
+               $('#'+ id).remove();
+            },
+            processData: false
+          });
     },
      // dont delete use for retrieving userCal events extendedProperties circleID
      /*
@@ -163,7 +181,7 @@ var teamHelper = (function() {
     appendCircleMembers: function(member) {
       if(member.gender == "male") {
         $('#circleMembers').append(
-          '<div class="col-md-3">'+
+          '<div id="'+member.id+'" class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-male"></i>'+
@@ -171,13 +189,14 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
+                '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
               '</div>'+
             '</div>'+
           '</div>'
         );
       } else if(member.gender == "female") {
         $('#circleMembers').append(
-          '<div class="col-md-3">'+
+          '<div id="'+member.id+'" class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-female"></i>'+
@@ -185,13 +204,15 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
+                 '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
+              
               '</div>'+
             '</div>'+
           '</div>'
         );
       } else {
         $('#circleMembers').append(
-          '<div class="col-md-3">'+
+          '<div id="'+member.id+'" class="col-md-3">'+
             '<div class="feature-box-style2">'+
               '<div class="feature-box-title">'+
                 '<i class="fa fa-users"></i>'+
@@ -199,6 +220,7 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
+                '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
               '</div>'+
             '</div>'+
           '</div>'
