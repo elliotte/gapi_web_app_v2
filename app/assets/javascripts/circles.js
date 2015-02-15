@@ -6,10 +6,7 @@ var teamHelper = (function() {
   var taskTeamPendingCount = 0;
 
   return {
-    /**
-    * Hides the sign-in button and connects the server-side app after
-    * the user successfully signs in.
-    */
+    //circlesRoute onSignCallBack
     onSignInCallback: function(authResult) {
       if (authResult['access_token']) {
         // The user is signed in
@@ -33,14 +30,13 @@ var teamHelper = (function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
         $('#circle_user_id').val(profile.id);
-        user_google_id = profile.id;
+        teamHelper.user_google_id = profile.id;
       });
+      teamHelper.loadPage();
       $('#authOps').show('slow');
       $('#gConnect').hide();
       $('#share-button').show();
     },
-
-
 
     connectServer: function() {
       console.log(this.authResult.code);
@@ -50,7 +46,6 @@ var teamHelper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          teamHelper.loadPage();
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -62,21 +57,7 @@ var teamHelper = (function() {
         teamHelper.circleFiles();
     },
 
-    removeTeamMember: function(button) {
-       
-       var id = $(button).data('id');
-          $.ajax({
-            type: 'POST',
-            url: '/peoples/remove_team_member/?google_id='+ id +'&circle_id='+ $("#circle_id").text(),
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function(result) {
-               console.log(result)
-               $('#'+ id).remove();
-            },
-            processData: false
-          });
-    },
+   
      // dont delete use for retrieving userCal events extendedProperties circleID
      /*
        * Calls the server endpoint to get the list of events in calendar.
@@ -88,7 +69,6 @@ var teamHelper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          teamHelper.appendCalendar(result);
         },
         processData: false
       });
@@ -166,14 +146,33 @@ var teamHelper = (function() {
           dataType: 'json',
           contentType: 'application/json',
           success: function(result) {
-            console.log(result);
-            teamHelper.appendCircleFiles(result);
+            if (!result.error) {
+              teamHelper.appendCircleFiles(result);
+            } else {
+              console.log('moneaMsg TeamFile ' + result.error.message + ' <fileID');
+            }
           }
         });
       }
       if(circleFilesCount == 0){
         $('#noDriveTeamFiles').show();
       }
+    },
+
+    removeTeamMember: function(button) {
+       
+       var id = $(button).data('id');
+          $.ajax({
+            type: 'POST',
+            url: '/peoples/remove_team_member/?google_id='+ id +'&circle_id='+ $("#circle_id").text(),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(result) {
+               console.log(result)
+               $('#'+ id).remove();
+            },
+            processData: false
+          });
     },
     /**
      * Displays circle members retrieved from DB.
@@ -249,17 +248,16 @@ var teamHelper = (function() {
                   '</ul>'+
                 '</h3>'+
                 '<p>'+
-                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/copy">Copy</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/comments/show">Comments</a>'+
+                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/copy"><i class="fa fa-copy"></i></a>'+
+                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
                 '</p>'+
+                '<p style="margin-bottom: 10px;">'+
+                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/share">Teams.share</a>'+
+                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+file.alternateLink+'">Users.share</a>'+
+                 '</p>'+
+                    //appends after this code block..
                 '<div id="export-links-' + file.id + '"></div>'+
-                '<p style="margin-bottom: 10px;">'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/share"><i class="fa fa-google-plus"></i> Share with teams</a>'+
-                '</p>'+
-                '<p style="margin-bottom: 10px;">'+
-                  ' <a class="btn btn-sm btn-primary" href="https://drive.google.com/file/d/' + file.id + '/edit?usp=sharing" target="_blank"><i class="fa fa-google-plus"></i> Share with users</a>'+
-                '</p>'+
               '</div>'+
             '</div>'+
           '</div>'
@@ -277,62 +275,7 @@ var teamHelper = (function() {
         }
       }
     },
-    /**
-     * Displays available Calendar Event retrieved from server.
-     */
-    appendCalendar: function(events) {
-      var teamCalendarCount = 0;
-      $('#calendarTeamEvents').empty();
-      for (var eventIndex in events.items) {
-        event = events.items[eventIndex];
-        if(event.extendedProperties && event.extendedProperties.private.circle_id == $("#circle_id").text()) {
-          teamCalendarCount++;
-          $('#calendarTeamEvents').show();
-          if(event.hangoutLink) {
-            $('#calendarTeamEvents').append(
-              '<div class="col-md-6">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-calendar"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
-                    '<p>' + event.description + '</p>'+
-                    '<p>'+
-                      ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">Delete</a>'+
-                      ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">Update</a>'+
-                      ' <a class="btn btn-primary" href="' + event.hangoutLink + '" target="_blank">Hangout</a>'+
-                    '</p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          } else {
-            $('#calendarTeamEvents').append(
-              '<div class="col-md-6">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-calendar"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
-                    '<p>' + event.description + '</p>'+
-                    '<p>'+
-                      ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">Delete</a>'+
-                      ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">Update</a>'+
-                    '</p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          }
-        }
-      }
-      if(teamCalendarCount==0){
-        $('#noCalendarTeamEvents').show();
-      }
-    },
-  
+
     appendEmailSearchResult: function(search) {
       var count_search = 0;
       $('#search_result').empty();

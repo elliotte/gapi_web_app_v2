@@ -59,10 +59,7 @@
 						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
 						Location: <%= text_field_tag "event[location]", "", class: "form-control", placeholder: "Location" %>
 						Attendees :-
-						Name: <%= select_tag "event[attendee_id_1]", "", class: "form-control", placeholder: "Attendee Name" %>
-						Name 1: <%= select_tag "event[attendee_id_2]", "", class: "form-control", placeholder: "Attendee Name" %>
-						Name 2: <%= select_tag "event[attendee_id_3]", "", class: "form-control", placeholder: "Attendee Name" %>
-						Name 3: <%= select_tag "event[attendee_id_4]", "", class: "form-control", placeholder: "Attendee Name" %>
+						Name: <%= text_field_tag "event[attendee_id_1]", "", class: "form-control", id: "search_calendar_ppl" %>
 						Others :-
 						Status: <%= text_field_tag "event[status]", "confirmed", class: "form-control", placeholder: "Status" %>
 						Visibility: <%= text_field_tag "event[visibility]", "default", class: "form-control", placeholder: "Visibility" %>

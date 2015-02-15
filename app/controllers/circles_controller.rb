@@ -27,6 +27,7 @@ class CirclesController < ApplicationController
 	end
 
 	def user_team_member_circles
+		#move into circle names for 1landing call and team.share tokenInput
 		memberCircles = TeamMember.find(:all, :conditions => ["google_id LIKE ?", "#{params[:user_google_id]}%"])
 		render json: memberCircles.to_json
 	end

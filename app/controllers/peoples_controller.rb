@@ -3,7 +3,6 @@ class PeoplesController < ApplicationController
 	before_action :discover_api
 
 	def index
-
     	# Get the list of people.
 	    @response = $client.execute!(@plus.people.list,
 	                                :collection => 'visible',

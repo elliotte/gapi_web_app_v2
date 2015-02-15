@@ -24,7 +24,7 @@ var helper = (function() {
         this.authResult = authResult;
         helper.connectServer();
         // After loading the Google+ API, render the profile data from Google+.
-        gapi.client.load('plus','v1',this.renderProfile);
+        gapi.client.load('plus','v1', this.renderProfile);
         helper.loadBBCFeed();
         helper.loadGoogleSourcedFeeds();
 
@@ -51,6 +51,11 @@ var helper = (function() {
           url: '/signin/save_user',
           data: {id: profile.id, email: email },
           success: function(result) {
+            helper.calendar();
+            helper.files();
+            //loads tasks after tasklist
+            helper.task_lists();
+            //loads memberCircles after circles
             helper.circles();
           }
         });
@@ -158,10 +163,7 @@ var helper = (function() {
         url: '/signin/connect?state=' + $("#state").text(),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
-          //console.log(result);
-          //helper.calendar();
-          helper.files();
-          //helper.task_lists();
+
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -262,21 +264,7 @@ var helper = (function() {
       });
     },
 
-    setStorage: function(key, result) {
-      localStorage.setItem(key, JSON.stringify(result));
-    },
 
-    returnStorage: function(key) {
-      return JSON.parse( localStorage.getItem(key) )
-    },
-
-    cycleStorage: function(key) {
-      var items = helper.returnStorage(key).items;
-      for (i in items) {
-        //new Date (items[i].created)
-        console.log(items[i])
-      }
-    },
 
     /**
      * Calls the server endpoint to get the list of files in google drive.
@@ -336,9 +324,9 @@ var helper = (function() {
         contentType: 'application/json',
         data: {user_google_id: user_google_id},
         success: function(result) {
-          console.log(result);
           helper.appendCircles(result);
           helper.team_member_circles();
+          helper.setStorage('circles', result)
         }
       });
     },
@@ -351,10 +339,22 @@ var helper = (function() {
         contentType: 'application/json',
         data: {user_google_id: user_google_id},
         success: function(result) {
-          console.log(result);
+          //helper.setStorage('userMemberCircles', result)
           helper.appendMemberCircles(result);
+          helper.setStorage('memberCircles', result)
         }
       });
+    },
+
+    loadFileShare: function(button) {
+      link = $(button).data('href');
+      var shareButton = '<script src="https://apis.google.com/js/platform.js" async defer></script>'+'<div class="g-plus" data-action="share" data-href="'+link+'" data-annotation="none" data-height="15"></div>'
+      container = $(button).parent();
+      $(container).append(shareButton);
+    },
+
+    setStorage: function(key, result) {
+      localStorage.setItem(key, JSON.stringify(result));
     },
     /**
      * Displays circles retrieved from DB.
@@ -366,6 +366,7 @@ var helper = (function() {
       for (var c in circles) {
         circleCount++;
         circle = circles[c];
+        
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
               '<div class="feature-box-containt monea-teams">' +
@@ -385,6 +386,7 @@ var helper = (function() {
       for (var c in circles) {
         circleCount++;
         circle = circles[c];
+        
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
               '<div class="feature-box-containt monea-teams">' +
@@ -449,14 +451,6 @@ var helper = (function() {
         $('#noCalendarEvent').show();
       }
     },
-
-    loadFileShare: function(button) {
-      link = $(button).data('href');
-      var shareButton = '<script src="https://apis.google.com/js/platform.js" async defer></script>'+'<div class="g-plus" data-action="share" data-href="'+link+'" data-annotation="none" data-height="15"></div>'
-      container = $(button).parent();
-      $(container).append(shareButton);
-    },
-
     /**
      * Displays available files in drive retrieved from server.
      */
@@ -542,7 +536,7 @@ var helper = (function() {
                 if(fileCount%4 == 0) {
                   $('#driveFiles').append('</div>');
                 }
-            }
+            };
             
           } else {
             

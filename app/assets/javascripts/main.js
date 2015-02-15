@@ -17,8 +17,6 @@
 // 	return response
 // };
 
-
-
 $(document).ready(function () {
 
 	$("#go-home").click(function(e) {
@@ -30,20 +28,29 @@ $(document).ready(function () {
 	});
 	$("#add_event").click(function() {
 		$("#modal-window-create-event").modal("show");
-		 var friends = JSON.parse(localStorage.friends);
+		 //to add tokenInput
    		 $("#event_attendee_id_1").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
    		 $("#event_attendee_id_2").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
    		 $("#event_attendee_id_3").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
    		 $("#event_attendee_id_4").append('<option value="no-attendees">' + 'No-attendees' + '</option>')
-   		 $(friends).each(function(i) {
-   		 	if (typeof friends[i].emails !== "undefined") {
-   		 		email = friends[i].emails[0]['value']
-				$("#event_attendee_id_1").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
-	   		 	$("#event_attendee_id_2").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
-	   		 	$("#event_attendee_id_3").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
-	   		 	$("#event_attendee_id_4").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
-   		 	}; 
-   		 });
+
+   		 $("#search_calendar_ppl").tokenInput("/circles/circle_names.json", {
+      		theme: "facebook",
+      		crossDomain: false,
+      		hintText: "NOT WORKING add attendees"
+    	 });
+    	$(".token-input-dropdown-facebook").css("z-index","9999")
+
+
+   // 		 $(friends).each(function(i) {
+   // 		 	if (typeof friends[i].emails !== "undefined") {
+   // 		 		email = friends[i].emails[0]['value']
+			// 	$("#event_attendee_id_1").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	  //  		 	$("#event_attendee_id_2").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	  //  		 	$("#event_attendee_id_3").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+	  //  		 	$("#event_attendee_id_4").append('<option value="'+email+'">' + friends[i].displayName + '</option>');
+   // 		 	}; 
+   // 		 });
 	});
 
 	$("#new_doc").click(function() {
