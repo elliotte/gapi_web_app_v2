@@ -35,3 +35,4 @@
 //= require main
 //= require signin
 //= require circles
+//= require userHelper

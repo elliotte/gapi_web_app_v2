@@ -23,20 +23,26 @@ class PeoplesController < ApplicationController
 	    render json: JSON.parse(response).to_json
 	end
 
+	def monea_email_search
+		# Search all public profiles.
+		response = User.find(:all, :conditions => ["email LIKE ?", "#{params[:query]}%"])
+
+	    render json: response
+	end
+
 	def search
 		# Search all public profiles.
 		if params[:next_page_token].present?
 		    response = $client.execute!(@plus.people.search,
 		                                {'query' => params[:query],
-		                                'maxResults' => 10,
+		                                'maxResults' => 20,
 		                                'pageToken' => params[:next_page_token]}).body
 		else
 			response = $client.execute!(@plus.people.search,
 		                                {'query' => params[:query],
-		                                'maxResults' => 10}).body
+		                                'maxResults' => 20}).body
 		end
-
-	    render json: JSON.parse(response).to_json
+	    render json: response.to_json
 	end
 
 	def list_by_activity
@@ -54,30 +60,35 @@ class PeoplesController < ApplicationController
 	end
 
 	def add_people
-		if params[:google_id].present?
-			params[:google_id].each do |google_id|
-				unless TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id).present?
-					team_member = TeamMember.create(circle_id: params[:circle_id], google_id: google_id)
-					user = User.find_by(google_id: google_id)
-					if user
-						drive = $client.discovered_api('drive', 'v2')
-						teamfiles = team_member.circle.team_files
-			            if teamfiles
-			              	teamfiles.each do |teamfile|
-				                new_permission = drive.permissions.insert.request_schema.new({
-				                  	'value' => user.email,
-				                  	'type' => "user",
-				                  	'role' => "reader"
-				                })
+	    if !params[:user_id]
+			if params[:google_id].present?
+				params[:google_id].each do |google_id|
+					unless TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id).present?
+						team_member = TeamMember.create(circle_id: params[:circle_id], google_id: google_id)
+						user = User.find_by(google_id: google_id)
+						if user
+							drive = $client.discovered_api('drive', 'v2')
+							teamfiles = team_member.circle.team_files
+				            if teamfiles
+				              	teamfiles.each do |teamfile|
+					                new_permission = drive.permissions.insert.request_schema.new({
+					                  	'value' => user.email,
+					                  	'type' => "user",
+					                  	'role' => "reader"
+					                })
 
-			                	result = $client.execute(:api_method => drive.permissions.insert,
-			                        :body_object => new_permission,
-			                        :parameters => { 'fileId' => teamfile.file_id })
-			              	end
-			            end
-			        end
+				                	result = $client.execute(:api_method => drive.permissions.insert,
+				                        :body_object => new_permission,
+				                        :parameters => { 'fileId' => teamfile.file_id })
+				              	end
+				            end
+				        end
+					end
 				end
 			end
+		else
+		  user = User.find_by(id: params[:user_id])
+		  team_member = TeamMember.create(circle_id: params[:circle_id], google_id: user.google_id)
 		end
 		redirect_to circle_path(params[:circle_id])
 	end

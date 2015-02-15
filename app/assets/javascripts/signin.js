@@ -53,6 +53,7 @@ var helper = (function() {
           success: function(result) {
             console.log(result);
             helper.circles();
+            helper.team_member_circles();
           }
         });
 
@@ -342,21 +343,55 @@ var helper = (function() {
         }
       });
     },
+
+    team_member_circles: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/circles/user_team_member_circles',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: {user_google_id: user_google_id},
+        success: function(result) {
+          console.log(result);
+          helper.appendMemberCircles(result);
+        }
+      });
+    },
     /**
      * Displays circles retrieved from DB.
      */
     appendCircles: function(circles) {
       var circleCount = 0;
       $('#monea-teams').empty();
+      $('#monea-teams').show();
       for (var c in circles) {
         circleCount++;
-        $('#monea-teams').show();
         circle = circles[c];
         $('#monea-teams').append(
           '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
               '<div class="feature-box-containt monea-teams">' +
                  '<a style="color:#e10707;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>' + 
                 '<p>' + circle.description + '</p>'+
+              '</div>' + 
+          '</div>'
+        );
+      }
+      if(circleCount==0){
+        $('#noCircle').show();
+      }
+    },
+
+    appendMemberCircles: function(circles) {
+      var circleCount = 0;
+      for (var c in circles) {
+        circleCount++;
+        circle = circles[c];
+        console.log(circle.circle_id)
+        $('#monea-teams').append(
+          '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
+              '<div class="feature-box-containt monea-teams">' +
+                 '<a style="color:#e10707;" href="/circles/' + circle.circle_id + '">' + circle.circle_id + '</a>' + 
+                '<p>teamMember circle</p>'+
               '</div>' + 
           '</div>'
         );

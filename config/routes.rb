@@ -43,6 +43,7 @@ GooglePlay::Application.routes.draw do
     end
     collection do
       get :circles_names
+      get :user_team_member_circles
     end
   end
 
@@ -79,6 +80,7 @@ GooglePlay::Application.routes.draw do
   resources :peoples, :only => [:index, :show] do
     collection do
       get :search
+      get :monea_email_search
       get :list_by_activity
       get :circle_peoples
       post :add_people

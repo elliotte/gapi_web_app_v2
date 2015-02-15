@@ -310,53 +310,48 @@ var teamHelper = (function() {
         $('#noCalendarTeamEvents').show();
       }
     },
-    /**
-     * Displays available Task Lists retrieved from server.
-     */
-    appendTaskLists: function(taskLists) {
-      for (var taskListIndex in taskLists.items) {
-        taskList = taskLists.items[taskListIndex];
-        $('#task_list_id').val(taskList.id);
-        teamHelper.tasks(taskList.id);
+  
+    appendEmailSearchResult: function(search) {
+      var count_search = 0;
+      $('#search_result').empty();
+      $("#modal-window-add-circle-member").modal("hide");
+      for (var searchIndex in search) {
+        count_search++;
+        people = search[searchIndex];
+        $('#search_result').append(
+          '<div class="feature-boxs-wrapper">'+
+            '<div class="feature-box-style2" style="margin: 0 0 5px 0;">'+
+              '<div class="feature-box-containt" style="margin-top: 0px;padding: 5px 0px 0;">'+
+                '<h3 style="padding-bottom: 5px;">'+
+                  '<div class="form-group" style="margin-bottom: 0px;">'+
+                    '<input name="user_id" type="checkbox" value="'+people.id+'" style="margin-right: 7px;">'+
+                    '<input value="'+people.google_id+'" style="display:none;">'+
+                    '<p style="margin-right: 7px;">'+people.email+'</p>'+
+                  '</div'+
+                '</h3>'+
+              '</div>'+
+            '</div>'+
+          '</div>'
+        );
+        $("#next_button_circle_member_search").hide();
       }
-      if(taskTeamCompletedCount == 0 && taskTeamPendingCount == 0){
-        $('#noTeamTasks').show();
+      if(count_search == 0) {
+        $('#search_result').append(
+          '<div class="feature-boxs-wrapper">'+
+            '<div class="feature-box-style2" style="margin: 0 0 5px 0;">'+
+              '<div class="feature-box-containt" style="margin-top: 0px;padding: 5px 0px 0;">'+
+                '<h3 style="padding-bottom: 5px;">'+
+                  'No Result Found!!!!'+
+                '</h3>'+
+              '</div>'+
+            '</div>'+
+          '</div>'
+        );
+        $("#next_button_circle_member_search").hide();
       }
+      $("#modal-window-circle-members-result").modal("show");
     },
-    /**
-     * Displays available Tasks in Task List retrieved from server.
-     */
-    appendTasks: function(tasks, taskListId) {
-      for (var taskIndex in tasks.items) {
-        task = tasks.items[taskIndex];
-        if(task.title.lastIndexOf("[") >= 0) {
-          if(task.title.substring(task.title.lastIndexOf("[")+1, task.title.lastIndexOf("]")) == $("#circle_id").text()) {
-            if (task.status == "completed" && task.completed) {
-              taskTeamCompletedCount++;
-              $('#teamCompletedTasks').show();
-              $('#teamTasksCompleted').append(
-                '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Completed at: ' + task.completed.substring(0,10) + '</p>'+
-                '<p>'+
-                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                '</p>'
-              );
-            } else if(task.status == "needsAction" && task.due) {
-              taskTeamPendingCount++;
-              $('#teamPendingTasks').show();
-              $('#teamTasksPending').append(
-                '<p>'+ '- Title: ' + task.title.substring(0, task.title.lastIndexOf("[")) + ', Notes: ' + task.notes + ', Due Date: ' + task.due.substring(0, 10) + '</p>'+
-                '<p>'+
-                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
-                '</p>'
-              );
-            }
-          }
-        }
-      }
-    },
+
     /**
      * Displays Search Results retrieved from server.
      */
@@ -420,17 +415,20 @@ $(document).ready(function() {
     if (hasError) {
       return false;
     } else {
-      $.ajax({
-        type: 'GET',
-        url: '/peoples/search',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: {query: $("#add_circle_member_form #query").val()},
-        success: function(result) {
-          console.log(result);
-          teamHelper.appendSearchResult(result);
-        }
-      });
+        
+        $.ajax({
+          type: 'GET',
+          url: '/peoples/monea_email_search',
+          //url: '/peoples/search',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: {query: $("#add_circle_member_form #query").val()},
+          success: function(result) {
+            console.log(result);
+             teamHelper.appendEmailSearchResult(result);
+          }
+        });
+   
     }
   });
   $('#next_button_circle_member_search').click(function(){

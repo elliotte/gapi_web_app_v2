@@ -1,6 +1,6 @@
 class CirclesController < ApplicationController
 
-	before_action :get_circle, except: [:index, :create, :circles_names]
+	before_action :get_circle, except: [:index, :create, :circles_names, :user_team_member_circles]
 
 	def index
 		@circles = User.find_by(google_id: params[:user_google_id]).circles
@@ -24,6 +24,11 @@ class CirclesController < ApplicationController
 
 	def new
 		@circle = Circle.new
+	end
+
+	def user_team_member_circles
+		memberCircles = TeamMember.find(:all, :conditions => ["google_id LIKE ?", "#{params[:user_google_id]}%"])
+		render json: memberCircles.to_json
 	end
 
 	def show
