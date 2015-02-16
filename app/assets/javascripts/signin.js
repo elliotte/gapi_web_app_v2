@@ -1,11 +1,8 @@
 $(document).ready(function() {
-
   $('#disconnect').click(helper.disconnectServer);
-  
 });
 
 function onSignInCallback(authResult) {
-
    var route = window.location.href 
    if (route.indexOf("circle") > -1) {
       teamHelper.onSignInCallback(authResult);
@@ -13,15 +10,6 @@ function onSignInCallback(authResult) {
       helper.onSignInCallback(authResult);
    };
 };
-
-
-(function() {
-  var po = document.createElement('script');
-  po.type = 'text/javascript'; po.async = true;
-  po.src = 'https://plus.google.com/js/client:plusone.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(po, s);
-})();
 
 var helper = (function() {
   var authResult = undefined;
@@ -55,11 +43,33 @@ var helper = (function() {
       console.log('authResult', authResult);
     },
     /**
+     * Calls the server endpoint to connect the app for the user.
+     */
+    connectServer: function() {
+      console.log(this.authResult.code);
+      $.ajax({
+        type: 'POST',
+        url: '/signin/connect?state=' + $("#state").text(),
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+            console.log(result);
+        },
+        processData: false,
+        data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
+      });
+    },
+    /**
      * Retrieves and renders the authenticated user's Google+ profile.
      */
     renderProfile: function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
+          helper.appendProfile(profile);
+          helper.persistUser(profile);
+      });
+    },
+
+    persistUser: function(profile) {
         $('#circle_user_id').val(profile.id);
         user_google_id = profile.id;
         email = profile.emails[0].value
@@ -68,15 +78,45 @@ var helper = (function() {
           url: '/signin/save_user',
           data: {id: profile.id, email: email },
           success: function(result) {
-            helper.calendar();
-            helper.files();
-            //loads tasks after tasklist
-            helper.task_lists();
-            //loads memberCircles after circles
-            helper.circles();
+              console.log('JS success persistUser Endpoint preAuth passes and the returned result is-- '+ result)
+              helper.fireLandingCalls();
           }
         });
+    },
+    //auth done after this fires
+    fireLandingCalls: function() {
+          helper.calendar();
+          helper.files();
+          //loads tasks after tasklist
+          helper.task_lists();
+          //loads memberCircles after circles
+          helper.circles();
+          $('#authOps').show('slow');
+          $('#gConnect').hide();
+          $('#share-button').show();
+    },
+    /**
+     * Calls the server endpoint to disconnect the app for the user.
+     */
+    disconnectServer: function() {
+      // Revoke the server tokens
+      $.ajax({
+        type: 'POST',
+        url: '/signin/disconnect',
+        async: false,
+        success: function(result) {
+          console.log('revoke response: ' + result);
+          $('#authOps').hide();
+          $('#gConnect').show();
+          $('#share-button').hide();
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
+    },
 
+    appendProfile: function(profile) {
         $('#profile').empty();
         if (profile.error) {
           $('#profile').append(profile.error);
@@ -145,126 +185,7 @@ var helper = (function() {
             );
           }
         }
-      });
-      $('#authOps').show('slow');
-      $('#gConnect').hide();
-      $('#share-button').show();
     },
-    /**
-     * Calls the server endpoint to disconnect the app for the user.
-     */
-    disconnectServer: function() {
-      // Revoke the server tokens
-      $.ajax({
-        type: 'POST',
-        url: '/signin/disconnect',
-        async: false,
-        success: function(result) {
-          console.log('revoke response: ' + result);
-          $('#authOps').hide();
-          $('#gConnect').show();
-          $('#share-button').hide();
-        },
-        error: function(e) {
-          console.log(e);
-        }
-      });
-    },
-    /**
-     * Calls the server endpoint to connect the app for the user.
-     */
-    connectServer: function() {
-      console.log(this.authResult.code);
-      $.ajax({
-        type: 'POST',
-        url: '/signin/connect?state=' + $("#state").text(),
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-
-        },
-        processData: false,
-        data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
-      });
-    },
-
-    loadGoogleSourcedFeeds: function() {
-        var feed = new google.feeds.Feed("http://feeds.reuters.com/news/economy");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-        var feed = new google.feeds.Feed("http://www.accountancyage.com/feeds/rss/type/news");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.publishedDate))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/globalmarketsNews");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-    },
-    
-    loadBBCFeed: function() {
-      var feed = new google.feeds.Feed("http://feeds.bbci.co.uk/news/business/rss.xml?maxitems=-1");
-        feed.setNumEntries(20)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("bbc-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-    },
-
     /**
      * Calls the server endpoint to get the list of events in calendar.
      */
@@ -274,13 +195,17 @@ var helper = (function() {
         url: '/calendars/primary/events',
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
-          console.log(result);
-          helper.appendCalendar(result);
+          console.log('JS calendar-first google fire result returned to console says --- '+ result);
+          if (!result.error) {
+            console.log('not error first google endpoint return')
+            helper.appendCalendar(result);
+          } else {
+            console.log('ERRORRRR first google endpoint return REFRESH SESSION-CONNECTION REQUIRED')
+          }
         },
         processData: false
       });
     },
-
     /**
      * Calls the server endpoint to get the list of files in google drive.
      */
@@ -370,6 +295,84 @@ var helper = (function() {
 
     setStorage: function(key, result) {
       localStorage.setItem(key, JSON.stringify(result));
+    },
+
+    loadGoogleSourcedFeeds: function() {
+        var feed = new google.feeds.Feed("http://feeds.reuters.com/news/economy");
+        feed.setNumEntries(10)
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var snippet = document.createElement("p");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+            container.appendChild(snippet);
+            }
+          }
+        });
+        var feed = new google.feeds.Feed("http://www.accountancyage.com/feeds/rss/type/news");
+        feed.setNumEntries(10)
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var snippet = document.createElement("p");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            snippet.appendChild(document.createTextNode(entry.publishedDate))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+            container.appendChild(snippet);
+            }
+          }
+        });
+        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/globalmarketsNews");
+        feed.setNumEntries(10)
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("more-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var snippet = document.createElement("p");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+            container.appendChild(snippet);
+            }
+          }
+        });
+    },
+    
+    loadBBCFeed: function() {
+      var feed = new google.feeds.Feed("http://feeds.bbci.co.uk/news/business/rss.xml?maxitems=-1");
+        feed.setNumEntries(20)
+        feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("bbc-feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var storyLink = document.createElement("a");
+            var snippet = document.createElement("p");
+            storyLink.appendChild(document.createTextNode(entry.title));
+            snippet.appendChild(document.createTextNode(entry.contentSnippet))
+            storyLink.href = entry.link
+            storyLink.setAttribute('target', '_blank')
+            container.appendChild(storyLink);
+            container.appendChild(snippet);
+            }
+          }
+        });
     },
     /**
      * Displays circles retrieved from DB.

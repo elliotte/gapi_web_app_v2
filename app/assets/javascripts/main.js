@@ -66,6 +66,9 @@ $(document).ready(function () {
 	$("#create_circle").click(function() {
 		$("#modal-window-create-circle").modal("show");
 	});
+	$("#team_new").click(function() {
+		$("#modal-window-create-circle").modal("show");
+	});
 	$("#create_spreadsheet").click(function() {
 		$("#modal-window-create-spreadsheet").modal("show");
 	});

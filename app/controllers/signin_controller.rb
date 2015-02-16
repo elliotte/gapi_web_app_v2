@@ -29,9 +29,8 @@ class SigninController < ApplicationController
       else
         render json: 'The client state does not match the server state.'.to_json
       end
-      render json: "Connected".to_json
     else
-      render json: 'Current user is already connected.'.to_json
+      render json: 'got session token already, endpoint connectServer says already connected.'.to_json
     end
   end
 
@@ -61,7 +60,7 @@ class SigninController < ApplicationController
     @user =  User.find_by(google_id: params[:id])
     if @user
       session[:user_email] = @user.email
-      render json: 'User is already saved.'.to_json
+      render json: 'User is already saved and email set in session persistUser Endpoint.'.to_json
     else
       user = User.new(google_id: params[:id], email: params[:email])
       if user.save
@@ -85,9 +84,9 @@ class SigninController < ApplicationController
             end
           end
         end
-        render json: 'User is saved.'.to_json
+        render json: 'newUser is saved persistUser Endpoint..'.to_json
       else
-        render json: 'User is not saved.'.to_json
+        render json: 'newUser is not saved error persistUser Endpoint..'.to_json
       end
     end
     session[:user_google_id] = params[:id]

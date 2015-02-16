@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   	def verify_token
 	    # Check for stored credentials in the current user's session.
 	    if !session[:token]
-	    	render json: 'User is not connected.'.to_json
+	    	render json: 'User is not connected..by app_controller.'.to_json
 	    else
 	    	$client.authorization.access_token = session[:token]
 	    end
