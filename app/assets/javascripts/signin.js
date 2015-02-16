@@ -1,3 +1,20 @@
+$(document).ready(function() {
+
+  $('#disconnect').click(helper.disconnectServer);
+  
+});
+
+function onSignInCallback(authResult) {
+
+   var route = window.location.href 
+   if (route.indexOf("circle") > -1) {
+      teamHelper.onSignInCallback(authResult);
+   } else {
+      helper.onSignInCallback(authResult);
+   };
+};
+
+
 (function() {
   var po = document.createElement('script');
   po.type = 'text/javascript'; po.async = true;
@@ -189,7 +206,7 @@ var helper = (function() {
             }
           }
         });
-        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/businessNews");
+        var feed = new google.feeds.Feed("http://www.accountancyage.com/feeds/rss/type/news");
         feed.setNumEntries(10)
         feed.load(function(result) {
         if (!result.error) {
@@ -199,7 +216,7 @@ var helper = (function() {
             var storyLink = document.createElement("a");
             var snippet = document.createElement("p");
             storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
+            snippet.appendChild(document.createTextNode(entry.publishedDate))
             storyLink.href = entry.link
             storyLink.setAttribute('target', '_blank')
             container.appendChild(storyLink);
@@ -263,8 +280,6 @@ var helper = (function() {
         processData: false
       });
     },
-
-
 
     /**
      * Calls the server endpoint to get the list of files in google drive.
@@ -366,13 +381,17 @@ var helper = (function() {
       for (var c in circles) {
         circleCount++;
         circle = circles[c];
-        
         $('#monea-teams').append(
-          '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
-              '<div class="feature-box-containt monea-teams">' +
-                 '<a style="color:#e10707;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>' + 
-                '<p>' + circle.description + '</p>'+
-              '</div>' + 
+          '<div class="col-md-3">'+
+            '<div class="feature-box-style2">'+
+              '<div class="feature-box-title">'+
+                '<i class="fa fa-users"></i>'+
+              '</div>'+
+              '<div class="feature-box-containt">'+
+                '<h3>' + '<a style="color:#e10707;" href="/circles/' + circle.id + '">' + circle.display_name + '</a>' + '</h3>' +
+                '<p>' + circle.description +
+              '</div>'+
+            '</div>'+
           '</div>'
         );
       }
@@ -381,6 +400,7 @@ var helper = (function() {
       }
     },
 
+
     appendMemberCircles: function(circles) {
       var circleCount = 0;
       for (var c in circles) {
@@ -388,12 +408,18 @@ var helper = (function() {
         circle = circles[c];
         
         $('#monea-teams').append(
-          '<div class="feature-box-style2" style="max-width:46%; display:inline-block; ;margin-right:2%;">'+
-              '<div class="feature-box-containt monea-teams">' +
-                 '<a style="color:#e10707;" href="/circles/' + circle.circle_id + '">' + circle.circle_id + '</a>' + 
+          '<div class="col-md-3">'+
+            '<div class="feature-box-style2">'+
+              '<div class="feature-box-title">'+
+                '<i class="fa fa-users"></i>'+
+              '</div>'+
+              '<div class="feature-box-containt">'+
+                '<h3>' + '<a style="color:#e10707;" href="/circles/' + circle.circle_id + '">' + circle.circle_id + '</a>' + '</h3>' +
                 '<p>teamMember circle</p>'+
-              '</div>' + 
+              '</div>'+
+            '</div>'+
           '</div>'
+
         );
       }
     },
@@ -736,21 +762,6 @@ var helper = (function() {
   };
 })();
 
-$(document).ready(function() {
-
-  $('#disconnect').click(helper.disconnectServer);
-  
-});
-
-function onSignInCallback(authResult) {
-
-   var route = window.location.href 
-   if (route.indexOf("circle") > -1) {
-      teamHelper.onSignInCallback(authResult);
-   } else {
-      helper.onSignInCallback(authResult);
-   };
-};
 
 
 
