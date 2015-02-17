@@ -29,9 +29,8 @@ class SigninController < ApplicationController
       else
         render json: 'The client state does not match the server state.'.to_json
       end
-    else
-      render json: 'got session token already, endpoint connectServer says already connected.'.to_json
     end
+    render json: 'got session token already, endpoint connectServer says token is set in session.'.to_json
   end
 
   def refresh_connection

@@ -36,3 +36,4 @@
 //= require signin
 //= require circles
 //= require userHelper
+//= require loadertransformer

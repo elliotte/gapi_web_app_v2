@@ -118,3 +118,95 @@
 	overflow: scroll;
 }
 
+/*transform loading button*/
+
+.tcon {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 40px;
+  transition: 0.3s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 40px;
+  background: transparent; }
+  .tcon > * {
+    display: block; }
+  .tcon:focus {
+    outline: none; }
+
+.tcon-visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+  .tcon-visuallyhidden:active, .tcon-visuallyhidden:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto; }
+
+.tcon-loader--spinner360 {
+  border-radius: 80%;
+  display: block;
+  height: 40px;
+  width: 40px;
+  position: relative;
+  -webkit-animation: tcon-spin360 0.675s linear infinite forwards;
+  animation: tcon-spin360 0.675s linear infinite forwards;
+  background: lightgray; }
+  .tcon-loader--spinner360:before, .tcon-loader--spinner360:after {
+    content: "";
+    display: block;
+    position: absolute; }
+  .tcon-loader--spinner360:before {
+    border-radius: 0 90px 90px 0;
+    height: 40px;
+    width: 50%;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background: black;
+    background-image: linear-gradient(lightgray, black); }
+  .tcon-loader--spinner360:after {
+    border-radius: 80%;
+    height: 30px;
+    width: 30px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background: white; }
+
+@-webkit-keyframes tcon-spin360 {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes tcon-spin360 {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+#loader-wheel {
+	padding-top: 5px;
+}
+

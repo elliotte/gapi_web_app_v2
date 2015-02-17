@@ -3,13 +3,18 @@ $(document).ready(function() {
 });
 
 function onSignInCallback(authResult) {
+
    var route = window.location.href 
    if (route.indexOf("circle") > -1) {
       teamHelper.onSignInCallback(authResult);
    } else {
+      $('#gConnect').hide();
+      $('#loader-wheel').fadeIn();
       helper.onSignInCallback(authResult);
    };
 };
+
+
 
 var helper = (function() {
   var authResult = undefined;
@@ -37,8 +42,9 @@ var helper = (function() {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
         $('#authOps').hide('slow');
-        $('#gConnect').show();
+        $('#loader-wheel').hide();
         $('#share-button').hide();
+        $('#gConnect').show();
       }
       console.log('authResult', authResult);
     },
@@ -92,7 +98,7 @@ var helper = (function() {
           //loads memberCircles after circles
           helper.circles();
           $('#authOps').show('slow');
-          $('#gConnect').hide();
+          $('#loader-wheel').hide();
           $('#share-button').show();
     },
     /**
