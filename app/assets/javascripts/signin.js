@@ -46,6 +46,8 @@ var helper = (function() {
         $('#loader-wheel').hide();
         $('#share-button').hide();
         $('#gConnect').show();
+        // gapi.auth.signOut();
+        helper.disconnectServer();
       }
       console.log('authResult', authResult);
     },
