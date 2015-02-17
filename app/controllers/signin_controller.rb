@@ -25,12 +25,37 @@ class SigninController < ApplicationController
         json_body = Base64.decode64(encoded_json_body)
         body = JSON.parse(json_body)
         gplus_id = body['sub']
+        email = body['email']
         session[:token] = responseData.split(',')[2]
+        session[:user_google_id] = gplus_id
+        session[:user_email] = email
       else
         render json: 'The client state does not match the server state.'.to_json
       end
+    else
+      @user =  User.find_or_create_by(google_id: session[:user_google_id])
+     
+      if @user
+
+        $client.authorization.access_token = session[:token]
+        @plus = $client.discovered_api('plus', 'v1')
+        response = $client.execute!(@plus.people.get,
+                                  {'userId'=> 'me'})
+        result = JSON.parse(response.data.to_json)
+        case
+        when result.has_key?('error')
+          reset_session
+          render json: "Invalid Credentials, app session cleared".to_json
+        when result.has_key?('kind')
+          render json: result.to_json
+        end
+      else
+        render json: 'Something went wrong find the user using the session_ID'.to_json
+      end
+
     end
-    render json: 'got session token already, endpoint connectServer says token is set in session.'.to_json
+    # check_if_new_user
+    # check_session_token
   end
 
   def refresh_connection
@@ -54,40 +79,53 @@ class SigninController < ApplicationController
     render json: 'User disconnected.'.to_json
   end
 
-  def save_user
-    # Save or find User
-    @user =  User.find_by(google_id: params[:id])
-    if @user
-      session[:user_email] = @user.email
-      render json: 'User is already saved and email set in session persistUser Endpoint.'.to_json
-    else
-      user = User.new(google_id: params[:id], email: params[:email])
-      if user.save
-        drive = $client.discovered_api('drive', 'v2')
-        team_members = TeamMember.all.where(google_id: user.google_id)
-        if team_members.present?
-          team_members.each do |team_member|
-            teamfiles = team_member.circle.team_files
-            if teamfiles
-              teamfiles.each do |teamfile|
-                new_permission = drive.permissions.insert.request_schema.new({
-                  'value' => user.email,
-                  'type' => "user",
-                  'role' => "reader"
-                })
+  # def save_user
+  #   # Save or find User
+  #   @user =  User.find_by(google_id: params[:id])
+  #   if @user
+  #     session[:user_email] = @user.email
+  #     render json: 'User is already saved and email set in session persistUser Endpoint.'.to_json
+  #   else
+  #     user = User.new(google_id: params[:id], email: params[:email])
+  #     if user.save
+  #       drive = $client.discovered_api('drive', 'v2')
+  #       team_members = TeamMember.all.where(google_id: user.google_id)
+  #       if team_members.present?
+  #         team_members.each do |team_member|
+  #           teamfiles = team_member.circle.team_files
+  #           if teamfiles
+  #             teamfiles.each do |teamfile|
+  #               new_permission = drive.permissions.insert.request_schema.new({
+  #                 'value' => user.email,
+  #                 'type' => "user",
+  #                 'role' => "reader"
+  #               })
 
-                result = $client.execute(:api_method => drive.permissions.insert,
-                            :body_object => new_permission,
-                            :parameters => { 'fileId' => teamfile.file_id })
-              end
-            end
-          end
-        end
-        render json: 'newUser is saved persistUser Endpoint..'.to_json
-      else
-        render json: 'newUser is not saved error persistUser Endpoint..'.to_json
-      end
-    end
-    session[:user_google_id] = params[:id]
+  #               result = $client.execute(:api_method => drive.permissions.insert,
+  #                           :body_object => new_permission,
+  #                           :parameters => { 'fileId' => teamfile.file_id })
+  #             end
+  #           end
+  #         end
+  #       end
+  #       render json: 'newUser is saved persistUser Endpoint..'.to_json
+  #     else
+  #       render json: 'newUser is not saved EERRROOOORRRR persistUser Endpoint..'.to_json
+  #     end
+  #   end
+  #   session[:user_google_id] = params[:id]
+  # end
+
+
+private
+
+  def check_if_new_user
+     
+
   end
+
 end
+
+
+
+

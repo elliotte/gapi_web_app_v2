@@ -34,9 +34,10 @@ var helper = (function() {
         this.authResult = authResult;
         helper.connectServer();
         // After loading the Google+ API, render the profile data from Google+.
-        gapi.client.load('plus','v1', this.renderProfile);
         helper.loadBBCFeed();
         helper.loadGoogleSourcedFeeds();
+        gapi.client.load('plus','v1', this.renderProfile);
+       
 
       } else if (authResult['error']) {
         // The user is not signed in.
@@ -58,7 +59,14 @@ var helper = (function() {
         url: '/signin/connect?state=' + $("#state").text(),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
-            console.log(result);
+            
+            if (typeof result == "string") {
+              console.log('endPoint Result for connectServer' + result);
+              //append refresh connection
+            } else {
+              console.log('wooooooooo success valid result returned from serverEndPoint');
+              helper.fireLandingCalls();
+            }
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -70,25 +78,32 @@ var helper = (function() {
     renderProfile: function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
+          $('#circle_user_id').val(profile.id);
+          user_google_id = profile.id;
           helper.appendProfile(profile);
-          helper.persistUser(profile);
+          window.setTimeout( timeOut, 1000);
+          function timeOut() {
+            $('#authOps').show('slow');
+            $('#loader-wheel').hide();
+            $('#share-button').show();
+          }
       });
     },
 
-    persistUser: function(profile) {
-        $('#circle_user_id').val(profile.id);
-        user_google_id = profile.id;
-        email = profile.emails[0].value
-        $.ajax({
-          type: 'POST',
-          url: '/signin/save_user',
-          data: {id: profile.id, email: email },
-          success: function(result) {
-              console.log('JS success persistUser Endpoint preAuth passes and the returned result is-- '+ result)
-              helper.fireLandingCalls();
-          }
-        });
-    },
+    // persistUser: function(profile) {
+    //     $('#circle_user_id').val(profile.id);
+    //     user_google_id = profile.id;
+    //     email = profile.emails[0].value
+    //     $.ajax({
+    //       type: 'POST',
+    //       url: '/signin/save_user',
+    //       data: {id: profile.id, email: email },
+    //       success: function(result) {
+    //           console.log('JS success persistUser Endpoint preAuth passes and the returned result is-- '+ result)
+    //           helper.fireLandingCalls();
+    //       }
+    //     });
+    // },
     //auth done after this fires
     fireLandingCalls: function() {
           helper.calendar();
@@ -97,9 +112,7 @@ var helper = (function() {
           helper.task_lists();
           //loads memberCircles after circles
           helper.circles();
-          $('#authOps').show('slow');
-          $('#loader-wheel').hide();
-          $('#share-button').show();
+          
     },
     /**
      * Calls the server endpoint to disconnect the app for the user.
