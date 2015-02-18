@@ -1,10 +1,10 @@
 AUTH_URI: https://accounts.google.com/o/oauth2/auth
-CLIENT_SECRET: IlYpBnYc9YKCa09mHbUYkbdm
+CLIENT_SECRET: NkvWi_yG_tWlKf-B8et7t-rw
 TOKEN_URI: https://accounts.google.com/o/oauth2/token
-CLIENT_EMAIL: 833707550293-o4h3tc5306pvq7j2b607v8q5jnf4a08j@developer.gserviceaccount.com
-REDIRECT_URIS: http://localhost:3000/signin/connect
+CLIENT_EMAIL: 861321116128-uhn4jo21t8f3gf22v514k0ci243ubm2r@developer.gserviceaccount.com
+REDIRECT_URIS: https://mighty-crag-6646.herokuapp.com/signin/connect
 CLIENT_X509_CERT_URL: https://www.googleapis.com/robot/v1/metadata/x509/901506026811-q0am03i585627ptu5r38o7cpkt8pk98l@developer.gserviceaccount.com
-CLIENT_ID: 833707550293-o4h3tc5306pvq7j2b607v8q5jnf4a08j.apps.googleusercontent.com
+CLIENT_ID: 861321116128-uhn4jo21t8f3gf22v514k0ci243ubm2r.apps.googleusercontent.com
 AUTH_PROVIDER_X509_CERT_URL: https://www.googleapis.com/oauth2/v1/certs
-JAVASCRIPT_ORIGINS: http://localhost:3000
+JAVASCRIPT_ORIGINS: https://mighty-crag-6646.herokuapp.com/
 PLUS_LOGIN_SCOPE: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/plus.circles.read https://www.googleapis.com/auth/plus.profile.emails.read https://www.googleapis.com/auth/contacts.readonly
