@@ -1,3 +1,11 @@
+(function() {
+    var po = document.createElement('script');
+      po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://plus.google.com/js/client:plusone.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(po, s);
+})();
+
 $(document).ready(function() {
   $('#disconnect').click(helper.disconnectServer);
 });
@@ -8,9 +16,8 @@ function onSignInCallback(authResult) {
    if (route.indexOf("circle") > -1) {
       teamHelper.onSignInCallback(authResult);
    } else {
-      $('#gConnect').hide();
-      $('#loader-wheel').fadeIn();
       helper.onSignInCallback(authResult);
+      
    };
 };
 
@@ -37,14 +44,15 @@ var helper = (function() {
         helper.loadBBCFeed();
         helper.loadGoogleSourcedFeeds();
         gapi.client.load('plus','v1', this.renderProfile);
-       
+        // fires after profit to set profile.id
+        
 
       } else if (authResult['error']) {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
         $('#authOps').hide('slow');
-        $('#loader-wheel').hide();
         $('#share-button').hide();
+        $('#loader-wheel').hide();
         $('#gConnect').show();
         // gapi.auth.signOut();
         helper.disconnectServer();
@@ -64,9 +72,13 @@ var helper = (function() {
             
             if (typeof result == "string") {
               console.log('endPoint Result for connectServer' + result);
+              $('#loader-wheel').hide();
+              $('#gConnect').show();
               //append refresh connection
             } else {
               console.log('wooooooooo success valid result returned from serverEndPoint');
+              $('#gConnect').hide();
+              $('#loader-wheel').show();
               helper.fireLandingCalls();
             }
         },
@@ -81,14 +93,10 @@ var helper = (function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
           $('#circle_user_id').val(profile.id);
-          user_google_id = profile.id;
+          this.user_google_id = profile.id;
           helper.appendProfile(profile);
-          window.setTimeout( timeOut, 1000);
-          function timeOut() {
-            $('#authOps').show('slow');
-            $('#loader-wheel').hide();
-            $('#share-button').show();
-          }
+          helper.circles(profile.id);
+          helper.team_member_circles(profile.id);
       });
     },
 
@@ -113,7 +121,6 @@ var helper = (function() {
           //loads tasks after tasklist
           helper.task_lists();
           //loads memberCircles after circles
-          helper.circles();
           
     },
     /**
@@ -277,28 +284,34 @@ var helper = (function() {
     /**
      * Get Circles from DB.
      */
-    circles: function() {
+    circles: function(id) {
       $.ajax({
         type: 'GET',
         url: '/circles',
         dataType: 'json',
         contentType: 'application/json',
-        data: {user_google_id: user_google_id},
+        data: {user_google_id: id},
         success: function(result) {
           helper.appendCircles(result);
-          helper.team_member_circles();
+          //helper.team_member_circles();
           helper.setStorage('circles', result)
+          window.setTimeout( timeOut, 1000);
+          function timeOut() {
+            $('#authOps').show('slow');
+            $('#loader-wheel').hide();
+            $('#share-button').show();
+          }
         }
       });
     },
 
-    team_member_circles: function() {
+    team_member_circles: function(id) {
       $.ajax({
         type: 'GET',
         url: '/circles/user_team_member_circles',
         dataType: 'json',
         contentType: 'application/json',
-        data: {user_google_id: user_google_id},
+        data: {user_google_id: id},
         success: function(result) {
           //helper.setStorage('userMemberCircles', result)
           helper.appendMemberCircles(result);

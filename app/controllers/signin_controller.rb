@@ -32,28 +32,26 @@ class SigninController < ApplicationController
       else
         render json: 'The client state does not match the server state.'.to_json
       end
-    else
+    end
       @user =  User.find_or_create_by(google_id: session[:user_google_id])
      
       if @user
-
         $client.authorization.access_token = session[:token]
         @plus = $client.discovered_api('plus', 'v1')
         response = $client.execute!(@plus.people.get,
                                   {'userId'=> 'me'})
         result = JSON.parse(response.data.to_json)
-        case
-        when result.has_key?('error')
+        if result.has_key?('error')
           reset_session
           render json: "Invalid Credentials, app session cleared".to_json
-        when result.has_key?('kind')
+        else result.has_key?('kind')
           render json: result.to_json
         end
       else
+        reset_session
         render json: 'Something went wrong find the user using the session_ID'.to_json
       end
-
-    end
+    # Endpoint
     # check_if_new_user
     # check_session_token
   end
