@@ -41,7 +41,7 @@ class CirclesController < ApplicationController
 	    @state = session[:state]
 	    @messages = @circle.messages.all
 	    @wallpins = @circle.wallpins.all
-	    @user = session[:user_email]
+	    #@user = session[:user_email]
 		respond_to do |format|
 			format.html
 	    	format.js { @circle }

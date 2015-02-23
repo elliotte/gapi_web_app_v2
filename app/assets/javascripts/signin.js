@@ -17,13 +17,11 @@ function onSignInCallback(authResult) {
       teamHelper.onSignInCallback(authResult);
    } else {
       helper.onSignInCallback(authResult);
-      
    };
 };
 
-
-
 var helper = (function() {
+
   var authResult = undefined;
   var user_google_id = "";
   var taskListsCount = 0;
@@ -38,14 +36,16 @@ var helper = (function() {
     onSignInCallback: function(authResult) {
       if (authResult['access_token']) {
         // The user is signed in
-        this.authResult = authResult;
-        helper.connectServer();
-        // After loading the Google+ API, render the profile data from Google+.
-        helper.loadBBCFeed();
-        helper.loadGoogleSourcedFeeds();
-        gapi.client.load('plus','v1', this.renderProfile);
+         this.authResult = authResult;
         // fires after profit to set profile.id
-        
+         helper.connectServer();
+         $('#gConnect').hide();
+         $('#loader-wheel').show();
+
+         foodHelper.loadLandingFeeds();
+
+         gapi.client.load('plus','v1', this.renderProfile);
+
 
       } else if (authResult['error']) {
         // The user is not signed in.
@@ -63,7 +63,7 @@ var helper = (function() {
      * Calls the server endpoint to connect the app for the user.
      */
     connectServer: function() {
-      console.log(this.authResult.code);
+      //console.log(this.authResult.code);
       $.ajax({
         type: 'POST',
         url: '/signin/connect?state=' + $("#state").text(),
@@ -71,16 +71,18 @@ var helper = (function() {
         success: function(result) {
             
             if (typeof result == "string") {
-              console.log('endPoint Result for connectServer' + result);
+              console.log('ERRORRRRR endPoint String Result for connectServer' + result);
+              
               $('#loader-wheel').hide();
               $('#gConnect').show();
-              //append refresh connection
+              $('#share-button').hide();
+              
             } else {
               console.log('wooooooooo success valid result returned from serverEndPoint');
-              $('#gConnect').hide();
-              $('#loader-wheel').show();
-              helper.fireLandingCalls();
+              // After loading the Google+ API, render the profile data from Google+.
+              //helper.fireLandingCalls();
             }
+
         },
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
@@ -92,36 +94,30 @@ var helper = (function() {
     renderProfile: function() {
       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
       request.execute( function(profile) {
+          // _profile = profile
           $('#circle_user_id').val(profile.id);
-          this.user_google_id = profile.id;
+          
           helper.appendProfile(profile);
           helper.circles(profile.id);
           helper.team_member_circles(profile.id);
+
+          window.setTimeout( timeOut, 1000);
+
+          function timeOut() {
+            $('#authOps').show('slow');
+            $('#loader-wheel').hide();
+            $('#share-button').show();
+          }
+
       });
     },
 
-    // persistUser: function(profile) {
-    //     $('#circle_user_id').val(profile.id);
-    //     user_google_id = profile.id;
-    //     email = profile.emails[0].value
-    //     $.ajax({
-    //       type: 'POST',
-    //       url: '/signin/save_user',
-    //       data: {id: profile.id, email: email },
-    //       success: function(result) {
-    //           console.log('JS success persistUser Endpoint preAuth passes and the returned result is-- '+ result)
-    //           helper.fireLandingCalls();
-    //       }
-    //     });
-    // },
-    //auth done after this fires
     fireLandingCalls: function() {
           helper.calendar();
           helper.files();
           //loads tasks after tasklist
           helper.task_lists();
           //loads memberCircles after circles
-          
     },
     /**
      * Calls the server endpoint to disconnect the app for the user.
@@ -295,12 +291,7 @@ var helper = (function() {
           helper.appendCircles(result);
           //helper.team_member_circles();
           helper.setStorage('circles', result)
-          window.setTimeout( timeOut, 1000);
-          function timeOut() {
-            $('#authOps').show('slow');
-            $('#loader-wheel').hide();
-            $('#share-button').show();
-          }
+          
         }
       });
     },
@@ -316,6 +307,7 @@ var helper = (function() {
           //helper.setStorage('userMemberCircles', result)
           helper.appendMemberCircles(result);
           helper.setStorage('memberCircles', result)
+         
         }
       });
     },
@@ -330,84 +322,7 @@ var helper = (function() {
     setStorage: function(key, result) {
       localStorage.setItem(key, JSON.stringify(result));
     },
-
-    loadGoogleSourcedFeeds: function() {
-        var feed = new google.feeds.Feed("http://feeds.reuters.com/news/economy");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-        var feed = new google.feeds.Feed("http://www.accountancyage.com/feeds/rss/type/news");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.publishedDate))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-        var feed = new google.feeds.Feed("http://feeds.reuters.com/reuters/globalmarketsNews");
-        feed.setNumEntries(10)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("more-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-    },
-    
-    loadBBCFeed: function() {
-      var feed = new google.feeds.Feed("http://feeds.bbci.co.uk/news/business/rss.xml?maxitems=-1");
-        feed.setNumEntries(20)
-        feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("bbc-feed");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-            var storyLink = document.createElement("a");
-            var snippet = document.createElement("p");
-            storyLink.appendChild(document.createTextNode(entry.title));
-            snippet.appendChild(document.createTextNode(entry.contentSnippet))
-            storyLink.href = entry.link
-            storyLink.setAttribute('target', '_blank')
-            container.appendChild(storyLink);
-            container.appendChild(snippet);
-            }
-          }
-        });
-    },
+   
     /**
      * Displays circles retrieved from DB.
      */

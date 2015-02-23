@@ -2,8 +2,6 @@
 var teamHelper = (function() {
   var authResult = undefined;
   var user_google_id = "";
-  var taskTeamCompletedCount = 0;
-  var taskTeamPendingCount = 0;
 
   return {
     //circlesRoute onSignCallBack
@@ -11,7 +9,7 @@ var teamHelper = (function() {
       if (authResult['access_token']) {
         // The user is signed in
         this.authResult = authResult;
-        teamHelper.connectServer();
+       
         // After loading the Google+ API, render the profile data from Google+.
         gapi.client.load('plus','v1',this.renderProfile);
       } else if (authResult['error']) {
@@ -38,26 +36,11 @@ var teamHelper = (function() {
       $('#share-button').show();
     },
 
-    connectServer: function() {
-      console.log(this.authResult.code);
-      $.ajax({
-        type: 'POST',
-        url: '/signin/connect?state=' + $("#state").text(),
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          console.log(result);
-        },
-        processData: false,
-        data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
-      });
-    },
-
     loadPage: function() {
         teamHelper.circleMembers();
         teamHelper.circleFiles();
     },
 
-   
      // dont delete use for retrieving userCal events extendedProperties circleID
      /*
        * Calls the server endpoint to get the list of events in calendar.
@@ -84,7 +67,6 @@ var teamHelper = (function() {
         contentType: 'application/json',
         data: {id: $("#circle_id").text()},
         success: function(result) {
-          console.log(result);
           teamHelper.getCircleMembers(result);
         }
       });
