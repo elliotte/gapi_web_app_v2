@@ -49,13 +49,14 @@ var helper = (function() {
          helper.connectServer();
          
          if (this.authError == true) {
-            
+          
+            $('#signin-in-error-modal-body').empty();
             $('#modal-window-signin-error').modal('show');
             $('#signin-in-error-modal-body').append('<p>' 
-                + 'Your access token granted during authentication has expired, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
                 '</p>' + 
                 '<p>' + 
-                'Because of the confidential nature of our trade, there are over 10 steps of authentication on signin, all of which are impacted  by inactivity whilst being signin in, and being signed into your browser.' + 
+                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                 '</p>' +
                 '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
             );
