@@ -52,12 +52,14 @@ class SigninController < ApplicationController
         result = JSON.parse(response.to_json)
         
         if result.has_key?('error')
-          refresh_connection
+          $client.authorization.access_token = nil
+          render json: 'error in google client user credentials'.to_json
         else
           render json: result.to_json
         end
 
     else
+      $client.authorization.access_token = nil
       reset_session
       render json: 'Something went wrong find the user using the session_ID'.to_json
     end
@@ -65,6 +67,7 @@ class SigninController < ApplicationController
   end
 
   def refresh_connection
+      $client.authorization.access_token = nil
       reset_session
       redirect_to root_path
   end
@@ -72,7 +75,8 @@ class SigninController < ApplicationController
   def disconnect
     # Using either the refresh or access token to revoke if present.
     token = session[:token]
-
+    $client.authorization.access_token = nil
+    
     reset_session
 
     # Sending the revocation request and returning the result.

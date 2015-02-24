@@ -17,7 +17,9 @@ function onSignInCallback(authResult) {
       teamHelper.onSignInCallback(authResult);
    } else {
       helper.onSignInCallback(authResult);
+      
    };
+
 };
 
 var helper = (function() {
@@ -27,6 +29,7 @@ var helper = (function() {
   var taskListsCount = 0;
   var taskCompletedCount = 0;
   var taskPendingCount = 0;
+  var authError = false;
 
   return {
     /**
@@ -34,30 +37,48 @@ var helper = (function() {
     * the user successfully signs in.
     */
     onSignInCallback: function(authResult) {
+      console.log('authResult', authResult);
+
+      $('#gConnect').hide();
+      $('#loader-wheel').show();
+
       if (authResult['access_token']) {
-        // The user is signed in
+         // The user is signed in
          this.authResult = authResult;
-        // fires after profit to set profile.id
+
          helper.connectServer();
-         $('#gConnect').hide();
-         $('#loader-wheel').show();
+         
+         if (this.authError == true) {
+            
+            $('#modal-window-signin-error').modal('show');
+            $('#signin-in-error-modal-body').append('<p>' 
+                + 'Your access token granted during authentication has expired, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                '</p>' + 
+                '<p>' + 
+                'Because of the confidential nature of our trade, there are over 10 steps of authentication on signin, all of which are impacted  by inactivity whilst being signin in, and being signed into your browser.' + 
+                '</p>' +
+                '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+            );
 
-         foodHelper.loadLandingFeeds();
+            $('#gConnect').show();
+            $('#loader-wheel').hide();
 
-         gapi.client.load('plus','v1', this.renderProfile);
+         } else {
 
+             helper.fireServerCalls();
+             foodHelper.loadLandingFeeds();
+             gapi.client.load('plus','v1', this.renderProfile);
+
+         };
 
       } else if (authResult['error']) {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
-        $('#authOps').hide('slow');
-        $('#share-button').hide();
+        
         $('#loader-wheel').hide();
         $('#gConnect').show();
         // gapi.auth.signOut();
-        helper.disconnectServer();
-      }
-      console.log('authResult', authResult);
+      } 
     },
     /**
      * Calls the server endpoint to connect the app for the user.
@@ -66,28 +87,34 @@ var helper = (function() {
       //console.log(this.authResult.code);
       $.ajax({
         type: 'POST',
+        async: false,
         url: '/signin/connect?state=' + $("#state").text(),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
-            
+
             if (typeof result == "string") {
-              console.log('ERRORRRRR endPoint String Result for connectServer' + result);
+              console.log('ERRORRRRR endPoint String Result for connectServer  ::  ' + result);
               
-              $('#loader-wheel').hide();
-              $('#gConnect').show();
-              $('#share-button').hide();
-              
+              helper.setAuthError();
+
             } else {
+
               console.log('wooooooooo success valid result returned from serverEndPoint');
               // After loading the Google+ API, render the profile data from Google+.
-              //helper.fireLandingCalls();
             }
 
         },
+
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
       });
+      
     },
+
+    setAuthError: function() {
+         this.authError = true 
+    },
+
     /**
      * Retrieves and renders the authenticated user's Google+ profile.
      */
@@ -112,11 +139,11 @@ var helper = (function() {
       });
     },
 
-    fireLandingCalls: function() {
+    fireServerCalls: function() {
+          helper.task_lists();
           helper.calendar();
           helper.files();
           //loads tasks after tasklist
-          helper.task_lists();
           //loads memberCircles after circles
     },
     /**
