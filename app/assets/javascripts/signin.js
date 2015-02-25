@@ -31,12 +31,7 @@ function onSignInCallback(authResult) {
             $('#signin-in-error-modal-body').empty();
             $('#modal-window-signin-error').modal('show');
             $('#signin-in-error-modal-body').append('<p>' 
-                + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
-                '</p>' + 
-                '<p>' + 
-                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
-                '</p>' +
-                '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+                '<p>' + 'Click Button To Grant Access or Reload Page' + '</p>'
             );
 
             helper.disconnectServer();
@@ -58,7 +53,7 @@ function onSignInCallback(authResult) {
                                 + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
                                 '</p>' + 
                                 '<p>' + 
-                                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
+                                'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
                                 '</p>' +
                                 '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
                             );
@@ -129,7 +124,7 @@ var helper = (function() {
                     + 'Server Side Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
                     '</p>' + 
                     '<p>' + 
-                    'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
+                    'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
                     '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
                 );
