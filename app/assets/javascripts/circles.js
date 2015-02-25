@@ -9,9 +9,9 @@ var teamHelper = (function() {
       if (authResult['access_token']) {
         // The user is signed in
         this.authResult = authResult;
-       
         // After loading the Google+ API, render the profile data from Google+.
         gapi.client.load('plus','v1',this.renderProfile);
+
       } else if (authResult['error']) {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
@@ -30,6 +30,7 @@ var teamHelper = (function() {
         $('#circle_user_id').val(profile.id);
         teamHelper.user_google_id = profile.id;
       });
+      
       teamHelper.loadPage();
       $('#authOps').show('slow');
       $('#gConnect').hide();

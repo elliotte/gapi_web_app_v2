@@ -10,17 +10,82 @@ $(document).ready(function() {
   $('#disconnect').click(helper.disconnectServer);
 });
 
+
 function onSignInCallback(authResult) {
 
-   var route = window.location.href 
-   if (route.indexOf("circle") > -1) {
-      teamHelper.onSignInCallback(authResult);
-   } else {
-      helper.onSignInCallback(authResult);
-      
-   };
+   document.getElementById('gConnect').style.display = 'none';
+   document.getElementById('loader-wheel').style.display = 'block';
 
-};
+   var route = window.location.href 
+
+   if (route.indexOf("circle") > -1) {
+
+      teamHelper.onSignInCallback(authResult);
+
+   } else {
+
+        if (authResult['error']) {
+            // The user is not signed in.
+            console.log('There was an error: ' + authResult['error']);
+
+            $('#signin-in-error-modal-body').empty();
+            $('#modal-window-signin-error').modal('show');
+            $('#signin-in-error-modal-body').append('<p>' 
+                + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                '</p>' + 
+                '<p>' + 
+                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
+                '</p>' +
+                '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+            );
+
+            helper.disconnectServer();
+            document.getElementById('loader-wheel').style.display = 'none';
+
+        } else {
+
+               gapi.client.load('plus','v1', JSProfileCallBack);
+
+               function JSProfileCallBack() {
+
+                      var request = gapi.client.plus.people.get( {'userId' : 'me'} );
+                      request.execute( function(profile) {
+
+                          if (profile.error) {
+                            $('#signin-in-error-modal-body').empty();
+                            $('#modal-window-signin-error').modal('show');
+                            $('#signin-in-error-modal-body').append('<p>' 
+                                + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                                '</p>' + 
+                                '<p>' + 
+                                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
+                                '</p>' +
+                                '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+                            );
+                            document.getElementById('loader-wheel').style.display = 'none';
+                            document.getElementById('gConnect').style.display = 'block';
+                          } else {
+
+                            helper.user_google_id = profile.id;
+                            //for teamForms
+                            $('#circle_user_id').val(profile.id);
+                            //Retrieves and renders the authenticated user's Google+ profile.
+                            helper.appendProfile(profile);
+                            //connects and verifies ServerSide client connection
+                            helper.onSignInCallback(authResult);
+                            foodHelper.loadLandingFeeds();
+
+                          }
+
+                      });//End of requestExecute
+
+               };//end of CallBack
+
+        }//End of ELSE[ERROR]
+
+   };//End RouteSignInFilter
+
+};//End of API console CallBack Reference
 
 var helper = (function() {
 
@@ -37,49 +102,12 @@ var helper = (function() {
     * the user successfully signs in.
     */
     onSignInCallback: function(authResult) {
-      console.log('authResult', authResult);
-
-      $('#gConnect').hide();
-      $('#loader-wheel').show();
-
-      if (authResult['access_token']) {
-         // The user is signed in
-         this.authResult = authResult;
-
+         console.log('authResult HelperCallBack', authResult);
+         // The user has JSAPI verified authentication
+         this.authResult = authResult; 
+         //make call and/or check serverside client auth/state
          helper.connectServer();
-         
-         if (this.authError == true) {
-          
-            $('#signin-in-error-modal-body').empty();
-            $('#modal-window-signin-error').modal('show');
-            $('#signin-in-error-modal-body').append('<p>' 
-                + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
-                '</p>' + 
-                '<p>' + 
-                'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
-                '</p>' +
-                '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
-            );
 
-            $('#gConnect').show();
-            $('#loader-wheel').hide();
-
-         } else {
-
-             helper.fireServerCalls();
-             foodHelper.loadLandingFeeds();
-             gapi.client.load('plus','v1', this.renderProfile);
-
-         };
-
-      } else if (authResult['error']) {
-        // The user is not signed in.
-        console.log('There was an error: ' + authResult['error']);
-        
-        $('#loader-wheel').hide();
-        $('#gConnect').show();
-        // gapi.auth.signOut();
-      } 
     },
     /**
      * Calls the server endpoint to connect the app for the user.
@@ -88,19 +116,34 @@ var helper = (function() {
       //console.log(this.authResult.code);
       $.ajax({
         type: 'POST',
-        async: false,
         url: '/signin/connect?state=' + $("#state").text(),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
 
             if (typeof result == "string") {
-              console.log('ERRORRRRR endPoint String Result for connectServer  ::  ' + result);
+               console.log('ERRORRRRR endPoint String Result for connectServer  ::  ' + result);
               
-              helper.setAuthError();
+               $('#signin-in-error-modal-body').empty();
+               $('#modal-window-signin-error').modal('show');
+               $('#signin-in-error-modal-body').append('<p>' 
+                    + 'Server Side Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                    '</p>' + 
+                    '<p>' + 
+                    'Because of the confidential nature of our trade, we check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
+                    '</p>' +
+                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+                );
+
+                document.getElementById('loader-wheel').style.display = 'none';
+                document.getElementById('gConnect').style.display = 'block';
 
             } else {
-
-              console.log('wooooooooo success valid result returned from serverEndPoint');
+              
+               console.log('wooooooooo success valid result returned from serverEndPoint');
+               console.log('zzzzzzzzzzzzzzxzxxzxzxzxzxzxzxzx' + helper.user_google_id)
+               helper.circles();
+               helper.team_member_circles();
+               helper.fireServerCalls();
               // After loading the Google+ API, render the profile data from Google+.
             }
 
@@ -108,44 +151,16 @@ var helper = (function() {
 
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token
+      
       });
       
     },
-
-    setAuthError: function() {
-         this.authError = true 
-    },
-
-    /**
-     * Retrieves and renders the authenticated user's Google+ profile.
-     */
-    renderProfile: function() {
-      var request = gapi.client.plus.people.get( {'userId' : 'me'} );
-      request.execute( function(profile) {
-          // _profile = profile
-          $('#circle_user_id').val(profile.id);
-          
-          helper.appendProfile(profile);
-          helper.circles(profile.id);
-          helper.team_member_circles(profile.id);
-
-          window.setTimeout( timeOut, 1000);
-
-          function timeOut() {
-            $('#authOps').show('slow');
-            $('#loader-wheel').hide();
-            $('#share-button').show();
-          }
-
-      });
-    },
-
+    
     fireServerCalls: function() {
           helper.task_lists();
+          //loads tasks after tasklist
           helper.calendar();
           helper.files();
-          //loads tasks after tasklist
-          //loads memberCircles after circles
     },
     /**
      * Calls the server endpoint to disconnect the app for the user.
@@ -166,6 +181,114 @@ var helper = (function() {
           console.log(e);
         }
       });
+    },
+    /**
+     * Calls the server endpoint to get the list of events in calendar.
+     */
+    calendar: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/calendars/primary/events',
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          console.log('JS calendar-first google fire result returned to console says --- '+ result);
+          if (!result.error) {
+            console.log('not error first google endpoint return')
+            helper.appendCalendar(result);
+          } else {
+            console.log('ERRORRRR first google endpoint return REFRESH SESSION-CONNECTION REQUIRED')
+          }
+        },
+        processData: false
+      });
+    },
+    /**
+     * Calls the server endpoint to get the list of files in google drive.
+     */
+    files: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/files',
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          console.log(result);
+          helper.appendDrive(result);
+        },
+        processData: false
+      });
+    },
+    /**
+     * Calls the server endpoint to get the task lists.
+     */
+    task_lists: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/task_lists',
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          console.log(result);
+          helper.appendTaskLists(result);
+        },
+        processData: false
+      });
+    },
+    /**
+     * Calls the server endpoint to get the list of tasks.
+     */
+    tasks: function(taskListId) {
+      $.ajax({
+        type: 'GET',
+        url: '/task_lists/' + taskListId + '/tasks',
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          console.log(result);
+          helper.appendTasks(result, taskListId);
+        },
+        processData: false
+      });
+    },
+    /**
+     * Get Circles from DB.
+     */
+    circles: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/circles',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: {user_google_id: this.user_google_id},
+        success: function(result) {
+          helper.appendCircles(result);
+         // helper.setStorage('circles', result)
+        }
+      });
+    },
+
+    team_member_circles: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/circles/user_team_member_circles',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: {user_google_id: this.user_google_id},
+        success: function(result) {
+          //helper.setStorage('userMemberCircles', result)
+          helper.appendMemberCircles(result);
+          helper.setStorage('memberCircles', result)
+         
+        }
+      });
+    },
+
+    loadFileShare: function(button) {
+      link = $(button).data('href');
+      var shareButton = '<script src="https://apis.google.com/js/platform.js" async defer></script>'+'<div class="g-plus" data-action="share" data-href="'+link+'" data-annotation="none" data-height="15"></div>'
+      container = $(button).parent();
+      $(container).append(shareButton);
+    },
+
+    setStorage: function(key, result) {
+      localStorage.setItem(key, JSON.stringify(result));
     },
 
     appendProfile: function(profile) {
@@ -239,124 +362,10 @@ var helper = (function() {
         }
     },
     /**
-     * Calls the server endpoint to get the list of events in calendar.
-     */
-    calendar: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/calendars/primary/events',
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          console.log('JS calendar-first google fire result returned to console says --- '+ result);
-          if (!result.error) {
-            console.log('not error first google endpoint return')
-            helper.appendCalendar(result);
-          } else {
-            console.log('ERRORRRR first google endpoint return REFRESH SESSION-CONNECTION REQUIRED')
-          }
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the list of files in google drive.
-     */
-    files: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/files',
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          console.log(result);
-          helper.appendDrive(result);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the task lists.
-     */
-    task_lists: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/task_lists',
-        contentType: 'application/octet-stream; charset=utf-8',
-        async: false,
-        success: function(result) {
-          console.log(result);
-          helper.appendTaskLists(result);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Calls the server endpoint to get the list of tasks.
-     */
-    tasks: function(taskListId) {
-      $.ajax({
-        type: 'GET',
-        url: '/task_lists/' + taskListId + '/tasks',
-        contentType: 'application/octet-stream; charset=utf-8',
-        async: false,
-        success: function(result) {
-          console.log(result);
-          helper.appendTasks(result, taskListId);
-        },
-        processData: false
-      });
-    },
-    /**
-     * Get Circles from DB.
-     */
-    circles: function(id) {
-      $.ajax({
-        type: 'GET',
-        url: '/circles',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: {user_google_id: id},
-        success: function(result) {
-          helper.appendCircles(result);
-          //helper.team_member_circles();
-          helper.setStorage('circles', result)
-          
-        }
-      });
-    },
-
-    team_member_circles: function(id) {
-      $.ajax({
-        type: 'GET',
-        url: '/circles/user_team_member_circles',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: {user_google_id: id},
-        success: function(result) {
-          //helper.setStorage('userMemberCircles', result)
-          helper.appendMemberCircles(result);
-          helper.setStorage('memberCircles', result)
-         
-        }
-      });
-    },
-
-    loadFileShare: function(button) {
-      link = $(button).data('href');
-      var shareButton = '<script src="https://apis.google.com/js/platform.js" async defer></script>'+'<div class="g-plus" data-action="share" data-href="'+link+'" data-annotation="none" data-height="15"></div>'
-      container = $(button).parent();
-      $(container).append(shareButton);
-    },
-
-    setStorage: function(key, result) {
-      localStorage.setItem(key, JSON.stringify(result));
-    },
-   
-    /**
      * Displays circles retrieved from DB.
      */
     appendCircles: function(circles) {
       var circleCount = 0;
-      $('#monea-teams').empty();
       $('#monea-teams').show();
       for (var c in circles) {
         circleCount++;
@@ -382,9 +391,10 @@ var helper = (function() {
 
 
     appendMemberCircles: function(circles) {
-      var circleCount = 0;
+      console.log('membbbbbbbbbbbbbb cirlces' + circles[0])
+      //var circleCount = 0;
       for (var c in circles) {
-        circleCount++;
+        //circleCount++;
         circle = circles[c];
         
         $('#monea-teams').append(
@@ -401,6 +411,8 @@ var helper = (function() {
           '</div>'
 
         );
+
+       
       }
     },
     /**
@@ -628,6 +640,9 @@ var helper = (function() {
      * Displays available Task Lists retrieved from server.
      */
     appendTaskLists: function(taskLists) {
+      var taskListsCount = 0;
+      var taskCompletedCount = 0;
+      var taskPendingCount = 0;
       for (var taskListIndex in taskLists.items) {
         taskListsCount++;
         $('#taskLists').show();
@@ -657,9 +672,10 @@ var helper = (function() {
       if(taskListsCount == 0){
         $('#noTaskLists').show();
       }
-      if(taskCompletedCount == 0 && taskPendingCount == 0){
-        $('#noTasks').show();
+      if(taskListsCount == taskLists.items.length) {
+        
       }
+      
     },
     /**
      * Displays available Tasks in Task List retrieved from server.
@@ -734,13 +750,24 @@ var helper = (function() {
             );
           }
         }
+
+        if(taskCompletedCount == 0 && taskPendingCount == 0){
+          $('#noTasks').show();
+        }
+
       }
+       $('#authOps').show('slow');
+       $('#loader-wheel').hide();
+       $('#share-button').show();
     },
     /**
-     * Displays Search Results retrieved from server.
+     * ENNNNNDDDD OF HELPERS.FUNCTIONS.
      */
   };
-})();
+  /**
+     * ENNNNNDDDD OF RETURN.
+  */
+})(); // END of HELPER
 
 
 
