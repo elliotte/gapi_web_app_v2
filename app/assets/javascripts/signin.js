@@ -21,6 +21,7 @@ function onSignInCallback(authResult) {
    if (route.indexOf("circle") > -1) {
 
       teamHelper.onSignInCallback(authResult);
+      document.getElementById('loader-wheel').style.display = 'none';
 
    } else {
 
