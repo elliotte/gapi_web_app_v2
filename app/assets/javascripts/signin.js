@@ -49,7 +49,7 @@ function onSignInCallback(authResult) {
                             $('#signin-in-error-modal-body').empty();
                             $('#modal-window-signin-error').modal('show');
                             $('#signin-in-error-modal-body').append(
-                                '<p>' + 'Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                                '<p>' + 'Browser Authentication Failed, you need to REFRESH your connection, and/or reload the page. ' +
                                 '</p>' + 
                                 '<p>' + 
                                 'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 

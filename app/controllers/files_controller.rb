@@ -132,8 +132,15 @@ class FilesController < ApplicationController
 	    response = $client.execute(:api_method => @drive.files.delete,
     							:parameters => { 'fileId' => params[:id] })
 
+	    teams_file_belongs_to = TeamFile.all.where(file_id: params[:id])
+	    teams_file_belongs_to.each do |t_file|
+	    	t_file.destroy
+	    end
 	    # render json: response.data.to_json
-	    redirect_to root_path
+	    respond_to do |format|
+	      	format.js { @div_id = params[:id] }
+	    end
+	    #redirect_to root_path
 	end
 
 	def destroy_show
@@ -171,11 +178,28 @@ class FilesController < ApplicationController
   	end
 
   	def share_files
-  		#new to add permissions??
   		if params[:teams].present?
 	        teams = params[:teams].split(',')
 	        teams.each do |team|
 	        	TeamFile.create(circle_id: team, file_id: params[:file_id])
+	        	circle = Circle.find(team)
+				  	team_members = circle.team_members
+				    if team_members.present?
+				    	team_members.each do |team_member|
+				    		user = User.find_by(google_id: team_member.google_id)
+				    		if user
+				    			new_permission = @drive.permissions.insert.request_schema.new({
+								    'value' => user.email,
+								    'type' => "user",
+								    'role' => "reader"
+								})
+
+								result = $client.execute(:api_method => @drive.permissions.insert,
+													    :body_object => new_permission,
+													    :parameters => { 'fileId' => params[:file_id], 'emailMessage' => 'Shared via monea.build' })
+				    		end
+				    end
+				end
 	        end
 	    end
 	   	redirect_to root_path

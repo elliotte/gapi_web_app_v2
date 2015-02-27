@@ -39,7 +39,7 @@ var helper = (function() {
                $('#signin-in-error-modal-body').empty();
                $('#modal-window-signin-error').modal('show');
                $('#signin-in-error-modal-body').append('<p>' 
-                    + 'Server Side Authentication Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                    + 'Server Side Authentication Failed, you need to REFRESH your connection, and/or reload the page. ' +
                     '</p>' + 
                     '<p>' + 
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
@@ -67,13 +67,12 @@ var helper = (function() {
                $('#signin-in-error-modal-body').empty();
                $('#modal-window-signin-error').modal('show');
                $('#signin-in-error-modal-body').append('<p>' 
-                    + 'Server Side Error State Failed, you need to REFRESH your connection using the monea.build dropDown, and/or reload the page. ' +
+                    + 'Something went Wrong, close your browser and try again. ' +
                     '</p>' + 
                     '<p>' + 
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
-                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                    '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
                 );
                
                 loaderWheel.style.display = 'none';
@@ -346,7 +345,7 @@ var helper = (function() {
         
         eventDate = new Date(event.start.dateTime)
 
-        if(event.hangovutLink) {
+        if(event.hangoutLink) {
           $('#calendarEvent').append(
             '<div id="'+ event.id +'" class="col-md-3">'+
               '<div class="feature-box-style2">'+
@@ -428,7 +427,7 @@ var helper = (function() {
               };
 
               container.append(
-               '<div class="col-md-3">'+
+               '<div id=' + item.id + ' class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
                     '<i class="fa fa-file-text"></i>'+
@@ -500,7 +499,7 @@ var helper = (function() {
               };
 
             container.append(
-              '<div class="col-md-3">'+
+              '<div id=' + item.id + ' class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
                     '<i class="fa fa-folder"></i>'+

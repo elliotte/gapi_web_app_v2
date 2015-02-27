@@ -43,7 +43,6 @@ GooglePlay::Application.routes.draw do
     end
     collection do
       get :circles_names
-      get :user_team_member_circles
     end
   end
 

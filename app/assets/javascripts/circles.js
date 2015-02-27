@@ -224,7 +224,7 @@ var teamHelper = (function() {
 
       if(!file.explicitlyTrashed) {
         $('#driveTeamFiles').append(
-              '<div class="col-md-3">'+
+              '<div id=' + file.id + ' class="col-md-3">'+
                 '<div class="feature-box-style2">'+
                   '<div class="feature-box-title">'+
                     '<i class="fa fa-file-text"></i>'+

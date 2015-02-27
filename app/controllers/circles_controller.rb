@@ -1,6 +1,7 @@
 class CirclesController < ApplicationController
 
-	before_action :get_circle, except: [:index, :create, :circles_names, :user_team_member_circles]
+	before_action :get_circle, except: [:index, :create, :circles_names]
+	before_filter :authorize_user, only: :show
 
 	def index
 		@circles = User.find_by(google_id: params[:user_google_id]).circles
@@ -32,12 +33,6 @@ class CirclesController < ApplicationController
 
 	def new
 		@circle = Circle.new
-	end
-
-	def user_team_member_circles
-		#move into circle names for 1landing call and team.share tokenInput
-		memberCircles = TeamMember.find(:all, :conditions => ["google_id LIKE ?", "%#{params[:user_google_id]}%"])
-		render json: memberCircles.to_json
 	end
 
 	def show
@@ -152,6 +147,22 @@ class CirclesController < ApplicationController
 	end
 
 	private
+
+	def authorize_user
+		if !session[:user_google_id]
+			redirect_to root_path
+		else
+			if @circle.user_id == current_user.id
+				return true
+			else
+				if @circle.team_members.where(google_id: session[:user_google_id]).present?
+					return true
+				else
+					redirect_to root_path
+				end
+			end
+		end
+	end
 
 	def get_circle
 		@circle = Circle.find(params[:id])
