@@ -39,13 +39,27 @@ class CalendarEventsController < ApplicationController
     # Creates an event.
     start = DateTime.parse(params[:event][:start_time])
     endT = DateTime.parse(params[:event][:end_time])
+
+    emails = []
+    event_circle_invites = params[:event][:attendee_team_ids] unless params[:event][:attendee_team_ids].blank?
     
-    # to add attendees present and extendproperties for teams/circles
+    if event_circle_invites
+         circle_ids = event_circle_invites.split(%r{,\s*})
+         circle_ids.each do |id| 
+            members = Circle.find(id.to_i).team_members
+            members.each do |user|
+                email = User.find_by(google_id: user.google_id).email
+                emails << email
+            end
+         end
+    end
+
     event = {
 
         'summary' => params[:event][:summary],
         'location' => params[:event][:location],
         'description' => params[:event][:description],
+        'hangoutLink' => params[:event][:hangout_link],
         'start' => {
           'dateTime' => start
         },
@@ -62,8 +76,15 @@ class CalendarEventsController < ApplicationController
         
     }
 
+    if emails.count >= 1 
+        event['attendees'] = []
+        emails.each do |email|
+          event['attendees'] << {'email' => email}
+        end
+    end
+
     response = $client.execute(:api_method => @calendar.events.insert,
-                              :parameters => {'calendarId' => params[:calendar_id]},
+                              :parameters => {'calendarId' => params[:calendar_id], 'sendNotifications' => true},
                               :body => JSON.dump(event),
                               :headers => {'Content-Type' => 'application/json'})
     # render json: response.data.to_json
@@ -71,7 +92,7 @@ class CalendarEventsController < ApplicationController
 
     if response.data['error']
       respond_to do |format|
-        redirect_to root_path, notice: 'SomethingWent Wrong'
+        format.js  { @event = "SomethingWentWrong" }
       end
     else 
       respond_to do |format|

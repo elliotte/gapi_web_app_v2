@@ -14,10 +14,18 @@ class CirclesController < ApplicationController
 		user = User.find_by(google_id: session[:user_google_id])
 	    circle_names = []
 	    if user.present?
+	    	#fetch teams user owns
 		    circles = user.circles.where("display_name ilike ?", "%#{params[:q]}%").order('display_name ASC')
 		    circles.each do |circle|
 		      circle_names.push({ id: circle.id, name: circle.display_name})
 		    end
+			#fetch teams user is a member of
+		    memberCircles = TeamMember.find(:all, :conditions => ["google_id LIKE ?", "%#{session[:user_google_id]}%"])
+			circle_ids = []
+			memberCircles.each do |c|
+				name = Circle.find(c.circle_id).display_name
+				circle_names.push({id: c.circle_id, name: name})
+			end
 		end
 	    render json: circle_names.to_json
   	end

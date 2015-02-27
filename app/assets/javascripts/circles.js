@@ -73,22 +73,6 @@ var teamHelper = (function() {
       });
     },
     /**
-     * Calls the server endpoint to get the Circle Files.
-     */
-    circleFiles: function() {
-      $.ajax({
-        type: 'GET',
-        url: '/files/circle_files',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: {id: $("#circle_id").text()},
-        success: function(result) {
-          console.log(result);
-          teamHelper.getCircleFiles(result);
-        }
-      });
-    },
-    /**
      * get circle members from DB.
      */
     getCircleMembers: function(members) {
@@ -113,6 +97,22 @@ var teamHelper = (function() {
         $('#noCircleMembers').show();
       }
     },
+     /**
+     * Calls the server endpoint to get the Circle Files.
+     */
+    circleFiles: function() {
+      $.ajax({
+        type: 'GET',
+        url: '/files/circle_files',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: {id: $("#circle_id").text()},
+        success: function(result) {
+          console.log(result);
+          teamHelper.getCircleFiles(result);
+        }
+      });
+    },
     /**
      * get circle files from DB.
      */
@@ -120,6 +120,9 @@ var teamHelper = (function() {
       var circleFilesCount = 0;
       $('#driveTeamFiles').empty();
       for (var f in files) {
+        if(circleFilesCount%4 == 1) {
+            $('#driveTeamFiles').append('<div class="row">');
+        }
         circleFilesCount++;
         $('#driveTeamFiles').show();
         file = files[f];
@@ -130,13 +133,17 @@ var teamHelper = (function() {
           contentType: 'application/json',
           success: function(result) {
             if (!result.error) {
-              teamHelper.appendCircleFiles(result);
+              teamHelper.appendCircleFile(result);
             } else {
               console.log('moneaMsg TeamFile ' + result.error.message + ' <fileID');
             }
           }
         });
-      }
+        if(circleFilesCount%4 == 0) {
+            $('#driveTeamFiles').append('</div>');
+        }
+      }//END OF FOR LOOP
+
       if(circleFilesCount == 0){
         $('#noDriveTeamFiles').show();
       }
@@ -161,6 +168,7 @@ var teamHelper = (function() {
      * Displays circle members retrieved from DB.
      */
     appendCircleMembers: function(member) {
+      
       if(member.gender == "male") {
         $('#circleMembers').append(
           '<div id="'+member.id+'" class="col-md-3">'+
@@ -212,38 +220,39 @@ var teamHelper = (function() {
     /**
      * Displays circle files retrieved from DB.
      */
-    appendCircleFiles: function(file) {
+    appendCircleFile: function(file) {
+
       if(!file.explicitlyTrashed) {
         $('#driveTeamFiles').append(
-          '<div class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-file"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<p>Owner: ' + file.ownerNames[0] + '</p>'+
-                '<h3>'+
-                  '<a href="' + file.alternateLink + '" target="_blank">' + file.title + '</a>'+
-                  '<ul class="project-details">'+
-                    '<li>'+
-                      '<img src="' + file.thumbnailLink + '" alt="screen" style="width: 100px;height: 75px;"/>'+
-                    '</li>'+
-                  '</ul>'+
-                '</h3>'+
-                '<p>'+
+              '<div class="col-md-3">'+
+                '<div class="feature-box-style2">'+
+                  '<div class="feature-box-title">'+
+                    '<i class="fa fa-file-text"></i>'+
+                  '</div>'+
+                  '<div class="feature-box-containt">'+
+                    '<p>Owner: '+ file.ownerNames[0] + '</p>'+
+                    '<h3>'+
+                      '<a href="' + file.alternateLink + '" target="_blank">' + file.title + '</a>'+
+                      '<ul class="project-details">'+
+                        '<li>'+
+                          '<img src="' + file.thumbnailLink + '" alt="screen" style="width: 100px;height: 75px;"/>'+
+                        '</li>'+
+                      '</ul>'+
+                    '</h3>'+
+                    '<p>'+
                       ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/copy"><i class="fa fa-copy"></i></a>'+
                       ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
-                '</p>'+
-                '<p style="margin-bottom: 10px;">'+
+                    '</p>'+
+                    '<p style="margin-bottom: 10px;">'+
                       ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + file.id + '/share">Teams.share</a>'+
                       ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+file.alternateLink+'">Users.share</a>'+
-                 '</p>'+
+                    '</p>'+
                     //appends after this code block..
-                '<div id="export-links-' + file.id + '"></div>'+
-              '</div>'+
-            '</div>'+
-          '</div>'
+                    '<div id="export-links-' + file.id + '"></div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'
         );
         if(file.exportLinks){
           var st = "#export-links-"+file.id

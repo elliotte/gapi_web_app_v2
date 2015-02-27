@@ -122,19 +122,21 @@
 				                        <!-- feature-box-style2 -->
 				                        <% if @messages.count > 0 %>
 					                        <% @messages.each do |m| %>
-					                        <div id="message-<%= m.id %>" class="feature-box-style2">
-					                            <!-- feature-box-title -->
-					                            <div class="feature-box-title">
-					                                <!-- icon -->
-					                                <i class="fa fa-comment" style="background-color:grey;"></i>
-					                            </div><!-- /feature-box-title -->
-					                            <!-- feature-box-containt -->
-					                            <div class="feature-box-containt">
-					                               	<p><%= m.text %></p>
-					                               	<p><%= m.added_by %></p>
-				                               		<p><a data-id="<%= m.id %>" data-item="message" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>
-					                            </div><!-- /feature-box-containt -->
-					                        </div><!-- /feature-box-style2 -->
+						                    <div class="col-md-6">
+						                        <div id="message-<%= m.id %>" class="feature-box-style2">
+						                            <!-- feature-box-title -->
+						                            <div class="feature-box-title">
+						                                <!-- icon -->
+						                                <i class="fa fa-comment" style="background-color:grey;"></i>
+						                            </div><!-- /feature-box-title -->
+						                            <!-- feature-box-containt -->
+						                            <div class="feature-box-containt">
+						                               	<p><%= m.text %></p>
+						                               	<p><%= m.added_by %></p>
+					                               		<p><a data-id="<%= m.id %>" data-item="message" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>
+						                            </div><!-- /feature-box-containt -->
+						                        </div><!-- /feature-box-style2 -->
+						                    </div>  <!-- END OF MD-6 -->
 					                        <% end %>
 					                    <% else %>
 					                    	<div class="feature-box-style2">
@@ -156,22 +158,24 @@
 				                    <div class="col-md-6" id="circle-wallpins-container">
 				                      <% if @wallpins.count > 0 %>
 				                      	<% @wallpins.each do |wp| %>
-				                        <div id="pin-<%= wp.id %>" class="feature-box-style2">
-				                            <!-- feature-box-title -->
-				                            <div class="feature-box-title">
-				                                <!-- icon -->
-				                                <i class="fa fa-thumb-tack" style="background-color:grey;"></i>
-				                            </div><!-- /feature-box-title -->
-				                            <!-- feature-box-containt -->
-				                            <div class="feature-box-containt">
-				                               	<p><%= wp.summary %></p>
-				                               	<% if wp.file_link %>
-				                               		<p><a href="<%= wp.file_link %>" target="_blank">LinkToFile</a></p>
-				                                <% end %>
-				                               	<p><% wp.added_by %></p>
-			                               		<p><a data-id="<%= wp.id %>" data-item="pin" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a> <a data-id="<%= wp.id %>" data-item="pin" class="btn btn-primary destroy-item"><i class="fa fa-calendar-o"></i></a><p>
-				                            </div><!-- /feature-box-containt -->
-				                        </div><!-- /feature-box-style2 -->
+				                      	<div class="col-md-6">
+					                        <div id="pin-<%= wp.id %>" class="feature-box-style2">
+					                            <!-- feature-box-title -->
+					                            <div class="feature-box-title">
+					                                <!-- icon -->
+					                                <i class="fa fa-thumb-tack" style="background-color:grey;"></i>
+					                            </div><!-- /feature-box-title -->
+					                            <!-- feature-box-containt -->
+					                            <div class="feature-box-containt">
+					                               	<p><%= wp.summary %></p>
+					                               	<% if wp.file_link %>
+					                               		<p><a href="<%= wp.file_link %>" target="_blank">LinkToFile</a></p>
+					                                <% end %>
+					                               	<p><% wp.added_by %></p>
+				                               		<p><a data-id="<%= wp.id %>" data-item="pin" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a> <a data-id="<%= wp.id %>" data-item="pin" class="btn btn-primary destroy-item"><i class="fa fa-calendar-o"></i></a><p>
+					                            </div><!-- /feature-box-containt -->
+					                        </div><!-- /feature-box-style2 -->
+					                     </div><!-- /col-md-6 -->
 				                        <% end %>
 				                      <% else %>
 				                      	<div class="feature-box-style2">

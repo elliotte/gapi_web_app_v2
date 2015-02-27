@@ -75,19 +75,20 @@
 						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
 						Location: <%= text_field_tag "event[location]", "", class: "form-control", placeholder: "Location" %>
 						Attendees :-
-						Name: <%= text_field_tag "event[attendee_id_1]", "", class: "form-control", id: "search_calendar_ppl" %>
+						ByTeam: <%= text_field_tag "event[attendee_team_ids]", "", class: "form-control", id: "search_calendar_ppl" %>
 						Others :-
-						Status: <%= text_field_tag "event[status]", "confirmed", class: "form-control", placeholder: "Status" %>
-						Visibility: <%= text_field_tag "event[visibility]", "default", class: "form-control", placeholder: "Visibility" %>
+						<br>
+						HangoutLink: <%= text_field_tag "event[hangout_link]", "", class: "form-control", placeholder: "paste Link" %>
           				<%= hidden_field_tag "event[circle_id]", params[:id] %>
           				<br>
-          				<%= submit_tag "Add", class: "btn btn-main-o" %>
+          				<%= submit_tag "Add", class: "btn btn-primary" %>
 					</div>
 				<% end %>
+				
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button id="add-another-event" class="btn btn-primary" aria-hidden="true">Add Another</button>
+				<button id="add-another-event" style="display:none" class="btn btn-primary" aria-hidden="true">Add Another</button>
 			</div>
 		</div>
 	</div>

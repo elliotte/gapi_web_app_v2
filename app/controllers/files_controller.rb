@@ -37,7 +37,7 @@ class FilesController < ApplicationController
 	    	:media => media,
 	    	:parameters => {
 	      		'uploadType' => 'multipart',
-	      		'alt' => 'json'})
+	      		'alt' => 'json' })
 
 	  	if params[:circle_id].present?
 		  	TeamFile.create(circle_id: params[:circle_id], file_id: response.data.id)
@@ -55,7 +55,7 @@ class FilesController < ApplicationController
 
 						result = $client.execute(:api_method => @drive.permissions.insert,
 											    :body_object => new_permission,
-											    :parameters => { 'fileId' => response.data.id })
+											    :parameters => { 'fileId' => response.data.id, 'emailMessage' => 'Shared via monea.build' })
 		    		end
 		    	end
 		    end

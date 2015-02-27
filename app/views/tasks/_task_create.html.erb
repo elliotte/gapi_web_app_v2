@@ -10,8 +10,9 @@
           <%= hidden_field_tag "task_list_id", task_list_id %>
           Title: <%= text_field_tag "task[title]", "", class: "form-control", placeholder: "Title" %>
           Notes: <%= text_field_tag "task[notes]", "", class: "form-control", placeholder: "Notes" %>
-          Due Date: <%= text_field_tag "task[due]", "", class: "form-control", placeholder: "Due Date" %>
+          Due: <%= text_field_tag "task[due]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "form-control" %>
           <%= hidden_field_tag "task[circle_id]", "" %>
+
           <br>
           <%= submit_tag "Add ToDo", class: "btn btn-main-o" %>
         <% end %>
