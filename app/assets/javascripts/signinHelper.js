@@ -16,7 +16,6 @@ var helper = (function() {
          this.authResult = authResult; 
          //make call and/or check serverside client auth/state
          helper.connectServer();
-         foodHelper.loadLandingFeeds();
     },
     /**
      * Calls the server endpoint to connect the app for the user.
@@ -57,8 +56,8 @@ var helper = (function() {
                console.log('wooooooooo success valid result returned from serverEndPoint');
               
                helper.circles();
+               foodHelper.loadLandingFeeds();
                helper.fireServerCalls();
-
             }
 
         },
@@ -90,6 +89,8 @@ var helper = (function() {
           //loads tasks after tasklist
           helper.calendar();
           helper.files();
+          
+
     },
     /**
      * Calls the server endpoint to disconnect the app for the user.
@@ -660,6 +661,7 @@ var helper = (function() {
       $('#authOps').show('slow');
       $('#loader-wheel').hide();
       $('#share-button').show();
+      //foodHelper.loadLandingFeeds();
     },
     /**
      * ENNNNNDDDD OF HELPERS.FUNCTIONS.

@@ -38,6 +38,8 @@ function onSignInCallback(authResult) {
 
                gapi.client.load('plus','v1', JSProfileCallBack);
 
+
+
                function JSProfileCallBack() {
 
                       var request = gapi.client.plus.people.get( {'userId' : 'me'} );

@@ -38,4 +38,3 @@
 //= require circles
 //= require userHelper
 //= require loadertransformer
-//= require foodFeeds
