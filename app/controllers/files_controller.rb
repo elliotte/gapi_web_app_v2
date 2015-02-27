@@ -171,6 +171,7 @@ class FilesController < ApplicationController
   	end
 
   	def share_files
+  		#new to add permissions??
   		if params[:teams].present?
 	        teams = params[:teams].split(',')
 	        teams.each do |team|
