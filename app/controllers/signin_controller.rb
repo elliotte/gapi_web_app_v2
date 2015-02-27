@@ -35,33 +35,25 @@ class SigninController < ApplicationController
       end
     end
 
-    if !session[:user_google_id]
-      reset_session
-      render json: 'Something went wrong finding the user googleID in session'.to_json
-    end
+    $client.authorization.access_token = session[:token]
+    @plus = $client.discovered_api('plus', 'v1')
 
-    @user =  User.find_or_create_by(google_id: session[:user_google_id])
-   
-    if @user
-
-        $client.authorization.access_token = session[:token]
-        @plus = $client.discovered_api('plus', 'v1')
-
-        response = $client.execute(@plus.people.get,
-                                  {'userId'=> 'me'}).data
-        result = JSON.parse(response.to_json)
-        
-        if result.has_key?('error')
-          $client.authorization.access_token = nil
-          render json: 'error in google client user credentials'.to_json
-        else
-          render json: result.to_json
-        end
-
-    else
+    response = $client.execute(@plus.people.get,
+                              {'userId'=> 'me'}).data
+    result = JSON.parse(response.to_json)
+    
+    if result.has_key?('error')
       $client.authorization.access_token = nil
       reset_session
-      render json: 'Something went wrong find the user using the session_ID'.to_json
+      render json: 'error in google client user credentials'.to_json
+    else
+      @user = User.find_by(google_id: session[:user_google_id])
+      if !@user
+        User.join_and_create(session[:user_email], session[:user_google_id])
+        render json: result.to_json
+      else
+        render json: result.to_json
+      end
     end
    
   end
