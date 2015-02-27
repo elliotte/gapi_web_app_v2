@@ -178,7 +178,7 @@ class FilesController < ApplicationController
 	        	TeamFile.create(circle_id: team, file_id: params[:file_id])
 	        end
 	    end
-	    redirect_to root_path
+	   	redirect_to root_path
   	end
 
 	def touch
