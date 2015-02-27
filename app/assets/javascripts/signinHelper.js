@@ -16,7 +16,7 @@ var helper = (function() {
          this.authResult = authResult; 
          //make call and/or check serverside client auth/state
          helper.connectServer();
-
+         foodHelper.loadLandingFeeds();
     },
     /**
      * Calls the server endpoint to connect the app for the user.
@@ -104,7 +104,7 @@ var helper = (function() {
           console.log('revoke response: ' + result);
           var shareButton = document.getElementById('share-button')
           
-          $('#authOps').remove();
+          $('#authOps').hide();
 
           if (shareButton.style.display = 'block' ) {
                shareButton.style.display = 'none';

@@ -28,9 +28,7 @@ function onSignInCallback(authResult) {
             $('#signin-in-error-modal-body').empty();
             $('#modal-window-signin-error').modal('show');
             $('#signin-in-error-modal-body').append( 
-                '<p>' + 'Click Button To Grant Access or Reload Page' + '</p>' +
-                '<p>' + 'OR' + '</p>' +
-                '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                '<p>' + 'Click G-SignIn Button To Grant Access or Reload Page' + '</p>'
             );
 
             helper.disconnectServer();
@@ -68,7 +66,9 @@ function onSignInCallback(authResult) {
                             helper.appendProfile(profile);
                             //connects and verifies ServerSide client connection
                             helper.onSignInCallback(authResult);
-                            foodHelper.loadLandingFeeds();
+                            
+
+
 
                           }
 

@@ -1,4 +1,3 @@
-
 var foodHelper = (function() {
   
   return {
@@ -16,39 +15,49 @@ var foodHelper = (function() {
 
 function loadFeed(element, index, array) {
       
+            
       var feed = new google.feeds.Feed(element);
       feed.setNumEntries(10)
 
       feed.load(function(result) {
-        
           if (!result.error) {
               for (var i = 0; i < result.feed.entries.length; i++) {
                 var entry = result.feed.entries[i];
-                var container = "";
+                console.log(entry)
+
                 if (entry.link.indexOf('bbc.co.uk') > -1) {
                      var container = document.getElementById("bbc-feed");
+                     appendFeed(container, entry)
                 } else {
                      var container = document.getElementById("more-feed");
+                     appendFeed(container, entry)
                 }
-
-                var storyLink = document.createElement("a");
-                storyLink.appendChild(document.createTextNode(entry.title));
-                storyLink.href = entry.link
-                storyLink.setAttribute('target', '_blank')
-
-                var snippet = document.createElement("p");
-                if (entry.link.indexOf('account') > -1) {
-                     snippet.appendChild(document.createTextNode("No-snippet"))
-                } else {
-                      snippet.appendChild(document.createTextNode(entry.contentSnippet))
-                }
-
-                container.appendChild(storyLink);
-                container.appendChild(snippet);
+                
               };
           }
         
       });
 };
+
+
+function appendFeed(container, entry) {
+
+      var storyLink = document.createElement("a");
+      storyLink.appendChild(document.createTextNode(entry.title));
+      storyLink.href = entry.link
+      storyLink.setAttribute('target', '_blank')
+
+      var snippet = document.createElement("p");
+      if (entry.link.indexOf('account') > -1) {
+           snippet.appendChild(document.createTextNode("No-snippet"))
+      } else {
+           snippet.appendChild(document.createTextNode(entry.contentSnippet))
+      }
+
+      container.appendChild(storyLink);
+      container.appendChild(snippet);
+
+};
+
 
 

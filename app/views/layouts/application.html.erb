@@ -9,11 +9,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript">
-          google.load("feeds", "1");
-  </script>
+  <%= javascript_include_tag 'http://www.google.com/jsapi'.sub('.js', '') %>
+  <%= javascript_include_tag 'googleFeeds' %>
+  
   <%= csrf_meta_tags %>
+  
 </head>
 <body>
 
