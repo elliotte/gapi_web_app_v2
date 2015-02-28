@@ -1,21 +1,3 @@
-// function getPersonEmail(id) {
-	
-// 	route = '/peoples/' + id
-
-// 	var response = 'no-email';
-// 	$.ajax({ type: "GET",   
-// 	         url: route,   
-// 	         async: false,
-// 	         success : function(text)
-// 	         {
-// 	            if (typeof text.emails !== "undefined") {
-// 				    response = text.emails[0]['value']
-// 				}
-// 				return
-// 	         }
-// 	});
-// 	return response
-// };
 
 $(document).ready(function () {
 
@@ -29,8 +11,8 @@ $(document).ready(function () {
 		$("#modal-window-quick-create-event").modal("show");
 	});
 	$("#add_event").click(function() {
-		$("#modal-window-create-event").modal("show");
-		 //to add tokenInput
+		 $("#modal-window-create-event").modal("show");
+		 
    		 $("#search_calendar_ppl").tokenInput("/circles/circles_names.json", {
       		theme: "facebook",
       		crossDomain: false,
@@ -39,6 +21,8 @@ $(document).ready(function () {
     	$(".token-input-dropdown-facebook").css("z-index","9999")
 
 	});
+
+
 
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
@@ -72,6 +56,9 @@ $(document).ready(function () {
 	// $("#create_team_event").click(function() {
 	// 	$("#modal-window-create-circle-event").modal("show");
 	// });
+	$('#create_button_circle_member_search').click(function(){
+	    $('#add_circle_member_search_form').submit();
+	});
 	$("#create_team_message").click(function() {
 		$("#modal-window-circle-add-message").modal("show");
 	});
@@ -87,48 +74,32 @@ $(document).ready(function () {
 		$('#circle_item_type').val($(this).data('item'));
 	});
 
-	$('#create_button_circle_member_search').click(function(){
-	    $('#add_circle_member_search_form').submit();
+	$("#search-glyphicon").on("click", function() {
+		text = $('#search_p').val()
+		$.ajax({
+          type: 'GET',
+          url: '/peoples/search',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: {query: text},
+          success: function(result) {
+          	results = JSON.parse(result).items
+            userHelper.appendPeopleSearch(results);
+          }
+        });
 	});
-	$('#create_button_circle_event').click(function(){
-		$('form#create_circle_event_form .error').remove();
-	    var hasError = false;
-	    $('form#create_circle_event_form .requiredField').each(function () {
-	      	if (jQuery.trim($(this).val()) === '') {
-	        	$(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-	        	$(this).addClass('inputError');
-	        	hasError = true;
-	      	} else if ($(this).hasClass('email')) {
-                var emailReg = /^([\w-\.]+@([\w]+\.)+[\w]{2,4})?$/;
-                if (!emailReg.test(jQuery.trim($(this).val()))) {
-                    $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-                    $(this).addClass('inputError');
-                    hasError = true;
-                }
-            }
-	    });
-	    if (hasError) {
-	      	return false;
-	    } else {
-	    	$('#create_circle_event_form').submit();
-	    }
+
+	$("#search_files").click(function() {
+		$("#search_files_box").empty();
+		$("#modal-window-quick-search-files").modal("show");
+		$("#search_files_box").tokenInput("/files/search_files.json", {
+      		theme: "facebook",
+      		crossDomain: false,
+      		hintText: "Enter search text"
+    	 });
+    	$(".token-input-dropdown-facebook").css("z-index","9999")
 	});
-	$('#create_button_circle_task').click(function(){
-		$('form#create_circle_task_form .error').remove();
-	    var hasError = false;
-	    $('form#create_circle_task_form .requiredField').each(function () {
-	      	if (jQuery.trim($(this).val()) === '') {
-	        	$(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-	        	$(this).addClass('inputError');
-	        	hasError = true;
-	      	}
-	    });
-	    if (hasError) {
-	      	return false;
-	    } else {
-	    	$('#create_circle_task_form').submit();
-	    }
-	});
+
 	$('#create_button_circle_document').click(function(){
 		$('form#create_circle_document_form .error').remove();
 	    var hasError = false;
@@ -206,19 +177,6 @@ $(document).ready(function () {
 	});
 
 });
-
-
-//$(document).keydown(function(e) {
-    // if (e.keyCode == 65 ) {
-    // 	$('#modal-window-friends-collaborate').modal('show');
-   	// 	 var friends = JSON.parse(localStorage.friends);
-   	// 	 console.log(friends);
-   	// 	 var modal = $('#people-collaborate-modal-body')
-   	// 	 $(friends).each(function(i) {
-   	// 	 	$(modal).append('<p>' + friends[i].displayName + '</p>');
-   	// 	 });
-    // };
-//});
 
 
 

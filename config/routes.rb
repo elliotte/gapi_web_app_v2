@@ -73,6 +73,7 @@ GooglePlay::Application.routes.draw do
       post :insert_new
       post :share_files
       get :circle_files
+      get :search_files
     end
   end
 

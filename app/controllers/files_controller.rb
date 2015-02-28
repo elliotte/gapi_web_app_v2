@@ -10,6 +10,8 @@ class FilesController < ApplicationController
 	    render json: response.data.to_json
 	end
 
+
+
 	def show
 	    render json: @response.data.to_json
 	end
@@ -229,7 +231,17 @@ class FilesController < ApplicationController
 	    render json: response.data.to_json
 	end
 
+	def search_files
 
+		response = $client.execute(:api_method => @drive.files.list, :parameters => {"q" => "title contains '#{params[:q]}'" })
+		files = []
+		response.data.items.each do |file|
+			files.push({ id: file.id, name: file.title})
+		end
+		
+		render json: files.to_json
+
+	end
 
 	private
 

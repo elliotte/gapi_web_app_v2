@@ -376,7 +376,6 @@ $(document).ready(function() {
         $.ajax({
           type: 'GET',
           url: '/peoples/monea_email_search',
-          //url: '/peoples/search',
           dataType: 'json',
           contentType: 'application/json',
           data: {query: $("#add_circle_member_form #query").val()},
