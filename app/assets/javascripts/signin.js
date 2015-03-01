@@ -38,8 +38,6 @@ function onSignInCallback(authResult) {
 
                gapi.client.load('plus','v1', JSProfileCallBack);
 
-
-
                function JSProfileCallBack() {
 
                       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
@@ -64,13 +62,10 @@ function onSignInCallback(authResult) {
                             helper.user_google_id = profile.id;
                             //for teamForms
                             $('#circle_user_id').val(profile.id);
-                            //Retrieves and renders the authenticated user's Google+ profile.
+                            //Renders the authenticated user's Google+ profile.
                             helper.appendProfile(profile);
                             //connects and verifies ServerSide client connection
                             helper.onSignInCallback(authResult);
-                            
-
-
 
                           }
 

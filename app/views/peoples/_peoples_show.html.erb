@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel" class="modal-text-center">Friends List</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="friend-networks-container">
           <% peoples.items.each_with_index do |people, index| %>
             <% if index%2 == 0 %>
               <div class="row">
@@ -18,7 +18,7 @@
                     <div class="feature-box-containt">
                       <h3><a href="<%= people.url %>" target="_blank"><%= people.displayName %></a></h3>
                       <p><a href="<%= people.url %>" target="_blank"><img src="<%= people.image.url %>"></a></p>
-                      <a class="btn btn-sm btn-primary" onclick="helper.loadHangOut(this)" data-id="<%= people.id %>">Video.call</a>
+                      <a class="btn btn-sm btn-primary" onclick="userHelper.addToTeam(this)" data-name="<%= people.displayName %>" data-id="<%= people.id %>">Team.add</a>
                       <br>
                     </div>
                   </div>
@@ -29,8 +29,17 @@
             <% end %>
           <% end %>
     </div>
+    <div class="modal-body" id="add-to-team-form" style="display:none;">
+      <h3>Choose which team to add: <span id="people-name-placeholder" ></span> to;</h3>
+      <%= form_tag(add_friend_to_team_peoples_path, :method => "post", remote: true) do %>
+              <%= hidden_field_tag "person_google_id", "" %>
+                <div class="form-group" style="margin-bottom: 0px;" id="add-to-which-team-container">
+                </div>
+              <%= submit_tag "Add", class: "btn btn-main-o" %>
+      <% end %>
+    </div>
     <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
 </div>

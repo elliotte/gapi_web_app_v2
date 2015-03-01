@@ -7,8 +7,33 @@ var userHelper = (function() {
     * Hides the sign-in button and connects the server-side app after
     * the user successfully signs in.
     */
-    joinTeam: function() {
+    addToTeam: function(person) {
       console.log('here')
+      console.log()
+      $('#friend-networks-container').fadeOut('slow');
+      $('#add-to-team-form').show('slow');
+      $('#person_google_id').val($(person).data('id'))
+      $('#people-name-placeholder').text($(person).data('name'))
+      $.ajax({
+        type: 'GET',
+        url: '/circles/circles_names',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(circles) {
+              
+          container = $('#add-to-which-team-container')
+          
+          for (c in circles) {
+              circle = circles[c]
+              html = '<input name="circle_id" type="checkbox" value="'+circle.id+'" style="margin-right: 7px;">'+
+                     '<p style="margin-right: 7px;">'+circle.name+'</p>'
+              container.append(html)
+          }
+
+        },
+      
+      });
+
     },
 
     appendPeopleSearch: function(search) {

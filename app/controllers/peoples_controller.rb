@@ -22,6 +22,40 @@ class PeoplesController < ApplicationController
 	    render json: JSON.parse(response).to_json
 	end
 
+	def add_friend_to_team
+		team = Circle.find(params[:circle_id])
+		person_g_id = params[:person_google_id]
+		user = User.find_by(google_id: person_g_id)
+		teamfiles = team.team_files
+		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
+		files_shared = false
+		if team_member.present?
+			team_member
+		else
+			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
+            if teamfiles.present?
+				drive = $client.discovered_api('drive', 'v2')
+              	teamfiles.each do |teamfile|
+              		files_shared = true
+	                new_permission = drive.permissions.insert.request_schema.new({
+	                  	'value' => user.email,
+	                  	'type' => "user",
+	                  	'role' => "reader"
+	                })
+
+                	result = $client.execute(:api_method => drive.permissions.insert,
+                        :body_object => new_permission,
+                		:parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => "Shared via monea.build within moneaTeam '#{team.display_name}' " })
+              		
+              	end
+            end
+        end
+	    respond_to do |format|
+	      	format.html
+	      	format.js { @team_member = team_member }
+	    end
+	end
+
 	def monea_email_search
 		# Search all public profiles.
 		response = User.find(:all, :conditions => ["email LIKE ?", "#{params[:query]}%"])
@@ -79,7 +113,7 @@ class PeoplesController < ApplicationController
 
 				                	result = $client.execute(:api_method => drive.permissions.insert,
 				                        :body_object => new_permission,
-				                        :parameters => { 'fileId' => teamfile.file_id })
+				                		:parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => 'Shared via monea.build' })
 				              	end
 				            end
 				        end
@@ -102,7 +136,7 @@ class PeoplesController < ApplicationController
 
 	                	result = $client.execute(:api_method => drive.permissions.insert,
 	                        :body_object => new_permission,
-	                        :parameters => { 'fileId' => teamfile.file_id })
+	                        :parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => 'Shared via monea.build' })
 	              	end
 	            end
 			  end

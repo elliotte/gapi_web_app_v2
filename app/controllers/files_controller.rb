@@ -6,11 +6,8 @@ class FilesController < ApplicationController
 	def index
     	# Get the list of files in drive
 	    response = $client.execute(:api_method => @drive.files.list)
-
 	    render json: response.data.to_json
 	end
-
-
 
 	def show
 	    render json: @response.data.to_json
@@ -142,7 +139,6 @@ class FilesController < ApplicationController
 	    respond_to do |format|
 	      	format.js { @div_id = params[:id] }
 	    end
-	    #redirect_to root_path
 	end
 
 	def destroy_show
@@ -204,7 +200,11 @@ class FilesController < ApplicationController
 				end
 	        end
 	    end
-	   	redirect_to root_path
+	    #to add success counter on permission share
+	   	respond_to do |format|
+	      	format.html 
+	      	format.js { @file_id = params[:file_id]}
+	    end
   	end
 
 	def touch
@@ -232,15 +232,12 @@ class FilesController < ApplicationController
 	end
 
 	def search_files
-
 		response = $client.execute(:api_method => @drive.files.list, :parameters => {"q" => "title contains '#{params[:q]}'" })
 		files = []
 		response.data.items.each do |file|
 			files.push({ id: file.id, name: file.title})
 		end
-		
 		render json: files.to_json
-
 	end
 
 	private

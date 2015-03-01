@@ -1,0 +1,11 @@
+$("#js-team-share-result-body").empty();
+
+fileID = '<%= @file_id %>'
+
+link = '<a href="https://docs.google.com/file/d/'+fileID+'/edit?usp=drivesdk" target="_blank">View</a>'
+
+html = '<p>' + 'Success shared with your teams.' + '</p>' + 
+	   '<p>' + link + '</p>'
+
+$("#js-team-share-result-body").html(html);
+

@@ -1,0 +1,11 @@
+$('#add-to-team-form').empty()
+team_name = '<%= Circle.find(@team_member.circle_id).display_name %>';
+circle_id = '<%= @team_member.circle_id %>'
+// team_name = 'hello';
+// circle_id = 'hello'
+$('#add-to-team-form').append(
+
+		'<p>' + 'Success, your friend has been added to the team, to go to the moneaTeam Page click the below link' + '</p>' +
+		'<p>' + '<a href="/circles/'+circle_id+' " target="_blank">' + team_name + '</a>' + '</p>'
+
+);

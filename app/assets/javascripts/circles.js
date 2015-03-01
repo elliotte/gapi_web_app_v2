@@ -32,29 +32,34 @@ var teamHelper = (function() {
       });
       
       teamHelper.loadPage();
-      $('#authOps').show('slow');
-      $('#gConnect').hide();
-      $('#share-button').show();
+      
     },
 
     loadPage: function() {
         teamHelper.circleMembers();
         teamHelper.circleFiles();
+        teamHelper.teams();
+        $('#authOps').show('slow');
+        $('#gConnect').hide();
+        $('#share-button').show();
     },
 
-     // dont delete use for retrieving userCal events extendedProperties circleID
-     /*
-       * Calls the server endpoint to get the list of events in calendar.
-     */
-    calendar: function() {
+    teams: function() {
+      //no google_id uses session - call fired after auth and sess set
       $.ajax({
         type: 'GET',
-        url: '/calendars/primary/events',
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function(result) {
-          console.log(result);
-        },
-        processData: false
+        url: '/circles/circles_names',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(circles) {
+          for (i = 0; i < 5; i++) {
+              circle = circles[i];
+              console.log(circle)
+              $('#side-menu-container').append(
+                '<li><a href="/circles/'+ circle.id +'"><i class="fa fa-users"></i>'+ circle.name +'</a></li>'
+              )
+            };
+        }
       });
     },
     /**

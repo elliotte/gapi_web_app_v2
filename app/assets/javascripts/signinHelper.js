@@ -72,7 +72,8 @@ var helper = (function() {
                     '<p>' + 
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
-                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
+                    '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                 );
                
                 loaderWheel.style.display = 'none';
@@ -88,7 +89,6 @@ var helper = (function() {
           //loads tasks after tasklist
           helper.calendar();
           helper.files();
-          
 
     },
     /**
