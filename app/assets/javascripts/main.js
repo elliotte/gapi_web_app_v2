@@ -101,6 +101,7 @@ $(document).ready(function () {
 	    });
 	});
 
+	// two seaerch modals and forms..
 	$("#search_files").click(function() {
 		$("#modal-window-quick-search-files").modal("show");
 		$("#search_files_box").tokenInput("/files/search_files.json", {

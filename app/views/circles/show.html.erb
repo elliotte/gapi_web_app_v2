@@ -209,6 +209,7 @@
 				                        <!-- main-title -->
 				                        <div class="main-title">
 				                            <h2>Team Files</h2>
+				                            <a id="search_files" class="btn btn-sm btn-primary">Files.search</a>
 				                        </div><!-- /main-title -->
 				                    </div><!-- /section-title -->
 						        </div><!-- /col-md-12 -->
@@ -265,6 +266,7 @@
 
 							<div id="circle_id" class="hide"><%= params[:id] %></div>
 							<div id="state" class="hide"><%= @state %></div>
+							<div id="team-owner" data-value="<%= @circle.user_id == @current_user.id %>"></div>
 							<%= render 'circle_modals' %>
 				        </div>
 	                </div><!-- /feature-boxs-wrapper -->
@@ -275,63 +277,3 @@
 </section><!-- /white section-->
 
 
-<div class="modal fade" id="modal-window-quick-create-event" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-medium-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Quickly Add Event</h3>
-				<p>Same principles as google quick add.</p>
-			</div>
-			<div id="quick-events-modal-body" class="modal-body">
-				<%= form_tag("/calendars/primary/events/quick_add", :method => "post", remote: true) do %>
-					<div class="form-group">
-						Text: <%= text_field_tag "event[text]", "", class: "form-control", placeholder: "e.g 10am deliver report", id: "text" %>
-						<%= hidden_field_tag "event[circle_id]", params[:id] %>
-					</div>
-				  <%= submit_tag "Add", class: "btn btn-main-o" %>
-				<% end %>
-			</div>
-			<div id="quick_create_event_footer" class="modal-footer" style="display:none;">
-				<button id="quick_create_button_close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="modal-window-create-event" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-default-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Create Event</h3>
-				<p>You can now create and share an event using moneaTeams</p>
-			</div>
-			<div id="js-add-event-content-body" class="modal-body">
-				<%= form_tag("/calendars/primary/events", :id => "create_event_form", :method => "post", remote: true) do %>
-					<div class="form-group">
-						Summary: <%= text_field_tag "event[summary]", "", class: "form-control", placeholder: "Summary" %>
-						Start Time: <%= text_field_tag "event[start_time]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "form-control", id: "start_time_event" %>
-						End Time: <%= text_field_tag "event[end_time]", "#{(DateTime.now+1.hour).strftime('%d/%m/%Y %H:%M')}", class: "form-control", placeholder: "End Time", id: "end_time_event" %>
-						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
-						Location: <%= text_field_tag "event[location]", "", class: "form-control", placeholder: "Location" %>
-						Attendees :-
-						ByTeam: <%= text_field_tag "event[attendee_team_ids]", "", class: "form-control", id: "search_calendar_ppl" %>
-						Others :-
-						<br>
-						HangoutLink: <%= text_field_tag "event[hangout_link]", "", class: "form-control", placeholder: "paste Link" %>
-          				<%= hidden_field_tag "event[circle_id]", params[:id] %>
-          				<br>
-          				<%= submit_tag "Add", class: "btn btn-primary" %>
-					</div>
-				<% end %>
-				
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button id="add-another-event" style="display:none" class="btn btn-primary" aria-hidden="true">Add Another</button>
-			</div>
-		</div>
-	</div>
-</div>

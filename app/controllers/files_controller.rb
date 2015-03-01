@@ -177,6 +177,7 @@ class FilesController < ApplicationController
   	end
 
   	def share_files
+  		
   		if params[:teams].present?
 	        teams = params[:teams].split(',')
 	        teams.each do |team|
@@ -194,6 +195,25 @@ class FilesController < ApplicationController
 					end
 	        end
 	    end
+	    if params[:search_files_box].present?
+
+	    	teams = [params[:circle_id]]
+	        teams.each do |team|
+	        		params[:file_id] = params[:search_files_box]
+	        		#teamFile array for share_team_files method flexbility
+	        		teamfile = [TeamFile.create(circle_id: team, file_id: params[:file_id])]
+	        		
+	        		circle = Circle.find(team)
+				  	team_members = circle.team_members
+
+				    if team_members.present?
+			    		team_members.each do |team_member|
+			    		user = User.find_by(google_id: team_member.google_id)
+			    		  Circle.share_team_files($client, user, teamfile)
+				    	end
+					end
+	        end
+  		end
 	    #to add success counter on permission share
 	   	respond_to do |format|
 	      	format.html 

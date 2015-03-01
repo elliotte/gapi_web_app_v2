@@ -184,7 +184,7 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
+                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
               '</div>'+
             '</div>'+
           '</div>'
@@ -199,8 +199,7 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                 '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
-              
+                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
               '</div>'+
             '</div>'+
           '</div>'
@@ -215,12 +214,17 @@ var teamHelper = (function() {
               '<div class="feature-box-containt">'+
                 '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
                 '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                '<p><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
+                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
               '</div>'+
             '</div>'+
           '</div>'
         );
       }
+      var owner = $('#team-owner').data('value');
+      if (owner) {
+        $('.team-member-delete').show();
+      }
+
     },
     /**
      * Displays circle files retrieved from DB.

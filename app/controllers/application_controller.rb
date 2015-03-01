@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 	  end
 
     def current_user
-      User.find_by(google_id: session[:user_google_id])
+      @current_user ||= User.find_by(google_id: session[:user_google_id])
     end
 
 end
