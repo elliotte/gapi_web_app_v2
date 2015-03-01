@@ -11,9 +11,10 @@ var userHelper = (function() {
       console.log('here')
       console.log()
       $('#friend-networks-container').fadeOut('slow');
-      $('#add-to-team-form').show('slow');
+      $('#add-to-team-form').fadeIn('slow');
       $('#person_google_id').val($(person).data('id'))
       $('#people-name-placeholder').text($(person).data('name'))
+      
       $.ajax({
         type: 'GET',
         url: '/circles/circles_names',
@@ -53,7 +54,6 @@ var userHelper = (function() {
       }
       for (var searchIndex in search) {
         people = search[searchIndex];
-        console.log(people)
         $('.search_result').append(
           '<div class="feature-boxs-wrapper">'+
             '<div class="feature-box-style2" style="margin: 0 0 5px 0;">'+
@@ -69,8 +69,9 @@ var userHelper = (function() {
             '</div>'+
           '</div>'
         );
+        
       }
-      $("#modal-window-circle-search-result").modal("show");
+      $("#modal-window-g-plus-search-result").modal("show");
 
     },
 

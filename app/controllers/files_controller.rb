@@ -1,6 +1,6 @@
 class FilesController < ApplicationController
 
-	before_action :discover_api
+	before_action :discover_api, except: [:share_files]
 	before_action :get_file, only: [:show, :update, :destroy_show, :copy_show]
 
 	def index
@@ -20,6 +20,7 @@ class FilesController < ApplicationController
 
 	def create
 		# Create the file in drive
+		#need to clean up without impacting main file creates and teamFile.new
 	  	file = @drive.files.insert.request_schema.new({
 	    	'title' => params[:file].original_filename,
     		'mimeType' => params[:file].content_type
@@ -179,31 +180,24 @@ class FilesController < ApplicationController
   		if params[:teams].present?
 	        teams = params[:teams].split(',')
 	        teams.each do |team|
-	        	TeamFile.create(circle_id: team, file_id: params[:file_id])
-	        	circle = Circle.find(team)
+	        		#teamFile array for share_team_files method flexbility
+	        		teamfile = [TeamFile.create(circle_id: team, file_id: params[:file_id])]
+	        		
+	        		circle = Circle.find(team)
 				  	team_members = circle.team_members
-				    if team_members.present?
-				    	team_members.each do |team_member|
-				    		user = User.find_by(google_id: team_member.google_id)
-				    		if user
-				    			new_permission = @drive.permissions.insert.request_schema.new({
-								    'value' => user.email,
-								    'type' => "user",
-								    'role' => "reader"
-								})
 
-								result = $client.execute(:api_method => @drive.permissions.insert,
-													    :body_object => new_permission,
-													    :parameters => { 'fileId' => params[:file_id], 'emailMessage' => 'Shared via monea.build' })
-				    		end
-				    end
-				end
+				    if team_members.present?
+			    		team_members.each do |team_member|
+			    		user = User.find_by(google_id: team_member.google_id)
+			    		  Circle.share_team_files($client, user, teamfile)
+				    	end
+					end
 	        end
 	    end
 	    #to add success counter on permission share
 	   	respond_to do |format|
 	      	format.html 
-	      	format.js { @file_id = params[:file_id]}
+	      	format.js { @file_id = params[:file_id] }
 	    end
   	end
 

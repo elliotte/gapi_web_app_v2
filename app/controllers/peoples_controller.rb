@@ -18,51 +18,9 @@ class PeoplesController < ApplicationController
 	    # Get a person's profile.
 	    response = $client.execute!(@plus.people.get,
 	                                :userId => params[:id]).body
-
 	    render json: JSON.parse(response).to_json
 	end
-
-	def add_friend_to_team
-		team = Circle.find(params[:circle_id])
-		person_g_id = params[:person_google_id]
-		user = User.find_by(google_id: person_g_id)
-		teamfiles = team.team_files
-		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
-		files_shared = false
-		if team_member.present?
-			team_member
-		else
-			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
-            if teamfiles.present?
-				drive = $client.discovered_api('drive', 'v2')
-              	teamfiles.each do |teamfile|
-              		files_shared = true
-	                new_permission = drive.permissions.insert.request_schema.new({
-	                  	'value' => user.email,
-	                  	'type' => "user",
-	                  	'role' => "reader"
-	                })
-
-                	result = $client.execute(:api_method => drive.permissions.insert,
-                        :body_object => new_permission,
-                		:parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => "Shared via monea.build within moneaTeam '#{team.display_name}' " })
-              		
-              	end
-            end
-        end
-	    respond_to do |format|
-	      	format.html
-	      	format.js { @team_member = team_member }
-	    end
-	end
-
-	def monea_email_search
-		# Search all public profiles.
-		response = User.find(:all, :conditions => ["email LIKE ?", "#{params[:query]}%"])
-
-	    render json: response
-	end
-
+	
 	def search
 		# Search all public profiles.
 		if params[:next_page_token].present?
@@ -92,61 +50,62 @@ class PeoplesController < ApplicationController
 		render json: @team_members
 	end
 
-	def add_people
-	    case 
-	    when !params[:user_id]
-			if params[:google_id].present?
-				params[:google_id].each do |google_id|
-					unless TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id).present?
-						team_member = TeamMember.create(circle_id: params[:circle_id], google_id: google_id)
-						user = User.find_by(google_id: google_id)
-						if user
-							drive = $client.discovered_api('drive', 'v2')
-							teamfiles = team_member.circle.team_files
-				            if teamfiles
-				              	teamfiles.each do |teamfile|
-					                new_permission = drive.permissions.insert.request_schema.new({
-					                  	'value' => user.email,
-					                  	'type' => "user",
-					                  	'role' => "reader"
-					                })
-
-				                	result = $client.execute(:api_method => drive.permissions.insert,
-				                        :body_object => new_permission,
-				                		:parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => 'Shared via monea.build' })
-				              	end
-				            end
-				        end
-					end
-				end
-			end
+	def add_friend_to_team
+		team = Circle.find(params[:circle_id])
+		person_g_id = params[:person_google_id]
+		user = User.find_by(google_id: person_g_id)
+		teamfiles = team.team_files
+		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
+		files_shared = false
+		
+		if team_member.present?
+			team_member
 		else
-		  user = User.find_by(id: params[:user_id])
-		  team_member = TeamMember.create(circle_id: params[:circle_id], google_id: user.google_id)
-		  if user
-			  	drive = $client.discovered_api('drive', 'v2')
-			  	teamfiles = team_member.circle.team_files
-			  	if teamfiles
-	              	teamfiles.each do |teamfile|
-		                new_permission = drive.permissions.insert.request_schema.new({
-		                  	'value' => user.email,
-		                  	'type' => "user",
-		                  	'role' => "reader"
-		                })
+			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
+            if teamfiles.present?
+            	Circle.share_team_files($client, user, teamfiles)
+            end
+        end
+	    respond_to do |format|
+	      	format.js { @team_member = team_member }
+	    end
 
-	                	result = $client.execute(:api_method => drive.permissions.insert,
-	                        :body_object => new_permission,
-	                        :parameters => { 'fileId' => teamfile.file_id, 'emailMessage' => 'Shared via monea.build' })
-	              	end
-	            end
-			  end
-		end
-		redirect_to circle_path(params[:circle_id])
+	end
+
+
+	def monea_email_search
+		# Search all emails in monea
+		response = User.find(:all, :conditions => ["email LIKE ?", "#{params[:query]}%"])
+	    render json: response
+	end
+
+	def add_people
+		## used for add user by email inside tam page
+		team = Circle.find(params[:circle_id])
+		user = User.find_by(id: params[:user_id])
+		person_g_id = user.google_id
+		teamfiles = team.team_files
+		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
+		files_shared = false
+		
+		if team_member.present?
+			team_member
+		else
+			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
+            if teamfiles.present?
+            	Circle.share_team_files($client, user, teamfiles)
+            end
+        end
+
+	    respond_to do |format|
+	      	format.js { @team_member = team_member }
+	    end
+
 	end
 
 	def remove_team_member
-		@member = TeamMember.find_by(circle_id: params[:circle_id], google_id: google_id)
-		if @member.destroy
+		@member = TeamMember.find_by(circle_id: params[:circle_id], google_id: params[:google_id])
+		if @member.destroy 
 			@message = "Success".to_json
 			render json: @message
 		else

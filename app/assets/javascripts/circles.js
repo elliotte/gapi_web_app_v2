@@ -39,7 +39,7 @@ var teamHelper = (function() {
         teamHelper.circleMembers();
         teamHelper.circleFiles();
         teamHelper.teams();
-        $('#authOps').show('slow');
+        $('#authOps').fadeIn('slow');
         $('#gConnect').hide();
         $('#share-button').show();
     },
@@ -125,10 +125,10 @@ var teamHelper = (function() {
       var circleFilesCount = 0;
       $('#driveTeamFiles').empty();
       for (var f in files) {
+        circleFilesCount++;
         if(circleFilesCount%4 == 1) {
             $('#driveTeamFiles').append('<div class="row">');
         }
-        circleFilesCount++;
         $('#driveTeamFiles').show();
         file = files[f];
         $.ajax({
@@ -228,6 +228,7 @@ var teamHelper = (function() {
     appendCircleFile: function(file) {
 
       if(!file.explicitlyTrashed) {
+     
         $('#driveTeamFiles').append(
               '<div id=' + file.id + ' class="col-md-3">'+
                 '<div class="feature-box-style2">'+
@@ -269,8 +270,10 @@ var teamHelper = (function() {
               '<a class="capitalize" href="' + file.exportLinks[key] + '" target="_blank">' + file.exportLinks[key].substring(file.exportLinks[key].lastIndexOf("=")+1,file.exportLinks[key].length) + '</a> '
             );
           });
-        }
-      }
+        };//EN OF EXPORT LINKS
+    
+      
+      }//END OF FILE APPEND
     },
 
     appendEmailSearchResult: function(search) {
@@ -364,6 +367,7 @@ var teamHelper = (function() {
 
 $(document).ready(function() {
   $('#disconnect').click(teamHelper.disconnectServer);
+  
   $('#create_button_circle_member').click(function(){
     $('form#add_circle_member_form .error').remove();
     var hasError = false;
@@ -376,6 +380,7 @@ $(document).ready(function() {
     });
     if (hasError) {
       return false;
+    
     } else {
         
         $.ajax({
@@ -392,17 +397,22 @@ $(document).ready(function() {
    
     }
   });
-  $('#next_button_circle_member_search').click(function(){
-    $.ajax({
-      type: 'GET',
-      url: '/peoples/search',
-      dataType: 'json',
-      contentType: 'application/json',
-      data: {query: $("#add_circle_member_form #query").val(), next_page_token: $("#add_circle_member_search_form #next_page_token").val()},
-      success: function(result) {
-        console.log(result);
-        teamHelper.appendSearchResult(result);
+  //TeamFiles.new submit html redirect after
+  $('#create_button_circle_document').click(function(){
+    $('form#create_circle_document_form .error').remove();
+      var hasError = false;
+      $('form#create_circle_document_form .requiredField').each(function () {
+          if (jQuery.trim($(this).val()) === '') {
+            $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
+            $(this).addClass('inputError');
+            hasError = true;
+          }
+      });
+      if (hasError) {
+          return false;
+      } else {
+        $('#create_circle_document_form').submit();
       }
-    });
   });
+
 });

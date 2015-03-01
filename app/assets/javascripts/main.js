@@ -21,9 +21,6 @@ $(document).ready(function () {
     	$(".token-input-dropdown-facebook").css("z-index","9999")
 
 	});
-
-
-
 	$("#new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
 	});
@@ -53,12 +50,6 @@ $(document).ready(function () {
 		$("#modal-window-add-circle-member").modal("show");
 
 	});
-	// $("#create_team_event").click(function() {
-	// 	$("#modal-window-create-circle-event").modal("show");
-	// });
-	$('#create_button_circle_member_search').click(function(){
-	    $('#add_circle_member_search_form').submit();
-	});
 	$("#create_team_message").click(function() {
 		$("#modal-window-circle-add-message").modal("show");
 	});
@@ -73,9 +64,11 @@ $(document).ready(function () {
 		$('#circle_item_id').val($(this).data('id'));
 		$('#circle_item_type').val($(this).data('item'));
 	});
-
+	// search google Plus profiles
 	$("#search-glyphicon").on("click", function() {
 		text = $('#search_p').val()
+		//sets for use if nextPageToken
+		$('#query').val(text)
 		$.ajax({
           type: 'GET',
           url: '/peoples/search',
@@ -83,14 +76,32 @@ $(document).ready(function () {
           contentType: 'application/json',
           data: {query: text},
           success: function(result) {
+          	token = JSON.parse(result)['nextPageToken']
           	results = JSON.parse(result).items
             userHelper.appendPeopleSearch(results);
+            //sets NextPageToken
+	        $('#googlePlus_search_form #next_page_token').val(token);
           }
         });
 	});
+	// gets nextPage of Search Results
+	$('#next_button_gplus_people_search').click(function(){
+	    $.ajax({
+	      type: 'GET',
+	      url: '/peoples/search',
+	      dataType: 'json',
+	      contentType: 'application/json',
+	      data: {query: $('#search_p').val(), next_page_token: $("#googlePlus_search_form #next_page_token").val()},
+	      success: function(result) {
+	      	token = JSON.parse(result)['nextPageToken']
+	        results = JSON.parse(result).items
+	        userHelper.appendPeopleSearch(results);
+	        $('#googlePlus_search_form #next_page_token').val(token);
+	      }
+	    });
+	});
 
 	$("#search_files").click(function() {
-		$("#search_files_box").empty();
 		$("#modal-window-quick-search-files").modal("show");
 		$("#search_files_box").tokenInput("/files/search_files.json", {
       		theme: "facebook",
@@ -98,23 +109,6 @@ $(document).ready(function () {
       		hintText: "Enter search text"
     	 });
     	$(".token-input-dropdown-facebook").css("z-index","9999")
-	});
-
-	$('#create_button_circle_document').click(function(){
-		$('form#create_circle_document_form .error').remove();
-	    var hasError = false;
-	    $('form#create_circle_document_form .requiredField').each(function () {
-	      	if (jQuery.trim($(this).val()) === '') {
-	        	$(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-	        	$(this).addClass('inputError');
-	        	hasError = true;
-	      	}
-	    });
-	    if (hasError) {
-	      	return false;
-	    } else {
-	    	$('#create_circle_document_form').submit();
-	    }
 	});
 
 	$('#quick_create_button_close').click(function(){
@@ -139,16 +133,6 @@ $(document).ready(function () {
 	$('#create_button_tasklist').click(function(){
 	    $('#create_tasklist_form').submit();
 	});
-
-	// cancelling time option so commented out for now..
-	// $('#start_time_event').datepicker({
-	//     format: "yyyy/mm/dd",
-	//     autoclose: true
-	// });
-	// $('#end_time_event').datepicker({
-	//     format: "yyyy/mm/dd",
-	//     autoclose: true
-	// });
 
 	$('#go-to-events').on('click', function(e) {
 		e.preventDefault();
@@ -175,6 +159,18 @@ $(document).ready(function () {
 		var top = $('#team-members-anchor').offset().top - 75
 		$('html, body').animate({ scrollTop: top }, 1500)
 	});
+
+	
+	// cancelling time option so commented out for now..
+	// $('#start_time_event').datepicker({
+	//     format: "yyyy/mm/dd",
+	//     autoclose: true
+	// });
+	// $('#end_time_event').datepicker({
+	//     format: "yyyy/mm/dd",
+	//     autoclose: true
+	// });
+
 
 });
 

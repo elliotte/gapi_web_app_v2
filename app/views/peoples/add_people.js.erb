@@ -1,0 +1,15 @@
+$('#monea-email-search-js-return-body').empty();
+
+if ('<%= @team_member %>' == "ERROR") {
+	
+	$('#monea-email-search-js-return-body').append(
+		'<p>' + 'Something went wrong, is the user a teamMember already?' + '</p>'
+	);
+
+} else {
+
+	$('#monea-email-search-js-return-body').append(
+		'<p>' + 'Success, your friend has been added to the team.' + '</p>' 
+	);
+}
+

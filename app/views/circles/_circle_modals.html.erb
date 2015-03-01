@@ -2,16 +2,17 @@
 
 <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
+<!-- search form new.ppl inside team page, email search -->
 <div class="modal fade" id="modal-window-add-circle-member" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 		    <div class="modal-header">
 		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		      	<h3 id="myModalLabel">Search</h3>
+		      	<h3 id="myModalLabel">Search monea Users</h3>
 		    </div>
 		    <div class="modal-body">
 		      	<%= form_tag(search_peoples_path, :id => "add_circle_member_form", class: "contactForm", :method => "get") do %>
-		      		You are searching by email
+		      		<p>You are searching by email</p>
 		        	<div class="form-group">
 		          		<label for="query">Search:</label>
 		          		<div class="controls">
@@ -29,6 +30,7 @@
 	</div>
 </div>
 
+<!-- email result modal for appending results into see Circles.js line 279 -->
 <div class="modal fade" id="modal-window-circle-members-result" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-search-width">
 		<div class="modal-content">
@@ -36,38 +38,40 @@
 		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		      	<h3 id="myModalLabel" style="text-align: center;">Search Email Result</h3>
 		    </div>
-		    <div class="modal-body">
-		    	<%= form_tag(add_people_peoples_path, :id => "add_circle_member_search_form", :method => "post") do %>
+		    <div class="modal-body" id="monea-email-search-js-return-body">
+		    	<%= form_tag(add_people_peoples_path, :id => "add_circle_member_search_form", :method => "post", remote: true) do %>
 		    		<%= hidden_field_tag "circle_id", params[:id] %>
 		    		<div id="search_result"></div>
+		    		<br>
+					<%= submit_tag "Add",  class: "btn btn-main-o" %>
 		    	<% end %>
-		    	<div class="hide">
-		    		<%= form_tag(search_peoples_path, :id => "add_circle_member_search_form", :method => "get") do %>
-		    			<%= hidden_field_tag "query", params[:query] %>
-		    			<%= hidden_field_tag "circle_id", params[:id] %>
-		    			<div id="next_results"></div>
-		    		<% end %>
-		    	</div>
-		    	<button class="btn btn-primary pull-right" id="next_button_circle_member_search">Next</button>
 		    </div>
 		    <div class="modal-footer">
-		      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		      <button class="btn btn-primary" id="create_button_circle_member_search">Add</button>
+		      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
 		    </div>
 	  	</div>
 	</div>
 </div>
 
-<div class="modal fade" id="modal-window-circle-search-result" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- for searching People in header box -->
+<div class="modal fade" id="modal-window-g-plus-search-result" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-search-width">
 		<div class="modal-content">
 		    <div class="modal-header">
 		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		      	<h3 id="myModalLabel" style="text-align: center;">Search Result</h3>
+		      	<h3 id="myModalLabel" style="text-align: center;">Search G+ People Result</h3>
 		    </div>
 		    <div class="modal-body">
 		    	 <div class="search_result"></div>
+		    	 <button class="btn btn-primary pull-right" id="next_button_gplus_people_search">Next</button>
 		    </div>
+		    <div class="hide">
+	    		<%= form_tag(search_peoples_path, :id => "googlePlus_search_form", :method => "get") do %>
+	    			<%= hidden_field_tag "query", "" %>
+	    			<%= hidden_field_tag "next_page_token", "" %>
+	    		<% end %>
+		   	</div>
+
 		    <div class="modal-footer">
 		      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 		    </div>
