@@ -14,7 +14,7 @@ var helper = (function() {
          console.log('authResult HelperCallBack', authResult);
          // The user has JSAPI verified authentication
          this.authResult = authResult; 
-         //make call and/or check serverside client auth/state
+         //make server and/or check serverside client auth/state
          helper.connectServer();
     },
     /**

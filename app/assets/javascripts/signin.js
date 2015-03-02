@@ -63,6 +63,8 @@ function onSignInCallback(authResult) {
 
                              signInButton.style.display = 'block';
                              loaderWheel.style.display = 'none';
+                             
+                             gapi.auth.signOut();
 
                           } else {
 
