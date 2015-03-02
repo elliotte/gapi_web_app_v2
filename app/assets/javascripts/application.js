@@ -32,9 +32,9 @@
 //= require bootstrap-datepicker
 //= require mine
 //= require jquery.tokeninput
-//= require main
 //= require signin
 //= require signinHelper
 //= require circles
 //= require userHelper
 //= require loadertransformer
+//= require main

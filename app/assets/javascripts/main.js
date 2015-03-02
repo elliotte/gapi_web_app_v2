@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-	$('#disconnect').click(helper.disconnectServer);
+	//$('#disconnect').click(helper.disconnectServer);
 
 	$("#go-home").click(function(e) {
 		e.preventDefault();

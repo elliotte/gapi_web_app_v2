@@ -40,12 +40,13 @@ class SigninController < ApplicationController
 
     response = $client.execute(@plus.people.get,
                               {'userId'=> 'me'}).data
+
     result = JSON.parse(response.to_json)
     
     if result.has_key?('error')
       $client.authorization.access_token = nil
       reset_session
-      render json: 'error in google client user credentials'.to_json
+      render json: result['error'].to_json
     else
       @user = User.find_by(google_id: session[:user_google_id])
       if !@user

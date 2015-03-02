@@ -8,18 +8,14 @@
 
 
 function onSignInCallback(authResult) {
-
-   document.getElementById('gConnect').style.display = 'none';
-   document.getElementById('loader-wheel').style.display = 'block';
+   
+   signInButton = document.getElementById('gConnect');
+   loaderWheel = document.getElementById('loader-wheel');
+   
+   signInButton.style.display = 'none';
+   loaderWheel.style.display = 'block';
 
    var route = window.location.href 
-
-   if (route.indexOf("circle") > -1) {
-
-      teamHelper.onSignInCallback(authResult);
-      document.getElementById('loader-wheel').style.display = 'none';
-
-   } else {
 
         if (authResult['error']) {
             // The user is not signed in.
@@ -32,18 +28,27 @@ function onSignInCallback(authResult) {
             );
 
             helper.disconnectServer();
-            document.getElementById('loader-wheel').style.display = 'none';
+
+            signInButton.style.display = 'block';
+            loaderWheel.style.display = 'none';
 
         } else {
 
                gapi.client.load('plus','v1', JSProfileCallBack);
 
                function JSProfileCallBack() {
+  
+                      var disconnectButton = document.getElementById('disconnect');
+                      
+                      disconnectButton.addEventListener('click', function() {
+                         gapi.auth.signOut(); // Will use page level configuration
+                      });
 
                       var request = gapi.client.plus.people.get( {'userId' : 'me'} );
                       request.execute( function(profile) {
-                          
+
                           if (profile.error) {
+                            
                             $('#signin-in-error-modal-body').empty();
                             $('#modal-window-signin-error').modal('show');
                             $('#signin-in-error-modal-body').append(
@@ -55,26 +60,36 @@ function onSignInCallback(authResult) {
                                 '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
                                 '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                             );
-                            document.getElementById('loader-wheel').style.display = 'none';
-                            document.getElementById('gConnect').style.display = 'block';
+
+                             signInButton.style.display = 'block';
+                             loaderWheel.style.display = 'none';
+
                           } else {
 
-                            helper.user_google_id = profile.id;
-                            //for teamForms
-                            $('#circle_user_id').val(profile.id);
-                            //Renders the authenticated user's Google+ profile.
-                            helper.appendProfile(profile);
-                            //connects and verifies ServerSide client connection
-                            helper.onSignInCallback(authResult);
+                              helper.user_google_id = profile.id;
+                              //for teamForms
+                              $('#circle_user_id').val(profile.id);
+                              //Renders the authenticated user's Google+ profile.
+                              helper.appendProfile(profile);
+                              //connects and verifies ServerSide client connection
+                              
+                              if (route.indexOf("circle") > -1) {
 
-                          }
+                                  teamHelper.onSignInCallback(authResult);
+                                  loaderWheel.style.display = 'none';
+                              
+                              } else {
+                                  
+                                  helper.onSignInCallback(authResult);
+
+                              }
+
+                          };
 
                       });//End of requestExecute
 
                };//end of CallBack
 
         }//End of ELSE[ERROR]
-
-   };//End RouteSignInFilter
 
 };//End of API console CallBack Reference
