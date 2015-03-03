@@ -44,7 +44,6 @@ class SigninController < ApplicationController
     result = JSON.parse(response.to_json)
     
     if result.has_key?('error')
-      $client.authorization.access_token = nil
       reset_session
       render json: result['error'].to_json
     else
