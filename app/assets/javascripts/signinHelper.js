@@ -10,31 +10,49 @@ var helper = (function() {
 
   return {
 
-    onSignInCallback: function(authResult) {
+    setAuth: function(authResult) {
          console.log('authResult HelperCallBack', authResult);
          // The user has JSAPI verified authentication
          this.authResult = authResult; 
-         //make server and/or check serverside client auth/state
-         helper.connectServer();
     },
     /**
      * Calls the server endpoint to connect the app for the user.
      */
-    connectServer: function() {
+    disconnectUser: function() {
+
+        $('#authOps').hide();
+        signInButton = document.getElementById('gConnect');
+        loaderWheel = document.getElementById('loader-wheel');
+
+        signInButton.style.display = 'block';
+        loaderWheel.style.display = 'none';
+
+        var shareButton = document.getElementById('share-button')
+        if (shareButton.style.display = 'block' ) {
+             shareButton.style.display = 'none';
+        }
+
+        gapi.auth.signOut();
+
+    }, 
+    /**
+     * Calls the server endpoint to connect the app for the user.
+     */
+    connectServerSide: function(frontEndState) {
       //console.log(this.authResult.code);
       var loaderWheel = document.getElementById('loader-wheel')
       var connectButton = document.getElementById('gConnect')
 
       $.ajax({
         type: 'POST',
-        url: '/signin/connect?state=' + $("#state").text(),
+        url: '/signin/connect?state=' + frontEndState,
         contentType: 'application/octet-stream; charset=utf-8',
         processData: false,
         data: this.authResult.code + ',' + this.authResult.id_token + ',' + this.authResult.access_token,
         success: function(result) {
 
             if (typeof result == "string") {
-               console.log('success ERRORRRRR endPoint String Result for connectServer  ::  ' + result);
+               console.log('ERRORRRRR endPoint String Result from connectServer  ::  ' + result);
               
                $('#signin-in-error-modal-body').empty();
                $('#modal-window-signin-error').modal('show');
@@ -48,11 +66,7 @@ var helper = (function() {
                     '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                 );
 
-                loaderWheel.style.display = 'none';
-                connectButton.style.display = 'block';
-
             } else {
-              
                console.log('wooooooooo success valid result returned from serverEndPoint');
               
                helper.circles();
@@ -62,22 +76,8 @@ var helper = (function() {
 
         },
         error: function(e) {
-
                console.log('ERRORR ERRORRRRR endPoint String Result for connectServer  ::  ' + e);
-               $('#signin-in-error-modal-body').empty();
-               $('#modal-window-signin-error').modal('show');
-               $('#signin-in-error-modal-body').append('<p>' 
-                    + 'Something went Wrong, close your browser and try again. ' +
-                    '</p>' + 
-                    '<p>' + 
-                    'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
-                    '</p>' +
-                    '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                    '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
-                );
-               
-                loaderWheel.style.display = 'none';
-                connectButton.style.display = 'block';
+               helper.disconnectServer();
         }
 
       });//end of AJAX Post
@@ -95,29 +95,20 @@ var helper = (function() {
      * Calls the server endpoint to disconnect the app for the user.
      */
     disconnectServer: function() {
-      // Revoke the server tokens
-      $.ajax({
-        type: 'POST',
-        url: '/signin/disconnect',
-        async: false,
-        success: function(result) {
-          console.log('revoke response: ' + result);
-          var shareButton = document.getElementById('share-button')
-          
-          $('#authOps').hide();
-
-          if (shareButton.style.display = 'block' ) {
-               shareButton.style.display = 'none';
+        // Revoke the server tokens
+        $.ajax({
+          type: 'POST',
+          url: '/signin/disconnect',
+          async: false,
+          success: function(result) {
+            console.log('revoke response: ' + result);
+            helper.disconnectUser();
+           
+          },
+          error: function(e) {
+            console.log(e);
           }
-
-          $('#gConnect').show();
-
-         
-        },
-        error: function(e) {
-          console.log(e);
-        }
-      });
+        });
     },
     /**
      * Calls the server endpoint to get the list of events in calendar.
@@ -129,11 +120,10 @@ var helper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log('JS calendar-first google fire result returned to console says --- '+ result);
-          if (!result.error) {
-            console.log('not error first google endpoint return')
-            helper.appendCalendar(result);
+          if (typeof result == "string") {
+            helper.disconnectUser();
           } else {
-            console.log('ERRORRRR first google endpoint return REFRESH SESSION-CONNECTION REQUIRED')
+            helper.appendCalendar(result);
           }
         },
         processData: false
@@ -149,7 +139,11 @@ var helper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          helper.appendDrive(result);
+          if (typeof result == "string") {
+            helper.disconnectUser();
+          } else {
+            helper.appendDrive(result);
+          }
         },
         processData: false
       });
@@ -164,7 +158,11 @@ var helper = (function() {
         contentType: 'application/octet-stream; charset=utf-8',
         success: function(result) {
           console.log(result);
-          helper.appendTaskLists(result);
+          if (typeof result == "string") {
+            helper.disconnectUser();
+          } else {
+            helper.appendTaskLists(result);
+          }
         },
         processData: false
       });

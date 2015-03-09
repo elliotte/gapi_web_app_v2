@@ -34,7 +34,7 @@ class SigninController < ApplicationController
         render json: 'The client state does not match the server state.'.to_json
       end
     end
-
+    
     $client.authorization.access_token = session[:token]
     @plus = $client.discovered_api('plus', 'v1')
 
@@ -45,7 +45,7 @@ class SigninController < ApplicationController
     
     if result.has_key?('error')
       reset_session
-      render json: result['error'].to_json
+      render json: "Error in User Credentials; error result returned in api request".to_json
     else
       @user = User.find_by(google_id: session[:user_google_id])
       if !@user
@@ -70,7 +70,6 @@ class SigninController < ApplicationController
     $client.authorization.access_token = nil
     
     reset_session
-
     # Sending the revocation request and returning the result.
     revokePath = 'https://accounts.google.com/o/oauth2/revoke?token=' + token
     uri = URI.parse(revokePath)
