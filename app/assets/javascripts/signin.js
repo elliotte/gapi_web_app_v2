@@ -22,24 +22,31 @@ function onSignInCallback(authResult) {
             if (authResult['error'] == "immediate_failed") {
               console.log('NO APP ACCESS')
               console.log(authResult['status'])
+              
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append( 
-                '<p>' + 'No Access :: To Grant Access click G-SignIn Button and/or Reload Page First if you have just signed out' + '</p>'
+                '<p>' + 'No Access :: To Grant Access click G-SignIn Button and/or Reload Page if you have just signed out' + '</p>'
               );
             }
 
             if (authResult['error'] == "user_signed_out") {
+              
               console.log('SignedOut googleCallBack')
               console.log(authResult['status'])
 
+              // Perform an asynchronous GET request.
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append( 
-                '<p>' + 'User Signed Out :: Reload Page First if you want to sign in' + '</p>' + 
+                '<p>' + 'User Signed Out :: Reload Page if you want to sign in' + '</p>' + 
                 '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
               );
-              //helper.disconnectServer();
+
+              //catch for legacy signin..
+              if (helper.authResult) {
+                helper.disconnectUser(false);
+              }
 
             }
 
@@ -56,6 +63,7 @@ function onSignInCallback(authResult) {
 
             if (verifyAccessToken(authResult)) {
                 
+                console.log('tokenverified..staus is..')
                 console.log(authResult['status'])
                 
                 verified_auth_tokens = authResult
@@ -64,9 +72,20 @@ function onSignInCallback(authResult) {
                 disconnectButton.addEventListener('click', function() {
                      helper.disconnectServer();
                 });
-                gapi.client.load('plus','v1', JSProfileCallBack);
+
+                if (authResult['status']['signed_in'] && authResult['status']['google_logged_in'] ) {
+                  
+                  console.log('auth signed_in and google_logged_in status')
+                  gapi.client.load('plus','v1', JSProfileCallBack);
+
+                } else {
+
+                  helper.disconnectUser(false);
+
+                }
 
             } else {
+
               console.log(authResult['status'])
               
               $('#signin-in-error-modal-body').empty();
@@ -77,12 +96,11 @@ function onSignInCallback(authResult) {
                   '<p>' + 
                   'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
                   '</p>' +
-                  '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                  '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                  '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
               );
 
-              //helper.disconnectUser();
-              //helper.disconnectServer();
+              helper.disconnectUser(false);
+
             }
                
         }//End of ELSE[ERROR]

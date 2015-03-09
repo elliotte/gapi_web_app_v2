@@ -18,22 +18,29 @@ var helper = (function() {
     /**
      * Calls the server endpoint to connect the app for the user.
      */
-    disconnectUser: function() {
+    disconnectUser: function(page_reload) {
 
-        $('#authOps').hide();
-        signInButton = document.getElementById('gConnect');
-        loaderWheel = document.getElementById('loader-wheel');
-
-        signInButton.style.display = 'block';
-        loaderWheel.style.display = 'none';
-
-        var shareButton = document.getElementById('share-button')
-        if (shareButton.style.display = 'block' ) {
-             shareButton.style.display = 'none';
-        }
-
-        gapi.auth.signOut();
-
+        var true_reload = page_reload
+        var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' +
+            this.authResult.access_token;
+        // Perform an asynchronous disConnect GET request.
+        $.ajax({
+            type: 'GET',
+            url: revokeUrl,
+            async: false,
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(nullResponse) {
+                console.log('FRONTEND token Revoke')
+                helper.secureLanding();
+                if (true_reload) {
+                  window.location.reload();
+                }
+            },
+            error: function(e) {
+              helper.secureLanding();
+            }
+        });
     }, 
     /**
      * Calls the server endpoint to connect the app for the user.
@@ -57,18 +64,17 @@ var helper = (function() {
                $('#signin-in-error-modal-body').empty();
                $('#modal-window-signin-error').modal('show');
                $('#signin-in-error-modal-body').append('<p>' 
-                    + 'Server Side Authentication Failed, you need to REFRESH your connection, and/or reload the page. ' +
+                    + 'Server Side Authentication Failed, you need to REFRESH your connection below' +
                     '</p>' + 
                     '<p>' + 
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
                     '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                    '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                    '<a class="btn btn-main-o" onclick="helper.disconnectUser(true);" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                 );
 
             } else {
                console.log('wooooooooo success valid result returned from serverEndPoint');
-              
                helper.circles();
                foodHelper.loadLandingFeeds();
                helper.fireServerCalls();
@@ -77,20 +83,12 @@ var helper = (function() {
         },
         error: function(e) {
                console.log('ERRORR ERRORRRRR endPoint String Result for connectServer  ::  ' + e);
-               helper.disconnectServer();
+               helper.disconnectUser(true);
         }
 
       });//end of AJAX Post
       
     },//END of CONNECTSERVER
-    
-    fireServerCalls: function() {
-          helper.task_lists();
-          //loads tasks after tasklist
-          helper.calendar();
-          helper.files();
-
-    },
     /**
      * Calls the server endpoint to disconnect the app for the user.
      */
@@ -102,13 +100,20 @@ var helper = (function() {
           async: false,
           success: function(result) {
             console.log('revoke response: ' + result);
-            helper.disconnectUser();
-           
+            helper.disconnectUser(true);
           },
           error: function(e) {
             console.log(e);
           }
         });
+    },
+
+    fireServerCalls: function() {
+          helper.task_lists();
+          //loads tasks after tasklist
+          helper.calendar();
+          helper.files();
+
     },
     /**
      * Calls the server endpoint to get the list of events in calendar.
@@ -121,7 +126,7 @@ var helper = (function() {
         success: function(result) {
           console.log('JS calendar-first google fire result returned to console says --- '+ result);
           if (typeof result == "string") {
-            helper.disconnectUser();
+            helper.disconnectUser(false);
           } else {
             helper.appendCalendar(result);
           }
@@ -140,7 +145,7 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           if (typeof result == "string") {
-            helper.disconnectUser();
+            helper.disconnectUser(false);
           } else {
             helper.appendDrive(result);
           }
@@ -159,7 +164,7 @@ var helper = (function() {
         success: function(result) {
           console.log(result);
           if (typeof result == "string") {
-            helper.disconnectUser();
+            helper.disconnectUser(false);
           } else {
             helper.appendTaskLists(result);
           }
@@ -208,6 +213,21 @@ var helper = (function() {
 
     setStorage: function(key, result) {
       localStorage.setItem(key, JSON.stringify(result));
+    },
+
+    secureLanding: function() {
+           
+            $('#authOps').hide();
+            signInButton = document.getElementById('gConnect');
+            loaderWheel = document.getElementById('loader-wheel');
+
+            signInButton.style.display = 'block';
+            loaderWheel.style.display = 'none';
+
+            var shareButton = document.getElementById('share-button')
+            if (shareButton.style.display = 'block' ) {
+                 shareButton.style.display = 'none';
+            }
     },
 
     appendProfile: function(profile) {
