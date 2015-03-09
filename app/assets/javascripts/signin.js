@@ -30,7 +30,7 @@ function onSignInCallback(authResult) {
             }
 
             if (authResult['error'] == "user_signed_out") {
-              console.log('signed_out_callback')
+
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append( 
