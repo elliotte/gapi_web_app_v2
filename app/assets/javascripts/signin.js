@@ -21,7 +21,7 @@ function onSignInCallback(authResult) {
             //user_signed_out callback versus immeditate_fail
             if (authResult['error'] == "immediate_failed") {
               console.log('NO APP ACCESS')
-
+              console.log(authResult['status'])
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append( 
@@ -30,27 +30,18 @@ function onSignInCallback(authResult) {
             }
 
             if (authResult['error'] == "user_signed_out") {
+              console.log('SignedOut googleCallBack')
+              console.log(authResult['status'])
 
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append( 
-                '<p>' + 'User Signed Out :: Reload Page First if you want to sign in' + '</p>'
+                '<p>' + 'User Signed Out :: Reload Page First if you want to sign in' + '</p>' + 
+                '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
               );
-              $.ajax({
-                type: 'POST',
-                url: '/signin/disconnect',
-                async: false,
-                success: function(result) {
-                  console.log('revoke response: ' + result);
-                 
-                },
-                error: function(e) {
-                  console.log(e);
-                }
-              });
+              $("#state").remove();
               //helper.disconnectServer();
 
-              window.location.reload()
             }
 
             if (signInButton.style.display = 'none' ) {
@@ -66,6 +57,8 @@ function onSignInCallback(authResult) {
 
             if (verifyAccessToken(authResult)) {
                 
+                console.log(authResult['status'])
+                
                 verified_auth_tokens = authResult
                 var disconnectButton = document.getElementById('disconnect');
       
@@ -75,7 +68,8 @@ function onSignInCallback(authResult) {
                 gapi.client.load('plus','v1', JSProfileCallBack);
 
             } else {
-
+              console.log(authResult['status'])
+              
               $('#signin-in-error-modal-body').empty();
               $('#modal-window-signin-error').modal('show');
               $('#signin-in-error-modal-body').append(
