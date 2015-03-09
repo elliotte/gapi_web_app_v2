@@ -39,7 +39,6 @@ function onSignInCallback(authResult) {
                 '<p>' + 'User Signed Out :: Reload Page First if you want to sign in' + '</p>' + 
                 '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
               );
-              $("#state").remove();
               //helper.disconnectServer();
 
             }
