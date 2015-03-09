@@ -36,6 +36,20 @@ function onSignInCallback(authResult) {
               $('#signin-in-error-modal-body').append( 
                 '<p>' + 'User Signed Out :: Reload Page First if you want to sign in' + '</p>'
               );
+              $.ajax({
+                type: 'POST',
+                url: '/signin/disconnect',
+                async: false,
+                success: function(result) {
+                  console.log('revoke response: ' + result);
+                 
+                },
+                error: function(e) {
+                  console.log(e);
+                }
+              });
+              //helper.disconnectServer();
+
               window.location.reload()
             }
 
@@ -46,6 +60,7 @@ function onSignInCallback(authResult) {
             if (loaderWheel.style.display = 'block' ) {
                loaderWheel.style.display = 'none';
             }
+
 
         } else {
 
