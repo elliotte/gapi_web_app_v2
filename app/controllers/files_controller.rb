@@ -6,6 +6,10 @@ class FilesController < ApplicationController
 	def index
     	# Get the list of files in drive
 	    response = $client.execute(:api_method => @drive.files.list)
+	    # respond_to do |f| 
+	    # 	f.html
+	    # 	f.json { render json: response.data.to_json }
+	    # end
 	    render json: response.data.to_json
 	end
 

@@ -1,19 +1,15 @@
-(function() {
-    var po = document.createElement('script');
-      po.type = 'text/javascript'; po.async = true;
-      po.src = 'https://plus.google.com/js/client:plusone.js';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(po, s);
-})();
 
 
 function onSignInCallback(authResult) {
-   
-        signInButton = document.getElementById('gConnect');
-        loaderWheel = document.getElementById('loader-wheel');
         
+        console.log(authResult);
+        signInButton = document.getElementById('gConnect');
+        loaderWrapper = $('.loader-wrapper');
+        // loaderWrapper.hide();
+
         signInButton.style.display = 'none';
-        loaderWheel.style.display = 'block';
+
+        //loaderWheel.style.display = 'block';
 
         if (authResult['error']) {
             console.log('There was an error: ' + authResult['error']);
@@ -44,9 +40,9 @@ function onSignInCallback(authResult) {
               );
 
               //catch for legacy signin..
-              if (helper.authResult) {
-                helper.disconnectUser(false);
-              }
+              // if (helper.authResult) {
+              //   helper.disconnectUser(false);
+              // }
 
             }
 
@@ -63,15 +59,15 @@ function onSignInCallback(authResult) {
 
             if (verifyAccessToken(authResult)) {
                 
-                console.log('tokenverified..staus is..')
+                console.log('tokenverified..status is..')
                 console.log(authResult['status'])
                 
                 verified_auth_tokens = authResult
-                var disconnectButton = document.getElementById('disconnect');
+                // var disconnectButton = document.getElementById('disconnect');
       
-                disconnectButton.addEventListener('click', function() {
-                     helper.disconnectServer();
-                });
+                // disconnectButton.addEventListener('click', function() {
+                //      helper.disconnectServer();
+                // });
 
                 if (authResult['status']['signed_in'] && authResult['status']['google_logged_in'] ) {
                   
@@ -80,26 +76,26 @@ function onSignInCallback(authResult) {
 
                 } else {
 
-                  helper.disconnectUser(false);
+                  //helper.disconnectUser(false);
 
                 }
 
             } else {
 
-              console.log(authResult['status'])
+              // console.log(authResult['status'])
               
-              $('#signin-in-error-modal-body').empty();
-              $('#modal-window-signin-error').modal('show');
-              $('#signin-in-error-modal-body').append(
-                  '<p>' + 'Browser Authentication Failed, you need to REFRESH your connection' +
-                  '</p>' + 
-                  '<p>' + 
-                  'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
-                  '</p>' +
-                  '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
-              );
+              // $('#signin-in-error-modal-body').empty();
+              // $('#modal-window-signin-error').modal('show');
+              // $('#signin-in-error-modal-body').append(
+              //     '<p>' + 'Browser Authentication Failed, you need to REFRESH your connection' +
+              //     '</p>' + 
+              //     '<p>' + 
+              //     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity and state.' + 
+              //     '</p>' +
+              //     '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>'
+              // );
 
-              helper.disconnectUser(false);
+              // helper.disconnectUser(false);
 
             }
                
@@ -146,8 +142,8 @@ function JSProfileCallBack() {
               console.log(profile.id)
               if (route.indexOf("circle") > -1) {
                   teamHelper.onSignInCallback(verified_auth_tokens);
-                  loaderWheel.style.display = 'none';
               } else {
+                  $('.loader-wrapper').show();
                   helper.setAuth(verified_auth_tokens);
                   helper.connectServerSide(clientStateToken);
               }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2 (9964) - http://www.bohemiancoding.com/sketch -->
+    <title>map icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Contact" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M41.7053506,27.0833335 C43.1687285,24.4841832 44,21.5053931 44,18.3392016 C44,8.21074021 35.4934102,0 25,0 C14.5065898,0 6,8.21074021 6,18.3392016 C6,21.5053931 6.83127153,24.4841832 8.29464944,27.0833335 L8.11111112,27.0833335 L24.9999999,50 L41.8888889,27.0833335 L41.7053506,27.0833335 L41.7053506,27.0833335 Z M25,27.0833335 C29.6637379,27.0833335 33.4444444,23.3523731 33.4444444,18.7500001 C33.4444444,14.1476272 29.6637379,10.4166667 25,10.4166667 C20.3362621,10.4166667 16.5555556,14.1476272 16.5555556,18.7500001 C16.5555556,23.3523731 20.3362621,27.0833335 25,27.0833335 Z" id="map-icon" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

@@ -1,4 +1,4 @@
-.modal-default-width {
+/*.modal-default-width {
 	padding-top: 50px;
 }
 .modal-small-width {
@@ -15,195 +15,52 @@
 		padding-top: 50px;
 	}
 }
-#search_p {
-	color: #E6E6E6;
-	background-color: #7B7B7B;
-	border: 1px solid #7B7B7B;
-	border-radius: 0px;
-}
-#search-glyphicon {
-	position: absolute;
-	right: 0;
-	padding: 16px 27px;
-	color: #E6E6E6;
-}
-.margin-bottom-15 {
-	margin-bottom: 15px;
-}
-.btn-list-item {
-	display: list-item;
-}
-#share-button {
-	margin-top: 6px;
-	display: none;
-}
-#gConnect {
-	padding-top: 9px;
-}
-#search-form {
-	padding-top: 8px;
-}
-#discover-menu {
-	padding-bottom: 5px;
-}
-#discover-menu-caret {
-	padding-top: 4px;
-}
-#discover-dropdown-ul {
-	width: 186px;
-}
-.discover-dropdown-li {
-	width: 183px !important;
-}
-.common-share {
-	padding-left: 20px;
-}
-.modal-text-center {
-	text-align: center;
-}
-.capitalize {
-	text-transform:capitalize;
-}
+*/
 
-#profile {
-	overflow: scroll;
-	max-height: 325px;
-}
-#monea-teams {
-	display:none;
-	overflow: scroll;
-	max-height: 325px;
-}
-.monea-teams:hover {
-	border-left-color: #428bca;
-	border-right-color: #428bca;
-}
+/*---- reset CSS ---- */
 
-#bbc-feed {
-	overflow: scroll;
-	max-height: 325px;
-	background-color: #FFFFFF;
-}
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code,
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed, 
+	figure, figcaption, footer, header, hgroup, 
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	/* HTML5 display-role reset for older browsers */
+	article, aside, details, figcaption, figure, 
+	footer, header, hgroup, menu, nav, section {
+		display: block;
+	}
+	body {
+		line-height: 1;
+	}
+	ol, ul {
+		list-style: none;
+	}
+	blockquote, q {
+		quotes: none;
+	}
+	blockquote:before, blockquote:after,
+	q:before, q:after {
+		content: '';
+		content: none;
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
 
-#more-feed {
-	overflow: scroll;
-	max-height: 325px;
-	background-color: #FFFFFF;
-}
-
-#bbc-feed a {
-	display: block;
-	color: #428bca;
-	padding: 2px;
-	background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.050), rgba(0, 0, 0, 0));
-}
-
-#more-feed a {
-	display: block;
-	padding: 2px;
-	color: #428bca;
-	background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.050), rgba(0, 0, 0, 0));
-}
-
-#circle-messages-container {
-	max-height: 650px;
-	overflow: scroll;
-}
-
-#circle-wallpins-container {
-	max-height: 650px;
-	overflow: scroll;
-}
-
-/*transform loading button*/
-
-.tcon {
-  appearance: none;
-  border: none;
-  cursor: pointer;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  height: 40px;
-  transition: 0.3s;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  width: 40px;
-  background: transparent; }
-  .tcon > * {
-    display: block; }
-  .tcon:focus {
-    outline: none; }
-
-.tcon-visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px; }
-  .tcon-visuallyhidden:active, .tcon-visuallyhidden:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto; }
-
-.tcon-loader--spinner360 {
-  border-radius: 80%;
-  display: block;
-  height: 40px;
-  width: 40px;
-  position: relative;
-  -webkit-animation: tcon-spin360 0.675s linear infinite forwards;
-  animation: tcon-spin360 0.675s linear infinite forwards;
-  background: lightgray; }
-  .tcon-loader--spinner360:before, .tcon-loader--spinner360:after {
-    content: "";
-    display: block;
-    position: absolute; }
-  .tcon-loader--spinner360:before {
-    border-radius: 0 90px 90px 0;
-    height: 40px;
-    width: 50%;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    background: black;
-    background-image: linear-gradient(lightgray, black); }
-  .tcon-loader--spinner360:after {
-    border-radius: 80%;
-    height: 30px;
-    width: 30px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    background: white; }
-
-@-webkit-keyframes tcon-spin360 {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
-@keyframes tcon-spin360 {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
-#loader-wheel {
-	padding-top: 5px;
-}
-
+/*---- reset CSS ---- */

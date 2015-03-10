@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2 (9964) - http://www.bohemiancoding.com/sketch -->
+    <title>right arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="work-bottom" sketch:type="MSArtboardGroup" transform="translate(-570.000000, -957.000000)" fill="#000000">
+            <g id="right-arrow" sketch:type="MSLayerGroup" transform="translate(570.000000, 957.000000)">
+                <path d="M25,0 C11.1928813,0 0,11.1898454 0,25 C0,38.8071187 11.1898454,50 25,50 C38.8071187,50 50,38.8101546 50,25 C50,11.1928813 38.8101546,0 25,0 Z M25,48 C12.2953564,48 2,37.7037799 2,25 C2,12.2953564 12.2962201,2 25,2 C37.7046436,2 48,12.2962201 48,25 C48,37.7046436 37.7037799,48 25,48 Z" id="Rectangle-2" sketch:type="MSShapeGroup"></path>
+                <path d="M30.3192832,26.3002533 L30.3192832,24.6997467 L20.7724082,31.8536046 L21.9717323,33.4541113 L31.5186073,26.3002533 L32.5865512,25.5 L31.5186073,24.6997467 L21.9717323,17.5458887 L20.7724082,19.1463954 L30.3192832,26.3002533 Z" id="Path-4" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

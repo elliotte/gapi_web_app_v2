@@ -12,29 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require modernizr.custom
-//= require bootstrap.min
-//= require jquery.easing.1.3
-//= require jquery.backstretch.min
-//= require classie
-//= require gnmenu
-//= require jquery.flexslider-min
-//= require waypoints.min
-//= require jquery.mousewheel-3.0.6.pack
-//= require jquery.fancybox
-//= require jquery.countTo
-//= require jquery.accordion
-//= require jquery.isotope
-//= require jquery.cbpQTRotator
-//= require jquery.fitvids
-//= require snap.svg-min
-//= require retina-1.1.0
-//= require bootstrap-datepicker
-//= require mine
-//= require jquery.tokeninput
-//= require signin
-//= require signinHelper
-//= require circles
-//= require userHelper
-//= require loadertransformer
+//= require webflow
+//= require modernizr
 //= require main
+

@@ -76,7 +76,7 @@ var helper = (function() {
             } else {
                console.log('wooooooooo success valid result returned from serverEndPoint');
                helper.circles();
-               foodHelper.loadLandingFeeds();
+               //foodHelper.loadLandingFeeds();
                helper.fireServerCalls();
             }
 
@@ -675,9 +675,9 @@ var helper = (function() {
 
       }
       //show authOps and remove signIn and Loader
-      $('#authOps').show('slow');
-      $('#loader-wheel').hide();
-      $('#share-button').show();
+      //loaderWrapper = $('.loader-wrapper').hide();
+      $('.loader-wrapper').hide();
+      $('body').removeClass('overflow-hidden');
       //foodHelper.loadLandingFeeds();
     },
     /**

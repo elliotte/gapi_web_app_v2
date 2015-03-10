@@ -1,340 +1,249 @@
-<div class="backstretch-overlayer"></div>
+  <!-- pink landing loading wrapper -->
+  <div class="loader-wrapper" data-ix="display-none">
+    <div class="loader-content"><img class="logo-loader" src="<%= asset_path('loader.gif') %>" width="80" alt="549c43b5e136e6e56c054a1e_loader.gif">
+      <div class="loader-text"><span class="loader-text-low-opacity">Loading...<br xmlns="http://www.w3.org/1999/xhtml"></span>Make yourself at home.</div>
+    </div>
+  </div>
+  <!-- navbar slideDown -->
+  <div class="w-clearfix contact" data-ix="display-none">
+    <a class="w-inline-block contact-tile" href="mailto:">
+      <div class="w-clearfix contact-tile-content">
+          <img class="contact-icon" src="<%= asset_path('mail icon.svg') %>" alt="548f17b6f166a77b3a94ad43_mail%20icon.svg">
+          <h1 class="contact-title">email</h1>
+          <div class="contact-text">contemplate@gmail.com</div>
+      </div>
+    </a>
+    <a class="w-inline-block contact-tile _2" href="tel:3401545232">
+      <div class="w-clearfix contact-tile-content">
+          <img class="contact-icon" src="<%= asset_path('phone icon.svg') %>" alt="548f17c887202bb925402a34_phone%20icon.svg">
+          <h1 class="contact-title">phone</h1>
+          <div class="contact-text">3401545232</div>
+      </div>
+    </a>
+    <a class="w-inline-block contact-tile _3" href="#">
+        <div class="w-clearfix contact-tile-content">
+          <img class="contact-icon" src="<%= asset_path('map icon.svg') %>" alt="548f17d8c9dd0f7c3a0ce251_map%20icon.svg">
+          <h1 class="contact-title">find me</h1>
+          <div class="contact-text">Studio 1, West Hagley
+          <br>United Kingdom</div>
+      </div>
+    </a>
+    <a class="w-inline-block contact-tile _4" href="#">
+        <div class="contact-tile-content"><img class="contact-icon" src="<%= asset_path('twitter icon.svg') %>" alt="54b16b55f585b18b3fbf63fc_twitter%20icon.svg">
+        <h1 class="contact-title">Twitter</h1>
+      </div>
+    </a>
+    <a class="w-inline-block contact-tile _5" href="#">
+        <div class="contact-tile-content"><img class="contact-icon" src="<%= asset_path('facebook icon.svg') %>" alt="54b16b7a6ce3fe8c3f71ee1e_facebook%20icon.svg">
+        <h1 class="contact-title">facebook</h1>
+      </div>
+    </a>
+  </div> <!-- end of navBar -->
 
-<!-- home-section -->
-<section id="home-section">
-    <!-- container -->
-    <div class="container">
-      
-	</div><!-- /container -->
-</section><!-- /home-section -->
-<!-- white-section -->
-<section id="white-section">
-	<!-- hideNot-signedIn -->
-	<div id="authOps" style="display:none;">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-        		<!-- col-md-12 -->
-		    	<div class="col-md-12">
-		    		<br>
-		    		<br>
-		    		<div class="col-md-3">
-		    			 <div class="feature-boxs-wrapper">
-		                	<div id="profile">
-			                </div>
-			             </div><!-- /feature-boxs-wrapper -->
-	           		</div>
-	           		<div class="col-md-9">
-	           					<br>
-								<h2>You are now signed into monea.build using Google+</h2>
-								<br>
-								<p>If you chooses to disconnect, the app deletes all stored information retrieved from Google.</p>
-								<br>
-								<a id="go-to-events" style="margin-bottom:5px;"class="btn btn-sm btn-primary">Events.soon</a>
-								<a id="go-to-tasks" style="margin-bottom:5px;" class="btn btn-sm btn-primary">toDo.Tasks</a>
-								<a id="go-to-files" style="margin-bottom:5px;" class="btn btn-sm btn-primary">myFiles.all</a>
-								<a id="go-to-shared-files" style="margin-bottom:5px;" class="btn btn-sm btn-primary">sharedFiles.all</a>
-								<a href="https://fathomless-brushlands-5645.herokuapp.com/cash_ledgers" target="_blank" style="margin-bottom:5px;" class="btn btn-sm btn-main-o">monea.Ledgers</a>
-								<a href="https://fathomless-brushlands-5645.herokuapp.com/reports" style="margin-bottom:5px;" target="_blank" class="btn btn-sm btn-main-o">monea.Reports</a>
-								<a href="https://fathomless-brushlands-5645.herokuapp.com/reports" style="margin-bottom:5px;" target="_blank" class="btn btn-sm btn-main-o">monea.Resources</a>
-								<br>
-								<br>
-	           		</div>
-		</div>
+  <!-- mobile navBar -->
+  <div class="w-nav w-hidden-main w-hidden-medium mobile-navbar" data-collapse="small" data-animation="over-right" data-duration="300" data-contain="1" data-easing="ease-in-out-sine" data-easing2="ease-in-out-sine">
+    <!-- mobile navWrapper -->
+    <nav class="w-container mobile-navbar-container">
+      <a class="w-nav-brand brand" href="index.html"><img class="mobile-logo" src="<%= asset_path('mobile logo.svg') %>" width="64" alt="54bcd9f13547bc7d5fbb298a_mobile%20logo.svg">
+      </a>
+      <!-- navDrownDown -->
+      <nav class="w-nav-menu mobile-nav-menu" role="navigation">
+        <img class="mobile-close-button" src="<%= asset_path('mobile close button.png') %>" width="22" alt="548c3f65e84cbe797dc33e5a_mobile%20close%20button.png">
+          <!-- navDrownDown links -->
+          <div class="mobile-slide-menu-container">
+            <a class="w-nav-link mobile-nav-link" href="work.html">Work</a>
+            <a class="w-nav-link mobile-nav-link" href="concepts.html">Concepts</a>
+            <a class="w-nav-link mobile-nav-link" href="about.html">About</a>
+            <a class="w-nav-link mobile-nav-link" href="contact.html">Contact</a>
+          </div>
+      </nav>
+      <div class="w-nav-button mobile-menu-button">
+        <img class="hamburger" src="<%= asset_path('hamburger.svg') %>" width="23" alt="548f1dbcc9dd0f7c3a0ce2a9_hamburger.svg">
+      </div>
+    </nav>
+  </div> <!-- end of mobile nav -->
 
-		<div class="row">
-			        <div class="col-md-12">
-	                      <!--################### Circles ############### -->
-	                    	<div class="section-title">
-		                        <!-- main-title -->
-		                        <div class="main-title">
-									<br>
-									<br>
-									<br>
-		                            <h2>your moneaTeams </h2>
-		                        </div><!-- /main-title -->
-		                        <a id="team_new" class="btn btn-sm btn-primary">Team.new</a>
-	                    	</div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
+  <!-- sliderWrapper --> 
+  <div class="w-slider slider-homepage" data-animation="fade" data-duration="700" data-infinite="1" data-delay="4000" data-autoplay="1">
 
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	
-		                <div id="monea-teams" class="col-md-12" >
-		                </div>
-		                <div id="noCircle" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-support"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Teams!!!!</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div>
+    <div class="w-slider-mask">
+      <!-- slide one  -->
+      <div class="w-slide slide-1 escape-parete">
+          <!-- nav Menu -->
+          <nav class="w-nav-menu nav-menu" role="navigation">
+            <a class="w-nav-link navbar-link" href="work.html">Work</a>
+            <a class="w-nav-link navbar-link" href="concepts.html">Concepts</a>
+            <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
+              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
+              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
+            </a>
+            <a class="w-nav-link navbar-link" href="about.html">About</a>
+            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">Contact</a>
+          </nav>  <!-- end of nav -->
+          <!-- slider arrows container -->
+          <div class="full-screen-arrows-container">
+            <div class="slider-left-arrow right">
+              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+            <div class="slider-left-arrow">
+              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+          </div>
+          <!-- slider center text -->
+          <a class="w-inline-block slide-text-container" href="projects/escape-wall.html">
+            <h1 class="project-title">
+              <div id="gConnect">
+                  <button class="g-signin"
+                      data-scope="<%= ENV['PLUS_LOGIN_SCOPE'] %>"
+                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                      data-clientId="<%= ENV['CLIENT_ID'] %>"
+                      data-state=""
+                      data-accesstype="offline"
+                      data-callback="onSignInCallback"
+                      data-theme="dark"
+                      data-cookiepolicy="single_host_origin">
+                  </button>
+              </div>
+            </h1>
+            <h2 class="homepage-h2">SignIn</h2>
+          </a>
+      </div> <!-- end of slide one -->
 
-	    </div>
-	    <br>
-	    <br>
-	    <div class="row">
-			        <div class="col-md-12">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2><a class="" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples">Networks ( people ) <i class="fa fa-share"></i></a>  </h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
-	               
-	    </div>           <!--####################################### Friends ###################### -->
-	    <br>
-	    <br>
-	    <div class="row">
-			    	 <div class="col-md-12">
-			    	 	 <div class="section-title">
-			    	 	 <div class="main-title">
-			    	 	 	<h2> Business ( Food )</h2>
-	                        <br>
-			    	 	 </div>
-			    	 	</div>
-			    	 </div>
-	                <div class="col-md-6">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h4>BBC</h4>
-	                            <br>
-                            	<div id="bbc-feed">
-								</div>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-6 -->
-			        <div class="col-md-6">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h4>Reuters</h4>
-	                            <br>
-	                            <div id="more-feed">
-	                            </div>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-6 -->
-		</div>
-		<br>
-		<br>
-	    <div class="row">
-	  		<!--####################################### Task Lists ###################### -->
-	                <!-- col-md-12 -->
-			        <div class="col-md-12">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>Task Lists</h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
+      <div class="w-slide slide-1 escape-sospensione">
+          <div class="full-screen-arrows-container">
+            <div class="slider-left-arrow right">
+              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+            <div class="slider-left-arrow">
+              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+          </div>
+          <a class="w-inline-block slide-text-container" href="projects/escape-suspension.html">
+            <h1 class="project-title">escape</h1>
+            <h2 class="homepage-h2">suspension lamp</h2>
+          </a>
+          <nav class="w-nav-menu nav-menu" role="navigation">
+            <a class="w-nav-link navbar-link" href="work.html">Work</a>
+            <a class="w-nav-link navbar-link" href="concepts.html">Concepts</a>
+            <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
+              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
+              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
+            </a>
+            <a class="w-nav-link navbar-link" href="about.html">About</a>
+            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">Contact</a>
+          </nav>  <!-- end of nav -->
+      </div>
 
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="taskLists" style="display:none;">
-		                </div>
-		                <div id="noTaskLists" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-tasks"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Task Lists or REFRESH connection on dropdown</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Task Lists ###################### -->
-	    </div>
-	    <br>
-	    <br>
-		<div class="row">        
-	                <!--####################################### Tasks ###################### -->
-					<!-- col-md-12 -->
-			        <div class="col-md-12" id="tasks-anchor">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>Tasks</h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
+    </div> <!-- end of slider mask -->
 
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                    <!-- col-md-6 -->
-	                    <div class="col-md-6" id="completedTasks" style="display:none;">
-	                        <!-- feature-box-style2 -->
-	                        <div class="feature-box-style2">
-	                            <!-- feature-box-title -->
-	                            <div class="feature-box-title">
-	                                <!-- icon -->
-	                                <i class="fa fa-check"></i>
-	                            </div><!-- /feature-box-title -->
-	                            <!-- feature-box-containt -->
-	                            <div class="feature-box-containt">
-	                                <h3>Completed Tasks</h3>
-	                                <div id="tasksCompleted"></div>
-	                            </div><!-- /feature-box-containt -->
-	                        </div><!-- /feature-box-style2 -->
-	                    </div><!-- /col-md-6 -->
-	                    <!-- col-md-6 -->
-	                    <div class="col-md-6" id="pendingTasks" style="display:none;">
-	                        <!-- feature-box-style2 -->
-	                        <div class="feature-box-style2">
-	                            <!-- feature-box-title -->
-	                            <div class="feature-box-title">
-	                                <!-- icon -->
-	                                <i class="fa fa-cog"></i>
-	                            </div><!-- /feature-box-title -->
-	                            <!-- feature-box-containt -->
-	                            <div class="feature-box-containt">
-	                                <h3>Pending Tasks</h3>
-	                                <div id="tasksPending"></div>
-	                            </div><!-- /feature-box-containt -->
-	                        </div><!-- /feature-box-style2 -->
-	                    </div><!-- /col-md-6 -->
-	                    <div class="col-md-12" id="noTasks" style="display:none;">
-	                    	<!-- feature-box-style2 -->
-	                        <div class="feature-box-style2">
-	                            <!-- feature-box-title -->
-	                            <div class="feature-box-title">
-	                                <!-- icon -->
-	                                <i class="fa fa-tasks"></i>
-	                            </div><!-- /feature-box-title -->
-	                            <!-- feature-box-containt -->
-	                            <div class="feature-box-containt">
-	                                <h3>No Tasks or REFRESH connection on dropdown</h3>
-	                            </div><!-- /feature-box-containt -->
-	                        </div><!-- /feature-box-style2 -->
-	                    </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Tasks ###################### -->
+    <!-- arrows for slider inside main slider wrapper only -->
+    <div class="w-slider-arrow-left slider-left-arrow"></div>
+    <div class="w-slider-arrow-right slider-left-arrow right"></div>
+    <div class="w-slider-nav w-round slide-nav"></div>
+  </div> <!-- end of slider wrapper -->
 
-	                <!--####################################### Calendar Events ###################### -->
-	                <!-- col-md-12 -->
-			        <div class="col-md-12" id ="events-anchor">
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>Calendar Events</h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
-
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="calendarEvent" style="display:none;">
-		                </div>
-		                <div id="noCalendarEvent" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-calendar"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Calendar Events or REFRESH connection on dropdown</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Calendar Events ###################### -->
-
-	                <!--####################################### Drive Files ###################### -->
-					<!-- col-md-12 -->
-			        <div class="col-md-12" id="files-anchor" >
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>yourDrive Files</h2>
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
-
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="driveFiles" style="display:none;">
-		                </div>
-		                <div id="noDriveFiles" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-file"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Drive Files!!!!</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Drive Files ###################### -->
-
-	                
-	                <!-- col-md-12 -->
-			        <div class="col-md-12" id="shared-files-anchor" >
-	                    <!-- section-title -->
-	                    <div class="section-title">
-	                        <!-- main-title -->
-	                        <div class="main-title">
-	                            <h2>teamFiles</h2>
-
-	                        </div><!-- /main-title -->
-	                    </div><!-- /section-title -->
-			        </div><!-- /col-md-12 -->
-
-	                <!-- feature-boxs-wrapper -->
-	                <div class="feature-boxs-wrapper">
-	                	<div id="shared-driveFiles" style="display:none;">
-		                </div>
-		                <div id="noDriveFiles" style="display:none;">
-		                	<div class="col-md-12">
-		                		<div class="feature-box-style2">
-		                			<div class="feature-box-title">
-		                				<i class="fa fa-file"></i>
-		                			</div>
-		                			<div class="feature-box-containt">
-		                				<h3>No Drive or REFRESH connection on dropdown</h3>
-		                			</div>
-		                		</div>
-		                	</div>
-		                </div>
-	                </div><!-- /feature-boxs-wrapper -->
-	                <!--####################################### /Drive Files ###################### -->
-
-			</div><!-- /row -->
-		</div> <!-- /container -->
-	</div> <!-- /authOps -->
-</section><!-- /white-section -->
-
-<div id="state" class="hide"><%= @state %></div>
-<%= render "modals" %>
-
-<script type="text/javascript">
-    $('#home-section').backstretch([
-                "/assets/slider/bg-3.jpg"
-    ], {
-        fade: 750,
-        duration: 25000
-    });
-</script>
+<div class="w-clearfix content">
+     <nav class="w-nav-menu nav-menu" role="navigation">
+            <a class="w-nav-link navbar-link" href="work.html">Tasks</a>
+            <a class="w-nav-link navbar-link" href="concepts.html">Diary</a>
+            <a class="w-nav-link navbar-link" href="about.html">Files</a>
+     </nav>  <!-- end of nav -->
+    <div class="about-hero-container">
+      <h1 class="about-hero-title">we redefine creativity</h1>
+    </div>
+    <div class="about-div image"></div>
+    <div class="about-div">
+      <p class="about">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text</p>
+    </div>
+    <div class="about-div title">
+      <h1 class="h1-about">our team</h1>
+    </div>
+    <div class="about-div employees">
+      <div class="w-clearfix employees-container">
+        <div class="about-employee _1">
+          <div class="employee-bio">
+            <h4 class="employee-name">Vanessa fowler</h4>
+            <p class="bio-text">Hipster-friendly travel enthusiast. Internet lover. Entrepreneur. Extreme web practitioner.</p>
+          </div>
+        </div>
+        <div class="about-employee _2">
+          <div class="employee-bio">
+            <h4 class="employee-name">Adrian  Hart</h4>
+            <p class="bio-text">Certified alcohol fan. Organizer. Creator. Communicator. Troublemaker. Friendly bacon geek. Wannabe tv buff.</p>
+          </div>
+        </div>
+        <div class="about-employee _3">
+          <div class="employee-bio">
+            <h4 class="employee-name">Anthony Meyer</h4>
+            <p class="bio-text">Hardcore analyst. Bacon junkie. Music lover. Extreme tv fan. Lifelong beer scholar. Subtly charming entrepreneur.</p>
+          </div>
+        </div>
+        <div class="about-employee _4">
+          <div class="employee-bio">
+            <h4 class="employee-name">Delia Perez</h4>
+            <p class="bio-text">Friend of animals everywhere. Freelance zombie practitioner. Unapologetic coffee junkie.</p>
+          </div>
+        </div>
+        <div class="about-employee">
+          <div class="employee-bio">
+            <h4 class="employee-name">Wilfred Kennedy</h4>
+            <p class="bio-text">Music junkie. Total web advocate. Infuriatingly humble zombie aficionado. Writer. Twitter geek.</p>
+          </div>
+        </div>
+        <div class="about-employee _5">
+          <div class="employee-bio">
+            <h4 class="employee-name">Victoria  Harmon</h4>
+            <p class="bio-text">Evil zombie aficionado. Infuriatingly humble social media specialist. Unapologetic food fan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-div slider">
+      <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
+        <div class="w-slider-mask">
+          <div class="w-slide slide-about">
+            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('passion.svg') %>" alt="54bacd914bcc750812060dfd_passion.svg">
+              <h3>Passion</h3>
+            </div>
+          </div>
+          <div class="w-slide slide-about">
+            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('communication.svg') %>" alt="54bacd9ec3c251532765ee25_communication.svg">
+              <h3>communication</h3>
+            </div>
+          </div>
+          <div class="w-slide slide-about">
+            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('diligence.svg') %>" alt="54bacdae7e1f4b52275c6e37_diligence.svg">
+              <h3>diligence</h3>
+            </div>
+          </div>
+          <div class="w-slide slide-about">
+            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('innovation.svg') %>" alt="54bacdbd7e1f4b52275c6e39_innovation.svg">
+              <h3 class="values-title">innovation</h3>
+            </div>
+          </div>
+          <div class="w-slide slide-about">
+            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('reliability.svg') %>" alt="54baccd50303bf091219d61d_reliability.svg">
+              <h3>reliability</h3>
+            </div>
+          </div>
+        </div>
+        <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
+        </div>
+        <div class="w-slider-arrow-right slider-left-arrow right"><img class="slider-arrow" src="<%= asset_path('slider arrow right black.png') %>" alt="asset error">
+        </div>
+        <div class="w-slider-nav w-round slider-about-nav"></div>
+      </div>
+    </div>
+    <div class="about-div title">
+      <h1 class="h1-about">our values</h1>
+    </div>
+    <footer class="footer">
+      <div class="w-clearfix footer-content">
+        <div class="footer-text">Contemplate 2015&nbsp;</div>
+        <a class="w-inline-block logo-small" href="index.html"><img src="<%= asset_path('contemplate white.svg') %>" width="80" alt="54b1695f6ce3fe8c3f71ee0c_contemplate%20white.svg">
+        </a>
+        <div class="footer-text">All rights reserved</div>
+      </div>
+    </footer>
+ </div> 
+ <div id="state" class="hide"><%= @state %></div>
