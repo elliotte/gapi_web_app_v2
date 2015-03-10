@@ -1,7 +1,7 @@
   <!-- pink landing loading wrapper -->
   <div class="loader-wrapper" data-ix="display-none">
     <div class="loader-content"><img class="logo-loader" src="<%= asset_path('loader.gif') %>" width="80" alt="549c43b5e136e6e56c054a1e_loader.gif">
-      <div class="loader-text"><span class="loader-text-low-opacity">Loading...<br xmlns="http://www.w3.org/1999/xhtml"></span>Make yourself at home.</div>
+      <div class="loader-text"><span class="loader-text-low-opacity">Loading...<br xmlns="http://www.w3.org/1999/xhtml"></span>Welcome to work.</div>
     </div>
   </div>
   <!-- navbar slideDown -->
@@ -33,9 +33,9 @@
         <h1 class="contact-title">Twitter</h1>
       </div>
     </a>
-    <a class="w-inline-block contact-tile _5" href="#">
+    <a class="w-inline-block contact-tile _5" id="disconnect" href="javascript:void(0)">
         <div class="contact-tile-content"><img class="contact-icon" src="<%= asset_path('facebook icon.svg') %>" alt="54b16b7a6ce3fe8c3f71ee1e_facebook%20icon.svg">
-        <h1 class="contact-title">facebook</h1>
+        <h1 class="contact-title">Disconnect</h1>
       </div>
     </a>
   </div> <!-- end of navBar -->
@@ -64,7 +64,7 @@
   </div> <!-- end of mobile nav -->
 
   <!-- sliderWrapper --> 
-  <div class="w-slider slider-homepage" data-animation="fade" data-duration="700" data-infinite="1" data-delay="4000" data-autoplay="1">
+  <div id="not-auth-ops" class="w-slider slider-homepage" data-animation="fade" data-duration="700" data-infinite="1" data-delay="4000" data-autoplay="1">
 
     <div class="w-slider-mask">
       <!-- slide one  -->
@@ -105,7 +105,7 @@
                   </button>
               </div>
             </h1>
-            <h2 class="homepage-h2">SignIn</h2>
+            <h2 class="homepage-h2">Click</h2>
           </a>
       </div> <!-- end of slide one -->
 
@@ -123,14 +123,14 @@
             <h2 class="homepage-h2">suspension lamp</h2>
           </a>
           <nav class="w-nav-menu nav-menu" role="navigation">
-            <a class="w-nav-link navbar-link" href="work.html">Work</a>
-            <a class="w-nav-link navbar-link" href="concepts.html">Concepts</a>
+            <a class="w-nav-link navbar-link" href="#">Work</a>
+            <a class="w-nav-link navbar-link" href="#">Concepts</a>
             <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
               <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
               <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
             </a>
-            <a class="w-nav-link navbar-link" href="about.html">About</a>
-            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">Contact</a>
+            <a class="w-nav-link navbar-link" href="#">About</a>
+            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">monea.build</a>
           </nav>  <!-- end of nav -->
       </div>
 
@@ -142,58 +142,51 @@
     <div class="w-slider-nav w-round slide-nav"></div>
   </div> <!-- end of slider wrapper -->
 
+<!-- authorised ops -->
 <div class="w-clearfix content">
-     <nav class="w-nav-menu nav-menu" role="navigation">
-            <a class="w-nav-link navbar-link" href="work.html">Tasks</a>
-            <a class="w-nav-link navbar-link" href="concepts.html">Diary</a>
-            <a class="w-nav-link navbar-link" href="about.html">Files</a>
+      <!-- start of authNav -->
+      <nav class="w-nav-menu nav-menu" role="navigation">
+          <a class="w-nav-link navbar-link" href="#tasks-anchor">Tasks</a>
+          <a class="w-nav-link navbar-link" href="#">Diary</a>
+          <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
+              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
+              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
+            </a>
+          <a class="w-nav-link navbar-link" href="#">Files</a>
+          <a class="w-nav-link navbar-link w--current" href="#" data-ix="open-contact">monea.build</a>
      </nav>  <!-- end of nav -->
+    <!-- auth main landing image -->
     <div class="about-hero-container">
       <h1 class="about-hero-title">we redefine creativity</h1>
     </div>
-    <div class="about-div image"></div>
-    <div class="about-div">
-      <p class="about">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text</p>
+    <!-- first left box -->
+    <div class="about-div image">
+        <div class="employee-bio" style="background-color:#62DF71;">
+            <br>
+            <br>
+            <h4 class="employee-name">monea.Food</h4>
+            <p class="bio-text">See stories from BBC, reuteurs and other news feeds.</p>
+        </div>
     </div>
-    <div class="about-div title">
-      <h1 class="h1-about">our team</h1>
+    <!-- first right box -->
+    <div class="about-div">
+      <p class="about">
+        <a class="w-inline-block all-projects-button" href="#">
+          <img class="grid-button" src="<%= asset_path('grid button.svg') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts
+      </p>
+    </div>
+    <!-- second left box -->
+    <div id="tasks-anchor" class="about-div title">
+      <h1 class="h1-about">yourFiles</h1>
     </div>
     <div class="about-div employees">
-      <div class="w-clearfix employees-container">
+      <div id="files-container" class="w-clearfix employees-container">
         <div class="about-employee _1">
           <div class="employee-bio">
             <h4 class="employee-name">Vanessa fowler</h4>
             <p class="bio-text">Hipster-friendly travel enthusiast. Internet lover. Entrepreneur. Extreme web practitioner.</p>
-          </div>
-        </div>
-        <div class="about-employee _2">
-          <div class="employee-bio">
-            <h4 class="employee-name">Adrian  Hart</h4>
-            <p class="bio-text">Certified alcohol fan. Organizer. Creator. Communicator. Troublemaker. Friendly bacon geek. Wannabe tv buff.</p>
-          </div>
-        </div>
-        <div class="about-employee _3">
-          <div class="employee-bio">
-            <h4 class="employee-name">Anthony Meyer</h4>
-            <p class="bio-text">Hardcore analyst. Bacon junkie. Music lover. Extreme tv fan. Lifelong beer scholar. Subtly charming entrepreneur.</p>
-          </div>
-        </div>
-        <div class="about-employee _4">
-          <div class="employee-bio">
-            <h4 class="employee-name">Delia Perez</h4>
-            <p class="bio-text">Friend of animals everywhere. Freelance zombie practitioner. Unapologetic coffee junkie.</p>
-          </div>
-        </div>
-        <div class="about-employee">
-          <div class="employee-bio">
-            <h4 class="employee-name">Wilfred Kennedy</h4>
-            <p class="bio-text">Music junkie. Total web advocate. Infuriatingly humble zombie aficionado. Writer. Twitter geek.</p>
-          </div>
-        </div>
-        <div class="about-employee _5">
-          <div class="employee-bio">
-            <h4 class="employee-name">Victoria  Harmon</h4>
-            <p class="bio-text">Evil zombie aficionado. Infuriatingly humble social media specialist. Unapologetic food fan.</p>
           </div>
         </div>
       </div>
@@ -202,27 +195,32 @@
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div class="w-slider-mask">
           <div class="w-slide slide-about">
-            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('passion.svg') %>" alt="54bacd914bcc750812060dfd_passion.svg">
+            <div class="about-slide-container">
+              <img class="about-icon" src="<%= asset_path('passion.svg') %>" alt="54bacd914bcc750812060dfd_passion.svg">
               <h3>Passion</h3>
             </div>
           </div>
           <div class="w-slide slide-about">
-            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('communication.svg') %>" alt="54bacd9ec3c251532765ee25_communication.svg">
+            <div class="about-slide-container">
+              <img class="about-icon" src="<%= asset_path('communication.svg') %>" alt="54bacd9ec3c251532765ee25_communication.svg">
               <h3>communication</h3>
             </div>
           </div>
           <div class="w-slide slide-about">
-            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('diligence.svg') %>" alt="54bacdae7e1f4b52275c6e37_diligence.svg">
+            <div class="about-slide-container">
+              <img class="about-icon" src="<%= asset_path('diligence.svg') %>" alt="54bacdae7e1f4b52275c6e37_diligence.svg">
               <h3>diligence</h3>
             </div>
           </div>
           <div class="w-slide slide-about">
-            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('innovation.svg') %>" alt="54bacdbd7e1f4b52275c6e39_innovation.svg">
+            <div class="about-slide-container">
+              <img class="about-icon" src="<%= asset_path('innovation.svg') %>" alt="54bacdbd7e1f4b52275c6e39_innovation.svg">
               <h3 class="values-title">innovation</h3>
             </div>
           </div>
           <div class="w-slide slide-about">
-            <div class="about-slide-container"><img class="about-icon" src="<%= asset_path('reliability.svg') %>" alt="54baccd50303bf091219d61d_reliability.svg">
+            <div class="about-slide-container">
+              <img class="about-icon" src="<%= asset_path('reliability.svg') %>" alt="54baccd50303bf091219d61d_reliability.svg">
               <h3>reliability</h3>
             </div>
           </div>

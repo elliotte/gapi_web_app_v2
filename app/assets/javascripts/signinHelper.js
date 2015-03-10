@@ -417,164 +417,39 @@ var helper = (function() {
     appendDrive: function(drive) {
       var fileCount = 0;
       var countShared = 0;
-
-      $('#driveFiles').empty();
+      
       for (var itemIndex in drive.items) {
         item = drive.items[itemIndex];
-        var container = "";
-        $('#driveFiles').show();
-        $('#shared-driveFiles').show();
+        container = $('#files-container')
+
         if(!item.explicitlyTrashed) {
 
           if(item.thumbnailLink) {
-              containerInstance = "";
-              if(item.sharingUser) {
-                  container = $('#shared-driveFiles')
-                  containerInstance = "shared";
-                  countShared++;
-                  if(countShared%4 == 1) {
-                    container.append('<div class="row">');
-                  }
-              } else {
-                  container = $('#driveFiles')
-                  containerInstance = "user";
-                  fileCount++;
-                  if(fileCount%4 == 1) {
-                    container.append('<div class="row">');
-                  }
-              };
 
               container.append(
-               '<div id=' + item.id + ' class="col-md-3">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-file-text"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<p>Owner: '+ item.ownerNames[0] + '</p>'+
-                    '<h3>'+
-                      '<a href="' + item.alternateLink + '" target="_blank">' + item.title + '</a>'+
-                      '<ul class="project-details">'+
-                        '<li>'+
-                          '<img src="' + item.thumbnailLink + '" alt="screen" style="width: 100px;height: 75px;"/>'+
-                        '</li>'+
-                      '</ul>'+
-                    '</h3>'+
-                    '<p>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
-                    '</p>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
-                    '</p>'+
-                    //appends after this code block..
-                    '<div id="export-links-' + item.id + '"></div>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
+
+                      '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ item.thumbnailLink +');">' +
+                              '<div class="employee-bio">' +
+                                  '<p class="bio-text">'+
+                                   ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
+                                   ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
+                                   ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
+                                  '</p>' +
+                                  '<div id="export-links-' + item.id + '"></div>'+
+                              '</div>' +
+                      '</div>'
+
             );
-            if(item.exportLinks){
-              var st = "#export-links-"+item.id
-              $(st).html(
-                'Export: '
-              );
-              Object.keys(item.exportLinks).forEach(function(key) {
-                $(st).append(
-                  '<a class="capitalize" href="' + item.exportLinks[key] + '" target="_blank">' + item.exportLinks[key].substring(item.exportLinks[key].lastIndexOf("=")+1,item.exportLinks[key].length) + '</a> '
-                );
-              });
-            }
-            if (containerInstance == "shared") {
-                if(countShared%4 == 0) {
-                  $('#shared-driveFiles').append('</div>');
-                }
-            }
-            if (containerInstance == "user") {
-                if(fileCount%4 == 0) {
-                  $('#driveFiles').append('</div>');
-                }
-            };
+
             
           } else {
-            
-            containerInstance = "";
-              if(item.sharingUser) {
-                  container = $('#shared-driveFiles')
-                  containerInstance = "shared";
-                  countShared++;
-                  if(countShared%4 == 1) {
-                    container.append('<div class="row">');
-                  }
-              } else {
-                  container = $('#driveFiles')
-                  containerInstance = "user";
-                  fileCount++;
-                  if(fileCount%4 == 1) {
-                    container.append('<div class="row">');
-                  }
-              };
-
-            container.append(
-              '<div id=' + item.id + ' class="col-md-3">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-folder"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<p>Owner: '+ item.ownerNames[0] + '</p>'+
-                    '<h3>'+
-                      '<a href="' + item.alternateLink + '" target="_blank">' + item.title + '</a>'+
-                      '<ul class="project-details">'+
-                        '<li>'+
-                          '<img src="' + item.iconLink + '" alt="screen"/>'+
-                        '</li>'+
-                      '</ul>'+
-                    '</h3>'+
-                    '<p>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
-                      ' <a class="btn btn-sm btn-main-0" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
-                    '</p>'+
-                    '<p style="margin-bottom: 10px;">'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">Teams.share</a>'+
-                      ' <a class="btn btn-sm btn-primary" onclick="helper.loadFileShare(this)" data-href="'+item.alternateLink+'">Users.share</a>'+
-                    '</p>'+
-                    '<div id="export-links-' + item.id + '"></div>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-            if(item.exportLinks){
-              var st = "#export-links-"+item.id
-              $(st).html(
-                'Export: '
-              );
-              Object.keys(item.exportLinks).forEach(function(key) {
-                $(st).append(
-                  '<a class="capitalize" href="' + item.exportLinks[key] + '" target="_blank">' + item.exportLinks[key].substring(item.exportLinks[key].lastIndexOf("=")+1,item.exportLinks[key].length) + '</a> '
-                );
-              });
-            }
-            
-            if (containerInstance == "shared") {
-                if(countShared%4 == 0) {
-                  $('#shared-driveFiles').append('</div>');
-                }
-            }
-            if (containerInstance == "user") {
-                if(fileCount%4 == 0) {
-                  $('#driveFiles').append('</div>');
-                }
-            }
+           
+           
 
           }
         }
       }
-      if(fileCount == 0){
-        $('#noDriveFiles').show();
-      }
+      
 
     },
     /**
@@ -622,6 +497,7 @@ var helper = (function() {
      * Displays available Tasks in Task List retrieved from server.
      */
     appendTasks: function(tasks, taskListId) {
+
       for (var taskIndex in tasks.items) {
         task = tasks.items[taskIndex];
         
@@ -641,14 +517,17 @@ var helper = (function() {
         if (task.status == "completed" && task.completed) {
 
           taskCompletedCount++;
-          $('#completedTasks').show();
-          $('#tasksCompleted').append(
-            '<div id=' + task.id + '>' +
-              '<p>'+ '- Title: ' + task.title + ', Notes: ' + NotesIfTrue + ', Completed at: ' + task.completed.substring(0,10) + '</p>'+
-              '<p>'+
-                ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-              '</p>' +
+          $().append(
+            '<div id=' + task.id + ' class="about-employee _'+taskIndex+'" style="overflow:hidden;">' +
+              '<div class="employee-bio">' +
+                '<p class="bio-text">'+
+                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
+                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
+                '</p>' +
+              '</div>' +
+              '<p>' + task.title + '</p>' +
+              '<p>' + NotesIfTrue + '</p>' +
+              '<p>' + task.completed.substring(0,10) + '</p>'+
             '</div>'
           );
 
@@ -677,6 +556,8 @@ var helper = (function() {
       //show authOps and remove signIn and Loader
       //loaderWrapper = $('.loader-wrapper').hide();
       $('.loader-wrapper').hide();
+      $('#not-auth-ops').remove();
+      //$('.navbar-link').addClass('w--current')
       $('body').removeClass('overflow-hidden');
       //foodHelper.loadLandingFeeds();
     },

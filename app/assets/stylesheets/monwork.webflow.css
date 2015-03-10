@@ -855,7 +855,7 @@ p:hover {
   min-height: 100px;
   float: left;
   background-color: #ebebeb;
-  background-image: url(/assets/fp_gg_29_031-400x266.jpg);
+  /*background-image: url(/assets/fp_gg_29_031-400x266.jpg);*/
   background-position: 50% 0px;
   background-size: cover;
 }

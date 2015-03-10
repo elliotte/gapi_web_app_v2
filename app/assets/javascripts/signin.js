@@ -18,12 +18,8 @@ function onSignInCallback(authResult) {
             if (authResult['error'] == "immediate_failed") {
               console.log('NO APP ACCESS')
               console.log(authResult['status'])
+              signInButton.style.display = 'block';
               
-              $('#signin-in-error-modal-body').empty();
-              $('#modal-window-signin-error').modal('show');
-              $('#signin-in-error-modal-body').append( 
-                '<p>' + 'No Access :: To Grant Access click G-SignIn Button and/or Reload Page if you have just signed out' + '</p>'
-              );
             }
 
             if (authResult['error'] == "user_signed_out") {
@@ -50,10 +46,6 @@ function onSignInCallback(authResult) {
                signInButton.style.display = 'block';
             }
 
-            if (loaderWheel.style.display = 'block' ) {
-               loaderWheel.style.display = 'none';
-            }
-
 
         } else {
 
@@ -63,11 +55,11 @@ function onSignInCallback(authResult) {
                 console.log(authResult['status'])
                 
                 verified_auth_tokens = authResult
-                // var disconnectButton = document.getElementById('disconnect');
+                var disconnectButton = document.getElementById('disconnect');
       
-                // disconnectButton.addEventListener('click', function() {
-                //      helper.disconnectServer();
-                // });
+                disconnectButton.addEventListener('click', function() {
+                     helper.disconnectServer();
+                });
 
                 if (authResult['status']['signed_in'] && authResult['status']['google_logged_in'] ) {
                   
