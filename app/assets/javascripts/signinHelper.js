@@ -338,31 +338,11 @@ var helper = (function() {
      */
     appendCalendar: function(events) {
       var calendarCount = 0;
-      $('#calendarEvent').empty();
 
       for (var eventIndex in events.items) {
         event = events.items[eventIndex];
         calendarCount++;
-        if (calendarCount == 1) {
-          $('#calendarEvent').show();
-        }
-        if(calendarCount%4 == 1) {
-          $('#calendarEvent').append('<div class="row">');
-        }
-
-        var attendees_email_list = [];
-        
-        if (event.attendees) {
-          event.attendees.forEach(function(user) {
-            string = user.email
-            attendees_email_list.push(string);
-          });
-        } else {
-          attendees_email_list.push("No attendees");
-        }//END attendees prepare
-        
-        eventDate = new Date(event.start.dateTime)
-
+        console.log(events.items.length)
         if(event.hangoutLink) {
           $('#calendarEvent').append(
             '<div id="'+ event.id +'" class="col-md-3">'+
@@ -384,28 +364,9 @@ var helper = (function() {
             '</div>'
           );
         } else {
-          $('#calendarEvent').append(
-            '<div id="'+ event.id +'" class="col-md-3">'+
-              '<div class="feature-box-style2">'+
-                '<div class="feature-box-title">'+
-                  '<i class="fa fa-calendar"></i>'+
-                '</div>'+
-                '<div class="feature-box-containt" style="max-height:250px; overflow:scroll;">'+
-                  '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
-                  '<p>' + attendees_email_list.join(" and ") + '</p>'+
-                  '<p>' + eventDate.toLocaleDateString() + ', ' + eventDate.toLocaleTimeString() + '</p>'+
-                  '<p>'+
-                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
-                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
-                  '</p>'+
-                '</div>'+
-              '</div>'+
-            '</div>'
-          );
+           $('#diary-container').append(uiHelper.calendarHtml(event))
         }
-        if(calendarCount%4 == 0) {
-            $('#calendarEvent').append('</div>');
-        };
+        
       }//ENd of FOR loop
       if(calendarCount == 0){
         $('#noCalendarEvent').show();
@@ -417,39 +378,27 @@ var helper = (function() {
     appendDrive: function(drive) {
       var fileCount = 0;
       var countShared = 0;
-      
-      for (var itemIndex in drive.items) {
-        item = drive.items[itemIndex];
-        container = $('#files-container')
 
-        if(!item.explicitlyTrashed) {
-
-          if(item.thumbnailLink) {
-
-              container.append(
-
-                      '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ item.thumbnailLink +');">' +
-                              '<div class="employee-bio">' +
-                                  '<p class="bio-text">'+
-                                   ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
-                                   ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy"><i class="fa fa-copy"></i></a>'+
-                                   ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show"><i class="fa fa-comment-o"></i></a>'+
-                                  '</p>' +
-                                  '<div id="export-links-' + item.id + '"></div>'+
-                              '</div>' +
-                      '</div>'
-
-            );
-
-            
-          } else {
-           
-           
-
-          }
-        }
-      }
-      
+      containerUser = $('#latest-files-container')
+      containerShared = $('#shared-files-container')
+      var userShowCount = 0;
+      var sharedShowCount = 0;
+      for (file in drive.items) {
+          item = drive.items[file]
+          if(!item.explicitlyTrashed) {
+              if(item.sharingUser) {
+                  if (sharedShowCount < 5) {
+                      sharedShowCount++;
+                      containerShared.append(uiHelper.filesHtml(item));//end of append
+                  };
+              } else {
+                  if (userShowCount < 5) {
+                    userShowCount++;
+                    containerUser.append(uiHelper.filesHtml(item))
+                  };
+              }//end of shared filter
+          }//end of Trash Filter
+      }//end of For Loop
 
     },
     /**
@@ -472,9 +421,7 @@ var helper = (function() {
               '</div>'+
               '<div class="feature-box-containt">'+
                 '<h3>' + taskList.title + '</h3>' +
-
                 '<p>' + ' <a id="create-task-list-to-do" class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Task.new</a>' +
-                  
                 '<p>'+
                   ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
                   ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '"><i class="fa fa-edit"></i></a>'+
@@ -489,7 +436,7 @@ var helper = (function() {
         $('#noTaskLists').show();
       }
       if(taskListsCount == taskLists.items.length) {
-        
+          
       }
       
     },
@@ -497,54 +444,22 @@ var helper = (function() {
      * Displays available Tasks in Task List retrieved from server.
      */
     appendTasks: function(tasks, taskListId) {
+      var taskCompletedCount = 0;
+      var taskPendingCount = 0;
 
       for (var taskIndex in tasks.items) {
         task = tasks.items[taskIndex];
-        
-        var dateIfEntered = ""
-        if ( !task.due ) {
-          dateIfEntered = "None-SetBy-User"
-        } else {
-          dateIfEntered = task.due.substring(0,10)
-        };
-        var NotesIfTrue = ""
-        if ( !task.notes ) {
-          NotesIfTrue = "No-Notes"
-        } else {
-          NotesIfTrue = task.notes
-        };
 
-        if (task.status == "completed" && task.completed) {
-
+        if (task.status == "completed") {
           taskCompletedCount++;
-          $().append(
-            '<div id=' + task.id + ' class="about-employee _'+taskIndex+'" style="overflow:hidden;">' +
-              '<div class="employee-bio">' +
-                '<p class="bio-text">'+
-                  ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                  ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                '</p>' +
-              '</div>' +
-              '<p>' + task.title + '</p>' +
-              '<p>' + NotesIfTrue + '</p>' +
-              '<p>' + task.completed.substring(0,10) + '</p>'+
-            '</div>'
+          $('#tasks-complete-container').append(
+            uiHelper.tasksHtml(task, taskListId)
           );
 
         } else if(task.status == "needsAction") {
-
           taskPendingCount++;
-          $('#pendingTasks').show();
-          $('#tasksPending').append(
-
-            '<div id=' + task.id + '>' +
-                    '<p>'+ '- Title: ' + task.title + ', Notes: ' + NotesIfTrue + ', Due Date: ' + dateIfEntered + '</p>'+
-                    '<p>'+
-                      ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">Delete</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">Update</a>'+
-                      ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">Complete</a>'+
-                    '</p>' +
-            '</div>'
+          $('#tasks-pending-container').append(
+            uiHelper.tasksHtml(task, taskListId)
           );
         }
 
@@ -553,10 +468,11 @@ var helper = (function() {
         }
 
       }
-      //show authOps and remove signIn and Loader
       //loaderWrapper = $('.loader-wrapper').hide();
       $('.loader-wrapper').hide();
       $('#not-auth-ops').remove();
+      Webflow.require("slider").redraw();
+      Webflow.require("navbar").ready();
       //$('.navbar-link').addClass('w--current')
       $('body').removeClass('overflow-hidden');
       //foodHelper.loadLandingFeeds();

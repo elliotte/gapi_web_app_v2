@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require webflow
 //= require modernizr
+//= require bootstrapModals
+//= require uiHelper
 //= require main
 

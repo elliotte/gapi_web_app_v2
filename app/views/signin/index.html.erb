@@ -4,226 +4,53 @@
       <div class="loader-text"><span class="loader-text-low-opacity">Loading...<br xmlns="http://www.w3.org/1999/xhtml"></span>Welcome to work.</div>
     </div>
   </div>
-  <!-- navbar slideDown -->
-  <div class="w-clearfix contact" data-ix="display-none">
-    <a class="w-inline-block contact-tile" href="mailto:">
-      <div class="w-clearfix contact-tile-content">
-          <img class="contact-icon" src="<%= asset_path('mail icon.svg') %>" alt="548f17b6f166a77b3a94ad43_mail%20icon.svg">
-          <h1 class="contact-title">email</h1>
-          <div class="contact-text">contemplate@gmail.com</div>
-      </div>
-    </a>
-    <a class="w-inline-block contact-tile _2" href="tel:3401545232">
-      <div class="w-clearfix contact-tile-content">
-          <img class="contact-icon" src="<%= asset_path('phone icon.svg') %>" alt="548f17c887202bb925402a34_phone%20icon.svg">
-          <h1 class="contact-title">phone</h1>
-          <div class="contact-text">3401545232</div>
-      </div>
-    </a>
-    <a class="w-inline-block contact-tile _3" href="#">
-        <div class="w-clearfix contact-tile-content">
-          <img class="contact-icon" src="<%= asset_path('map icon.svg') %>" alt="548f17d8c9dd0f7c3a0ce251_map%20icon.svg">
-          <h1 class="contact-title">find me</h1>
-          <div class="contact-text">Studio 1, West Hagley
-          <br>United Kingdom</div>
-      </div>
-    </a>
-    <a class="w-inline-block contact-tile _4" href="#">
-        <div class="contact-tile-content"><img class="contact-icon" src="<%= asset_path('twitter icon.svg') %>" alt="54b16b55f585b18b3fbf63fc_twitter%20icon.svg">
-        <h1 class="contact-title">Twitter</h1>
-      </div>
-    </a>
-    <a class="w-inline-block contact-tile _5" id="disconnect" href="javascript:void(0)">
-        <div class="contact-tile-content"><img class="contact-icon" src="<%= asset_path('facebook icon.svg') %>" alt="54b16b7a6ce3fe8c3f71ee1e_facebook%20icon.svg">
-        <h1 class="contact-title">Disconnect</h1>
-      </div>
-    </a>
-  </div> <!-- end of navBar -->
 
-  <!-- mobile navBar -->
-  <div class="w-nav w-hidden-main w-hidden-medium mobile-navbar" data-collapse="small" data-animation="over-right" data-duration="300" data-contain="1" data-easing="ease-in-out-sine" data-easing2="ease-in-out-sine">
-    <!-- mobile navWrapper -->
-    <nav class="w-container mobile-navbar-container">
-      <a class="w-nav-brand brand" href="index.html"><img class="mobile-logo" src="<%= asset_path('mobile logo.svg') %>" width="64" alt="54bcd9f13547bc7d5fbb298a_mobile%20logo.svg">
-      </a>
-      <!-- navDrownDown -->
-      <nav class="w-nav-menu mobile-nav-menu" role="navigation">
-        <img class="mobile-close-button" src="<%= asset_path('mobile close button.png') %>" width="22" alt="548c3f65e84cbe797dc33e5a_mobile%20close%20button.png">
-          <!-- navDrownDown links -->
-          <div class="mobile-slide-menu-container">
-            <a class="w-nav-link mobile-nav-link" href="work.html">Work</a>
-            <a class="w-nav-link mobile-nav-link" href="concepts.html">Concepts</a>
-            <a class="w-nav-link mobile-nav-link" href="about.html">About</a>
-            <a class="w-nav-link mobile-nav-link" href="contact.html">Contact</a>
-          </div>
-      </nav>
-      <div class="w-nav-button mobile-menu-button">
-        <img class="hamburger" src="<%= asset_path('hamburger.svg') %>" width="23" alt="548f1dbcc9dd0f7c3a0ce2a9_hamburger.svg">
-      </div>
-    </nav>
-  </div> <!-- end of mobile nav -->
-
-  <!-- sliderWrapper --> 
-  <div id="not-auth-ops" class="w-slider slider-homepage" data-animation="fade" data-duration="700" data-infinite="1" data-delay="4000" data-autoplay="1">
-
-    <div class="w-slider-mask">
-      <!-- slide one  -->
-      <div class="w-slide slide-1 escape-parete">
-          <!-- nav Menu -->
-          <nav class="w-nav-menu nav-menu" role="navigation">
-            <a class="w-nav-link navbar-link" href="work.html">Work</a>
-            <a class="w-nav-link navbar-link" href="concepts.html">Concepts</a>
-            <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
-              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
-              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
-            </a>
-            <a class="w-nav-link navbar-link" href="about.html">About</a>
-            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">Contact</a>
-          </nav>  <!-- end of nav -->
-          <!-- slider arrows container -->
-          <div class="full-screen-arrows-container">
-            <div class="slider-left-arrow right">
-              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
-            </div>
-            <div class="slider-left-arrow">
-              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
-            </div>
-          </div>
-          <!-- slider center text -->
-          <a class="w-inline-block slide-text-container" href="projects/escape-wall.html">
-            <h1 class="project-title">
-              <div id="gConnect">
-                  <button class="g-signin"
-                      data-scope="<%= ENV['PLUS_LOGIN_SCOPE'] %>"
-                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                      data-clientId="<%= ENV['CLIENT_ID'] %>"
-                      data-state=""
-                      data-accesstype="offline"
-                      data-callback="onSignInCallback"
-                      data-theme="dark"
-                      data-cookiepolicy="single_host_origin">
-                  </button>
-              </div>
-            </h1>
-            <h2 class="homepage-h2">Click</h2>
-          </a>
-      </div> <!-- end of slide one -->
-
-      <div class="w-slide slide-1 escape-sospensione">
-          <div class="full-screen-arrows-container">
-            <div class="slider-left-arrow right">
-              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
-            </div>
-            <div class="slider-left-arrow">
-              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
-            </div>
-          </div>
-          <a class="w-inline-block slide-text-container" href="projects/escape-suspension.html">
-            <h1 class="project-title">escape</h1>
-            <h2 class="homepage-h2">suspension lamp</h2>
-          </a>
-          <nav class="w-nav-menu nav-menu" role="navigation">
-            <a class="w-nav-link navbar-link" href="#">Work</a>
-            <a class="w-nav-link navbar-link" href="#">Concepts</a>
-            <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
-              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
-              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
-            </a>
-            <a class="w-nav-link navbar-link" href="#">About</a>
-            <a class="w-nav-link navbar-link" href="#" data-ix="open-contact">monea.build</a>
-          </nav>  <!-- end of nav -->
-      </div>
-
-    </div> <!-- end of slider mask -->
-
-    <!-- arrows for slider inside main slider wrapper only -->
-    <div class="w-slider-arrow-left slider-left-arrow"></div>
-    <div class="w-slider-arrow-right slider-left-arrow right"></div>
-    <div class="w-slider-nav w-round slide-nav"></div>
-  </div> <!-- end of slider wrapper -->
+  <%= render 'layouts/moneaActionBar' %>
+  <%= render 'unAuth_landing' %>
+  <%= render 'layouts/mobileNav' %>
 
 <!-- authorised ops -->
 <div class="w-clearfix content">
       <!-- start of authNav -->
       <nav class="w-nav-menu nav-menu" role="navigation">
-          <a class="w-nav-link navbar-link" href="#tasks-anchor">Tasks</a>
-          <a class="w-nav-link navbar-link" href="#">Diary</a>
-          <a class="w-nav-brand logo" href="/" data-ix="logo-hover">
-              <img class="logo-black" src="<%= asset_path('contemplate black.svg') %>" alt="error">
-              <img class="logo-pink" src="<%= asset_path('contemplate pink.svg') %>" alt="error">
-            </a>
-          <a class="w-nav-link navbar-link" href="#">Files</a>
-          <a class="w-nav-link navbar-link w--current" href="#" data-ix="open-contact">monea.build</a>
-     </nav>  <!-- end of nav -->
+          <%= render 'layouts/navButtons' %>
+      </nav>  <!-- end of nav -->
     <!-- auth main landing image -->
     <div class="about-hero-container">
       <h1 class="about-hero-title">we redefine creativity</h1>
     </div>
     <!-- first left box -->
     <div class="about-div image">
-        <div class="employee-bio" style="background-color:#62DF71;">
-            <br>
-            <br>
-            <h4 class="employee-name">monea.Food</h4>
-            <p class="bio-text">See stories from BBC, reuteurs and other news feeds.</p>
-        </div>
     </div>
     <!-- first right box -->
     <div class="about-div">
       <p class="about">
         <a class="w-inline-block all-projects-button" href="#">
-          <img class="grid-button" src="<%= asset_path('grid button.svg') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+          <img class="grid-button" src="<%= asset_path('food icon.png') %>" alt="asset error">
         </a>
-        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts
+        Click to see stories from BBC, reuters and other news feeds.
       </p>
     </div>
-    <!-- second left box -->
-    <div id="tasks-anchor" class="about-div title">
-      <h1 class="h1-about">yourFiles</h1>
+
+    <!-- START OF CALENDAR -->
+    <!-- diary ledt box -->
+    <div class="about-div title">
+      <h1 class="h1-about">
+        <a class="w-inline-block action-button" href="#">
+          <img id="quick_add_event" class="grid-button action-button" src="<%= asset_path('qaddevent.png') %>" alt="asset-error">
+        </a>
+        <a class="w-inline-block action-button" href="#">
+          <img id="add_event" class="grid-button" src="<%= asset_path('calendar icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        yourDiary
+      </h1>
     </div>
-    <div class="about-div employees">
-      <div id="files-container" class="w-clearfix employees-container">
-        <div class="about-employee _1">
-          <div class="employee-bio">
-            <h4 class="employee-name">Vanessa fowler</h4>
-            <p class="bio-text">Hipster-friendly travel enthusiast. Internet lover. Entrepreneur. Extreme web practitioner.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- diary right box -->
     <div class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
-        <div class="w-slider-mask">
-          <div class="w-slide slide-about">
-            <div class="about-slide-container">
-              <img class="about-icon" src="<%= asset_path('passion.svg') %>" alt="54bacd914bcc750812060dfd_passion.svg">
-              <h3>Passion</h3>
-            </div>
-          </div>
-          <div class="w-slide slide-about">
-            <div class="about-slide-container">
-              <img class="about-icon" src="<%= asset_path('communication.svg') %>" alt="54bacd9ec3c251532765ee25_communication.svg">
-              <h3>communication</h3>
-            </div>
-          </div>
-          <div class="w-slide slide-about">
-            <div class="about-slide-container">
-              <img class="about-icon" src="<%= asset_path('diligence.svg') %>" alt="54bacdae7e1f4b52275c6e37_diligence.svg">
-              <h3>diligence</h3>
-            </div>
-          </div>
-          <div class="w-slide slide-about">
-            <div class="about-slide-container">
-              <img class="about-icon" src="<%= asset_path('innovation.svg') %>" alt="54bacdbd7e1f4b52275c6e39_innovation.svg">
-              <h3 class="values-title">innovation</h3>
-            </div>
-          </div>
-          <div class="w-slide slide-about">
-            <div class="about-slide-container">
-              <img class="about-icon" src="<%= asset_path('reliability.svg') %>" alt="54baccd50303bf091219d61d_reliability.svg">
-              <h3>reliability</h3>
-            </div>
-          </div>
+        <div id="diary-container" class="w-slider-mask">
+          <!-- append calendar events here -->
         </div>
         <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
         </div>
@@ -232,16 +59,108 @@
         <div class="w-slider-nav w-round slider-about-nav"></div>
       </div>
     </div>
-    <div class="about-div title">
-      <h1 class="h1-about">our values</h1>
+
+    <!-- START OF TASKS -->
+    <!-- completed tasks left box -->
+    <div class="about-div slider">
+      <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
+        <div id="tasks-complete-container" class="w-slider-mask">
+          <!-- append tasks here -->
+        </div>
+        <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
+        </div>
+        <div class="w-slider-arrow-right slider-left-arrow right"><img class="slider-arrow" src="<%= asset_path('slider arrow right black.png') %>" alt="asset error">
+        </div>
+        <div class="w-slider-nav w-round slider-about-nav"></div>
+      </div>
     </div>
-    <footer class="footer">
+    <!-- completed tasks right box -->
+    <div class="about-div title">
+      <h1 class="h1-about">
+        <a href=""><img class="contact-icon action-button" src="<%= asset_path('task icon.png') %>" alt="asset error"></a>
+        completed Tasks
+      </h1>
+    </div>
+    <!-- pending tasks left box -->
+    <div class="about-div title">
+      <h1 class="h1-about">
+        <a id="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
+        </a>
+        Pending Tasks
+      </h1>
+    </div>
+    <!-- pending tasks right box -->
+    <div class="about-div slider">
+      <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
+        <div id="tasks-pending-container" class="w-slider-mask">
+          <!-- append tasks here -->
+        </div>
+        <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
+        </div>
+        <div class="w-slider-arrow-right slider-left-arrow right"><img class="slider-arrow" src="<%= asset_path('slider arrow right black.png') %>" alt="asset error">
+        </div>
+        <div class="w-slider-nav w-round slider-about-nav"></div>
+      </div>
+    </div>
+    
+    <!-- START of FILES -->
+    <!-- shared files left box -->
+    <div class="about-div employees">
+      <div id="shared-files-container" class="w-clearfix employees-container">
+        <!-- files appended here -->
+      </div>
+    </div>
+    <!-- shared files right box -->
+    <div class="about-div title">
+      <h1 class="h1-about">
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        sharedFiles
+      </h1>
+    </div>
+    <!-- user files left box -->
+    <div id="files-anchor" class="about-div title">
+      <h1 class="h1-about">
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button" href="#">
+          <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        yourFiles
+      </h1>
+    </div>
+    <!-- user files right box -->
+    <div class="about-div employees">
+      <div id="latest-files-container" class="w-clearfix employees-container">
+        <!-- files appended here -->
+      </div>
+    </div>
+    
+ </div> <!--  end of clearFix authContent container -->
+ <br>
+ <br>
+ <footer class="footer">
       <div class="w-clearfix footer-content">
-        <div class="footer-text">Contemplate 2015&nbsp;</div>
-        <a class="w-inline-block logo-small" href="index.html"><img src="<%= asset_path('contemplate white.svg') %>" width="80" alt="54b1695f6ce3fe8c3f71ee0c_contemplate%20white.svg">
+        <div class="footer-text">monea.build 2015&nbsp;</div>
+        <a class="w-inline-block logo-small" href="/"><img src="<%= asset_path('contemplate white.svg') %>" width="80" alt="asset-error">
         </a>
         <div class="footer-text">All rights reserved</div>
       </div>
-    </footer>
- </div> 
+ </footer> 
  <div id="state" class="hide"><%= @state %></div>
+
+ <%= render 'modals' %>
+

@@ -7,26 +7,29 @@ $(document).ready(function () {
 	// 	e.preventDefault();
 	// 	window.location.href = '/';
 	// });
-	// $("#quick_add_event").click(function() {
-	// 	$("#modal-window-quick-create-event").modal("show");
-	// });
-	// $("#add_event").click(function() {
-	// 	 $("#modal-window-create-event").modal("show");
-		 
- //   		 $("#search_calendar_ppl").tokenInput("/circles/circles_names.json", {
- //      		theme: "facebook",
- //      		crossDomain: false,
- //      		hintText: "search teams"
- //    	 });
- //    	$(".token-input-dropdown-facebook").css("z-index","9999")
+	$("#quick_add_event").click(function() {
+		$("#modal-window-quick-create-event").modal("show");
+		console.log("herer")
 
-	// });
+	});
+	$("#add_event").click(function() {
+		 $("#modal-window-create-event").modal("show");
+   		 
+   		 $("#search_calendar_ppl").tokenInput("/circles/circles_names.json", {
+      		theme: "facebook",
+      		crossDomain: false,
+      		hintText: "search teams"
+    	 });
+    	$(".token-input-dropdown-facebook").css("z-index","9999")
+
+	});
 	// $("#new_doc").click(function() {
 	// 	$("#modal-window-new-doc").modal("show");
 	// });
 	// $("#add-to-do").click(function() {
 	// 	var route = $("#create-task-list-to-do").attr('href');
 	// 	$.get(route);
+
 	// });
 	// $("#new_ss").click(function() {
 	// 	$("#modal-window-new-ss").modal("show");

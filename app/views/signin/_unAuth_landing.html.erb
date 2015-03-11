@@ -1,0 +1,65 @@
+  <!-- sliderWrapper --> 
+  <div id="not-auth-ops" class="w-slider slider-homepage" data-animation="fade" data-duration="700" data-infinite="1" data-delay="4000" data-autoplay="1">
+
+    <div class="w-slider-mask">
+      <!-- slide one  -->
+      <div class="w-slide slide-1 escape-parete">
+          <!-- nav Menu -->
+          <nav class="w-nav-menu nav-menu" role="navigation">
+              <%= render 'layouts/navButtonsUnAuth' %>
+          </nav>  <!-- end of nav -->
+          <!-- slider arrows container -->
+          <div class="full-screen-arrows-container">
+            <div class="slider-left-arrow right">
+              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+            <div class="slider-left-arrow">
+              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+          </div>
+          <!-- slider center text -->
+          <a class="w-inline-block slide-text-container" href="projects/escape-wall.html">
+            <h1 class="project-title">
+              <div id="gConnect">
+                  <button class="g-signin"
+                      data-scope="<%= ENV['PLUS_LOGIN_SCOPE'] %>"
+                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                      data-clientId="<%= ENV['CLIENT_ID'] %>"
+                      data-state=""
+                      data-accesstype="offline"
+                      data-callback="onSignInCallback"
+                      data-theme="dark"
+                      data-cookiepolicy="single_host_origin">
+                  </button>
+              </div>
+            </h1>
+            <h2 class="homepage-h2">All the tools you need to run your Business</h2>
+          </a>
+      </div> <!-- end of slide one -->
+
+      <!-- slide two unAuth landing -->
+      <div class="w-slide slide-1 escape-sospensione">
+          <div class="full-screen-arrows-container">
+            <div class="slider-left-arrow right">
+              <img class="slider-arrow" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+            <div class="slider-left-arrow">
+              <img class="slider-arrow left" src="<%= asset_path('right arrow.svg') %>" alt="no-asset-error">
+            </div>
+          </div>
+          <a class="w-inline-block slide-text-container" href="projects/escape-suspension.html">
+            <h1 class="project-title">escape</h1>
+            <h2 class="homepage-h2">suspension lamp</h2>
+          </a>
+          <nav class="w-nav-menu nav-menu" role="navigation">
+              <%= render 'layouts/navButtonsUnAuth' %>
+          </nav>  <!-- end of nav -->
+      </div>
+
+    </div> <!-- end of slider mask -->
+
+    <!-- arrows for slider inside main slider wrapper only -->
+    <div class="w-slider-arrow-left slider-left-arrow"></div>
+    <div class="w-slider-arrow-right slider-left-arrow right"></div>
+    <div class="w-slider-nav w-round slide-nav"></div>
+</div> <!-- end of slider wrapper non-auth ops -->

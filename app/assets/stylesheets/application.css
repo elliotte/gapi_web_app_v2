@@ -12,4 +12,5 @@
  *= require webflow
  *= require monwork.webflow
  *= require signin
+ *= require bootstrapModals
  */
