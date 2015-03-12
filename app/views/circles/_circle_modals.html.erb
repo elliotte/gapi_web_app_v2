@@ -153,9 +153,8 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Share a File with the Team</h3>
-				<p style="color: #e10707;">Use Team.share from your main landing page, if your file is already in the cloud.  This upload creates a new copy.</p>
+				<h3 class="pink-header">Share a File with the Team</h3>
+				<p>Use Team.share from your main landing page, if your file is already in the cloud.  This upload creates a new copy.</p>
 			</div>
 			<div class="modal-body">
 				<%= form_tag(files_path, :id => "create_circle_document_form", class: "contactForm", :method => "post", :multipart => true) do %>

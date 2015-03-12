@@ -4,13 +4,12 @@
 	<div class="modal-dialog modal-small-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Authentication Error</h3>
+				<h3 class="pink-header">Authentication Error</h3>
 			</div>
 			<div id="signin-in-error-modal-body" class="modal-body">
 			</div>
 			<div id="" class="modal-footer">
-				<button id="" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 			</div>
 		</div>
 	</div>
@@ -22,21 +21,20 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Quickly Add Event</h3>
+				<h3 class="pink-header">Quickly Add Event</h3>
 				<p>Same principles as google quick add.</p>
 			</div>
 			<div id="quick-events-modal-body" class="modal-body">
 				<%= form_tag("/calendars/primary/events/quick_add", :method => "post", remote: true) do %>
 					<div class="form-group">
-						Text: <%= text_field_tag "event[text]", "", class: "form-control", placeholder: "e.g 10am deliver report", id: "text" %>
+						Text: <%= text_field_tag "event[text]", "", class: "white-pink", placeholder: "e.g 10am deliver report", id: "text" %>
 						<%= hidden_field_tag "event[circle_id]", params[:id] %>
 					</div>
-				  <%= submit_tag "Add", class: "btn btn-main-o" %>
+				  <%= submit_tag "Add", class: "btn" %>
 				<% end %>
 			</div>
 			<div id="quick_create_event_footer" class="modal-footer" style="display:none;">
-				<button id="quick_create_button_close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<p><button id="quick_create_button_close" class="btn close" data-dismiss="modal" aria-hidden="true">Close</button></p>
 			</div>
 		</div>
 	</div>
@@ -72,33 +70,29 @@
 	<div class="modal-dialog modal-default-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Create Event</h3>
+				<h3 class="pink-header">Create Event</h3>
 				<p>You can now create and share an event using moneaTeams</p>
 			</div>
 			<div id="js-add-event-content-body" class="modal-body">
 				<%= form_tag("/calendars/primary/events", :id => "create_event_form", :method => "post", remote: true) do %>
 					<div class="form-group">
-						Summary: <%= text_field_tag "event[summary]", "", class: "form-control", placeholder: "Summary" %>
-						Start Time: <%= text_field_tag "event[start_time]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "form-control", id: "start_time_event" %>
-						End Time: <%= text_field_tag "event[end_time]", "#{(DateTime.now+1.hour).strftime('%d/%m/%Y %H:%M')}", class: "form-control", placeholder: "End Time", id: "end_time_event" %>
-						Description: <%= text_field_tag "event[description]", "", class: "form-control", placeholder: "Description" %>
-						Location: <%= text_field_tag "event[location]", "", class: "form-control", placeholder: "Location" %>
-						Attendees :-
-						ByTeam: <%= text_field_tag "event[attendee_team_ids]", "", class: "form-control", id: "search_calendar_ppl" %>
-						Others :-
-						<br>
-						HangoutLink: <%= text_field_tag "event[hangout_link]", "", class: "form-control", placeholder: "paste Link" %>
+						Summary: <%= text_field_tag "event[summary]", "", class: "white-pink", placeholder: "Summary" %>
+						Start Time: <%= text_field_tag "event[start_time]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "white-pink", id: "start_time_event" %>
+						End Time: <%= text_field_tag "event[end_time]", "#{(DateTime.now+1.hour).strftime('%d/%m/%Y %H:%M')}", class: "white-pink", placeholder: "End Time", id: "end_time_event" %>
+						Description: <%= text_field_tag "event[description]", "", class: "white-pink", placeholder: "Description" %>
+						Location: <%= text_field_tag "event[location]", "", class: "white-pink", placeholder: "Location" %>
+						Attendee Teams: <%= text_field_tag "event[attendee_team_ids]", "", class: "white-pink", id: "search_calendar_ppl" %>
+						HangoutLink: <%= text_field_tag "event[hangout_link]", "", class: "white-pink", placeholder: "paste Link" %>
           				<%= hidden_field_tag "event[circle_id]", params[:id] %>
           				<br>
-          				<%= submit_tag "Add", class: "btn btn-primary" %>
+          				<%= submit_tag "Add", class: "btn" %>
 					</div>
 				<% end %>
 				
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button id="add-another-event" style="display:none" class="btn btn-primary" aria-hidden="true">Add Another</button>
+				<p>Press ESC to exit</p>
+				<button id="add-another-event" style="display:none" class="btn" aria-hidden="true">Add Another</button>
 			</div>
 		</div>
 	</div>
@@ -108,21 +102,43 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Create Circle</h3>
+				<h3 class="pink-header">Create a new Team</h3>
+				<p>You will become the owner.  Add people and colleagues after creation.</p>
 			</div>
 			<div class="modal-body">
 				<%= form_tag(circles_path, :id => "create_circle_form", :method => "post") do %>
 					<div class="form-group">
-						Name: <%= text_field_tag "circle[display_name]", "", class: "form-control", placeholder: "Enter Name", id: "name" %>
-						Description: <%= text_area_tag "circle[description]", "", class: "form-control", placeholder: "Description", id: "description" %>
+						Name: <%= text_field_tag "circle[display_name]", "", class: "white-pink", placeholder: "Enter Name", id: "name" %>
+						Description: <%= text_area_tag "circle[description]", "", class: "white-pink", placeholder: "Description", id: "description" %>
 						<%= hidden_field_tag "circle[user_id]", "" %>
 					</div>
 				<% end %>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button class="btn btn-primary" id="create_button_circle">Create</button>
+				<button class="btn" id="create_button_circle">Create</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-window-new-file-import" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-medium-width">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">Document or Spreadsheet?</h3>
+			</div>
+			<div class="modal-body">
+				<p>
+					<a id="create_spreadsheet" class="w-inline-block action-button" href="#">
+          				<img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        			</a>
+        			<a id="create_document" class="w-inline-block action-button" href="#">
+          				<img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        			</a>
+        		</p>
+			</div>
+			<div class="modal-footer">
+				<p>This will import the file into your cloud drive.</p>
 			</div>
 		</div>
 	</div>
@@ -132,20 +148,19 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">New SpreadSheet</h3>
+				<h3 class="pink-header">New SpreadSheet</h3>
 			</div>
 			<div id="new-ss-modal-body" class="modal-body">
 				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
 					<div class="form-group">
-						Text: <%= text_field_tag "title", "", class: "form-control", placeholder: "Enter a SS title", id: "title" %>
+						Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter a title for your new SS", id: "title" %>
 						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.spreadsheet" %>
 					</div>
 				  <%= submit_tag "Add", class: "btn" %>
 				<% end %>
 			</div>
 			<div id="new-ss-modal-footer" class="modal-footer" style="display:none;">
-				<button id="new-ss-insert-close" class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
+				<p><button id="new-ss-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button></p>
 			</div>
 		</div>
 	</div>
@@ -155,20 +170,21 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Import Spreadsheet</h3>
+				<h3 class="pink-header">Import Spreadsheet</h3>
 			</div>
 			<div class="modal-body">
+				<br>
 				<%= form_tag(files_path, :id => "create_spreadsheet_form", :method => "post", :multipart => true) do %>
 					<div class="form-group">
 						Select Spreadsheet: <%= file_field_tag "file", class: "form-control", :accept => ".csv, .xlsx, .xls" %>
 						<%= hidden_field_tag "circle_id", params[:id] %>
 					</div>
 				<% end %>
+				<br>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button class="btn btn-primary" id="create_button_spreadsheet">Create</button>
+				<button class="btn" id="create_button_spreadsheet">Create</button>
+				<p>Press ESC to exit</p>
 			</div>
 		</div>
 	</div>
@@ -178,13 +194,12 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">New Document</h3>
+				<h3 class="pink-header">New Document</h3>
 			</div>
 			<div id="new-doc-modal-body" class="modal-body">
 				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
 					<div class="form-group">
-						Text: <%= text_field_tag "title", "", class: "form-control", placeholder: "Enter a document title", id: "title" %>
+						Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter a document title", id: "title" %>
 						<%#= hidden_field_tag "event[circle_id]", params[:id] %>
 						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.document" %>
 					</div>
@@ -192,7 +207,7 @@
 				<% end %>
 			</div>
 			<div id="new-doc-modal-footer" class="modal-footer" style="display:none;">
-				<button id="new-doc-insert-close" class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">Close</button>
+				<p><button id="new-doc-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button></p>
 			</div>
 		</div>
 	</div>
@@ -202,20 +217,21 @@
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Import Document</h3>
+				<h3 class="pink-header">Import Document</h3>
 			</div>
 			<div class="modal-body">
+				<br>
 				<%= form_tag(files_path, :id => "create_document_form", :method => "post", :multipart => true) do %>
 					<div class="form-group">
 						Select Document: <%= file_field_tag "file", class: "form-control" %>
 						<%= hidden_field_tag "circle_id", params[:id] %>
 					</div>
 				<% end %>
+				<br>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button class="btn btn-primary" id="create_button_document">Create</button>
+				<p><button class="btn" id="create_button_document">Create</button></p>
+				<p>Press ESC to exit</p>
 			</div>
 		</div>
 	</div>
@@ -240,6 +256,22 @@
 	      		<button class="btn btn-primary" id="create_button_tasklist">Create</button>
 	    	</div>
 	  	</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-medium-width">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">yourTeams</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-teams-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
 	</div>
 </div>
 

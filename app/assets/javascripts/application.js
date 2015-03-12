@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.tokeninput
 //= require webflow
 //= require modernizr
 //= require bootstrapModals

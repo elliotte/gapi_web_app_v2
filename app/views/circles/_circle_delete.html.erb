@@ -1,14 +1,13 @@
 <div class="modal-dialog modal-small-width">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Are you sure?</h3>
+     <h3 class="pink-header">Are you sure?</h3>
+    </div>
+    <div class="modal-body">
       <%= form_tag(circle_path(circle.id), :id => "delete_circle", :method => "delete") do %>
       <% end %>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-main-o" id="delete_button">OK</button>
+      <button class="btn" id="delete_button">OK</button>
+      <p>Press ESC to exit</p>
     </div>
   </div>
 </div>
@@ -17,3 +16,5 @@
     $('#delete_circle').submit();
   });
 </script>
+
+

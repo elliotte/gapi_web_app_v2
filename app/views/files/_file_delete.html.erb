@@ -1,17 +1,13 @@
 <div class="modal-dialog modal-small-width">
   <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Are you sure?</h3>
-    </div>
     <div class="modal-body" id="delete-file-response-body">
+      <h3 class="pink-header">Are you sure?</h3>
       <%= form_tag(file_path(file.id), :id => "delete_file", :method => "delete", remote: true) do %>
-       
-        <%= submit_tag "Yes, Delete", class: "btn btn-main-o" %>
+        <%= submit_tag "Yes", class: "btn" %>
       <% end %>
     </div>
     <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <p>Press ESC to exit</p>
     </div>
   </div>
 </div>

@@ -9,12 +9,15 @@ $(document).ready(function () {
 	// });
 	$("#quick_add_event").click(function() {
 		$("#modal-window-quick-create-event").modal("show");
-		console.log("herer")
+
+	});
+	$("#view-teams").click(function() {
+		$("#modal-window-view-teams").modal("show");
 
 	});
 	$("#add_event").click(function() {
+		 
 		 $("#modal-window-create-event").modal("show");
-   		 
    		 $("#search_calendar_ppl").tokenInput("/circles/circles_names.json", {
       		theme: "facebook",
       		crossDomain: false,
@@ -23,29 +26,34 @@ $(document).ready(function () {
     	$(".token-input-dropdown-facebook").css("z-index","9999")
 
 	});
-	// $("#new_doc").click(function() {
-	// 	$("#modal-window-new-doc").modal("show");
-	// });
+	$(".new_doc").click(function() {
+		$("#modal-window-new-doc").modal("show");
+	});
 	// $("#add-to-do").click(function() {
 	// 	var route = $("#create-task-list-to-do").attr('href');
 	// 	$.get(route);
 
 	// });
-	// $("#new_ss").click(function() {
-	// 	$("#modal-window-new-ss").modal("show");
-	// });
+	$(".new_ss").click(function() {
+		$("#modal-window-new-ss").modal("show");
+	});
 	// $("#create_circle").click(function() {
 	// 	$("#modal-window-create-circle").modal("show");
 	// });
-	// $("#team_new").click(function() {
-	// 	$("#modal-window-create-circle").modal("show");
-	// });
-	// $("#create_spreadsheet").click(function() {
-	// 	$("#modal-window-create-spreadsheet").modal("show");
-	// });
-	// $("#create_document").click(function() {
-	// 	$("#modal-window-create-document").modal("show");
-	// });
+	$("#team_new").click(function() {
+		$("#modal-window-create-circle").modal("show");
+	});
+	$(".new_file_import").click(function() {
+		$("#modal-window-new-file-import").modal("show");
+	});
+	$("#create_spreadsheet").click(function() {
+		$('#modal-window-new-file-import').modal('hide');
+		$("#modal-window-create-spreadsheet").modal("show");
+	});
+	$("#create_document").click(function() {
+		$('#modal-window-new-file-import').modal('hide');
+		$("#modal-window-create-document").modal("show");
+	});
 	// $("#create_tasklist").click(function() {
 	// 	$("#modal-window-create-tasklist").modal("show");
 	// });
@@ -125,15 +133,15 @@ $(document).ready(function () {
 	// $('#create_button_event').click(function(){
 	// 	$('#create_event_form').submit();
 	// });
-	// $('#create_button_circle').click(function(){
-	// 	$('#create_circle_form').submit();
-	// });
-	// $('#create_button_spreadsheet').click(function(){
-	// 	$('#create_spreadsheet_form').submit();
-	// });
-	// $('#create_button_document').click(function(){
-	// 	$('#create_document_form').submit();
-	// });
+	$('#create_button_circle').click(function(){
+		$('#create_circle_form').submit();
+	});
+	$('#create_button_spreadsheet').click(function(){
+		$('#create_spreadsheet_form').submit();
+	});
+	$('#create_button_document').click(function(){
+		$('#create_document_form').submit();
+	});
 	// $('#create_button_tasklist').click(function(){
 	//     $('#create_tasklist_form').submit();
 	// });

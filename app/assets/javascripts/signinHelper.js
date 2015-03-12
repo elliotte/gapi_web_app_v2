@@ -305,32 +305,17 @@ var helper = (function() {
      */
     appendCircles: function(circles) {
       var circleCount = 0;
-      $('#monea-teams').show();
       for (var c in circles) {
         circleCount++;
         circle = circles[c];
-        if(circleCount%4 == 1) {
-          $('#monea-teams').append('<div class="row">');
-        }
-        $('#monea-teams').append(
-          '<div class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-users"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3>' + '<a style="color:#e10707;" href="/circles/' + circle.id + '">' + circle.name + '</a>' + '</h3>' +
-                '<p>' + circle.name + '</p>' +
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-        if(circleCount%4 == 0) {
-            $('#monea-teams').append('</div>');
-        }
+         $('#landing-teams-append').append(
+          '<p>' +
+              '<a class="grid-button action-button" href="/circles/' + circle.id + '">' + circle.name + '</a>' +
+          '</p>'
+         );
       }
       if(circleCount==0){
-        $('#noCircle').show();
+        $('#landing-teams-append').append('No Teams');
       }
     },
     /**
@@ -391,12 +376,40 @@ var helper = (function() {
                       sharedShowCount++;
                       containerShared.append(uiHelper.filesHtml(item));//end of append
                   };
+                  if (sharedShowCount == 5) {
+                    var moreCard = '<div class="about-employee">' + 
+                                      '<div class="table-cell-wrapper">' + 
+                                        '<p class="user-button-landing action-button">'+ 'view.all' + '</p>' +
+                                      '</div>' + 
+                                    '</div>'
+                     containerUser.append(moreCard);
+                  };
               } else {
                   if (userShowCount < 5) {
                     userShowCount++;
                     containerUser.append(uiHelper.filesHtml(item))
                   };
+                  if (userShowCount == 5) {
+                    var moreCard = '<div class="about-employee">' + 
+                                      '<div class="table-cell-wrapper">' + 
+                                        '<p class="user-button-landing action-button">'+ 'view.all' + '</p>' +
+                                      '</div>' + 
+                                    '</div>'
+                     containerUser.append(moreCard);
+                  };
               }//end of shared filter
+              if(item.exportLinks){
+                var st = "#export-links-"+item.id
+                $(st).html(
+                  'Export: '
+                );
+                Object.keys(item.exportLinks).forEach(function(key) {
+                  $(st).append(
+                    '<a class="capitalize" href="' + item.exportLinks[key] + '" target="_blank">' + item.exportLinks[key].substring(item.exportLinks[key].lastIndexOf("=")+1,item.exportLinks[key].length) + '</a> '
+                  );
+                });
+              }// end of exportLinks
+
           }//end of Trash Filter
       }//end of For Loop
 
@@ -471,9 +484,8 @@ var helper = (function() {
       //loaderWrapper = $('.loader-wrapper').hide();
       $('.loader-wrapper').hide();
       $('#not-auth-ops').remove();
-      Webflow.require("slider").redraw();
       Webflow.require("navbar").ready();
-      //$('.navbar-link').addClass('w--current')
+      Webflow.require("slider").redraw();
       $('body').removeClass('overflow-hidden');
       //foodHelper.loadLandingFeeds();
     },

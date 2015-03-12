@@ -1,19 +1,16 @@
 <div class="modal-dialog modal-medium-width">
   <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Create Copy</h3>
-    </div>
     <div class="modal-body">
+      <h3 class="pink-header">Create a Copy</h3>
       <%= form_tag(copy_file_path(file.id), :id => "copy_file", :method => "post") do %>
         <div class="form-group">
-          Title: <%= text_field_tag "title", "", class: "form-control", placeholder: "Title" %>
+          Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter the title for the copy" %>
         </div>
       <% end %>
     </div>
     <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-main-o" id="copy_button">OK</button>
+      <p><button class="btn" id="copy_button">OK</button></p>
+      <p>Press ESC to exit</p>
     </div>
   </div>
 </div>

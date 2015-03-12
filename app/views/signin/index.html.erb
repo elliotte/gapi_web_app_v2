@@ -15,15 +15,14 @@
       <nav class="w-nav-menu nav-menu" role="navigation">
           <%= render 'layouts/navButtons' %>
       </nav>  <!-- end of nav -->
+    
     <!-- auth main landing image -->
     <div class="about-hero-container">
       <h1 class="about-hero-title">we redefine creativity</h1>
     </div>
-    <!-- first left box -->
-    <div class="about-div image">
-    </div>
-    <!-- first right box -->
-    <div class="about-div">
+
+     <!-- foodNews left box -->
+     <div class="about-div">
       <p class="about">
         <a class="w-inline-block all-projects-button" href="#">
           <img class="grid-button" src="<%= asset_path('food icon.png') %>" alt="asset error">
@@ -31,7 +30,57 @@
         Click to see stories from BBC, reuters and other news feeds.
       </p>
     </div>
+    <!-- foodNews right box -->
+    <div class="about-div image">
+    </div>
 
+    <!-- actionBoard left box -->
+    <div class="about-div image" style="background-image: url(/assets/infinity_3.jpg);">
+    </div>
+    <!-- actionBoard right box -->
+     <div class="about-div employees">
+      <div class="w-clearfix employees-container">
+        <div class="about-employee">
+            <div class="employee-bio text-buffer">
+                <p class="bio-text">Ceate a new toDo task</p>
+                <br>
+                <a id="toDo-task" class="btn" href="javascript:void(0)">.new</a>
+            </div>
+            <div class="table-cell-wrapper">
+              <p class="user-button-landing"> toDo.new </p>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div class="table-cell-wrapper">
+              <a class="user-button-landing action-button" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples"> 
+                 <img class="contact-icon" src="<%= asset_path('user icon.png') %>" alt="asset-error">
+                Networks (people) </a>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div class="employee-bio text-buffer">
+                <p class="bio-text">Ceate a new moneaTeam</p>
+                <br>
+                <a id="team_new" class="btn" href="javascript:void(0)">.new</a>
+            </div>
+            <div class="table-cell-wrapper">
+              <p class="user-button-landing"> Team.new </p>
+            </div>
+        </div>
+        <div class="about-employee">
+        </div>
+        <div class="about-employee">
+           
+        </div>
+        <div class="about-employee">
+            <div class="table-cell-wrapper">
+              <a class="user-button-landing action-button" id="view-teams" href="javascript:void(0)"> 
+                 <img class="contact-icon" src="<%= asset_path('teams icon.png') %>" alt="asset-error">
+                Teams (all) </a>
+            </div>
+        </div>
+      </div>
+    </div>
     <!-- START OF CALENDAR -->
     <!-- diary ledt box -->
     <div class="about-div title">
@@ -113,13 +162,13 @@
     <!-- shared files right box -->
     <div class="about-div title">
       <h1 class="h1-about">
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_doc" href="#">
           <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_file_import" href="#">
           <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_ss" href="#">
           <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
         <br>
@@ -129,13 +178,13 @@
     <!-- user files left box -->
     <div id="files-anchor" class="about-div title">
       <h1 class="h1-about">
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_doc" href="#">
           <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_file_import" href="#">
           <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
-        <a class="w-inline-block action-button" href="#">
+        <a class="w-inline-block action-button new_ss" href="#">
           <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
         <br>

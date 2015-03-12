@@ -4,15 +4,26 @@ var uiHelper = (function() {
   return {
     // files html method
     filesHtml: function(item) {
+       mimeType = item.mimeType
+       imageLink = "";
+
        if (item.thumbnailLink) {
          imageLink = item.thumbnailLink;
+         console.log(mimeType)
+         console.log(item)
        } else {
-
-          mimeType = item.mimeType
+         
           if (mimeType.indexOf('folder') >= -1 ) {
               imageLink = "http://www.iconhot.com/icon/ico/vista-folder-colors/blue-folder.ico";
-          } else {
-              //imageLink = "/assets/gSSimage.png";
+          }
+          if (mimeType == "text/csv" ) {
+              imageLink = "http://www.iconhot.com/icon/ico/vista-folder-colors/blue-folder.ico";
+          }
+          if (mimeType == "application/vnd.google-apps.document" ) {
+              imageLink = "http://blogs.uis.edu/isat/files/2014/03/google_docs.png";
+          } 
+          if (mimeType.mimeType == "application/vnd.google-apps.spreadsheet") {
+              imageLink = "http://icons.iconarchive.com/icons/carlosjj/google-jfk/128/spreadsheets-icon.png";
           }
 
        };
@@ -20,22 +31,25 @@ var uiHelper = (function() {
        var html =   '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ imageLink +');">' +
                         '<div class="employee-bio">' +
                             '<a href="'+item.alternateLink+'" class="employee-name" target="_blank">' + item.title + '</a>' +
-                            '<p class="bio-text">'+
+                            '<p class="bio-text file-card">' +
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">' + 
-                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
+                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>' +
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
-                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/comment.png" alt="asset-error">' + '</a>' +
-                            '</p>' +
-                            '<div id="export-links-' + item.id + '"></div>'+
+                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
+                            '</p>' + 
+                            '<div style="padding-top:5px;"id="export-links-' + item.id + '"></div>'+
                         '</div>' +
                     '</div>'
+
+       
 
         return html
     },
 
     tasksHtml: function(task, taskListId) {
+        
         iconNames = ['passion.svg', 'communication.svg', 'diligence.svg', 'innovation.svg', 'reliability.svg' ]
         iconIndex = Math.floor(Math.random() * 4) + 1
 
@@ -78,6 +92,7 @@ var uiHelper = (function() {
     },
 
      calendarHtml: function(event) {
+        
         iconNames = ['passion.svg', 'communication.svg', 'diligence.svg', 'innovation.svg', 'reliability.svg' ]
         iconIndex = Math.floor(Math.random() * 4) + 1
         var attendees_email_list = [];
