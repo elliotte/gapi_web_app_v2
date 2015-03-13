@@ -1,31 +1,25 @@
 
 $('#js-task-create-result-body').empty();
 
-var title = '<%= @task.title %>';
 var html = '<p>' + ' Task added successfully ' + title + 
-			' <i class="fa fa-check"><i>' + '</p>' 
+			     '</p>' 
 			
 $('#js-task-create-result-footer').show();
 $('#js-task-create-result-body').append(html);
 
-var task_id = '<%= @task.id %>'
-var status = '<%= @task.status %>'
-var title = '<%= @task.title %>'
-var notes = '<%= @task.notes %>'
+task = {
+  id: '<%= @task.id %>',
+  title: '<%= @task.title %>',
+  due: '<%= @task.due %>',
+  completed: '<%= @task.completed %>',
+  notes: '<%= @task.notes %>',
+  status: '<%= @task.status %>'
+}
+
 var taskListId = '<%= @task_list_id %>'
-var dueDate = '<%= @task.due %>'
 
-
-$('#pendingTasks').show();
-$('#tasksPending').append(
-      '<div id=' + task_id + '>' +
-        '<p>'+ '- Title: ' + title + ', Notes: ' + notes + ', Due Date: ' + dueDate + '</p>'+
-        '<p>'+
-          ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/destroy">Delete</a>'+
-          ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '">Update</a>'+
-          ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/complete">Complete</a>'+
-        '</p>' +
-      '</div>'
+$('#tasks-pending-container').prepend(
+     uiHelper.tasksHtml(task, taskListId)
 );
 
-
+Webflow.require("slider").redraw();

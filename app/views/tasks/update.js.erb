@@ -3,40 +3,31 @@ var div_id = '#'+'<%= @div_id %>'
 
 $(div_id).hide();
 
-var task_id = '<%= @task.id %>'
-var status = '<%= @task.status %>'
-var title = '<%= @task.title %>'
-var notes = '<%= @task.notes %>'
-var completed = '<%= @task.completed %>'
+task = {
+	id: '<%= @task.id %>',
+	title: '<%= @task.title %>',
+	due: '<%= @task.due %>',
+	completed: '<%= @task.completed %>',
+	notes: '<%= @task.notes %>',
+	status: '<%= @task.status %>'
+}
+
 var taskListId = '<%= @task_list_id %>'
-var dueDate = '<%= @task.due %>'
 
 $("#js-update-task-modal-body").html("<%= escape_javascript(render partial: 'task_updated', locals: { task: @task }) %>");
 
-if (status == "completed" ) {
-	$('#completedTasks').show();
-	$('#tasksCompleted').append(
-		'<div id=' + task_id + '>' +
-	      '<p>'+ '- Title: ' + title + ', Notes: ' + notes + ', Completed at: ' + completed.substring(0,10) + '</p>'+
-	      '<p>'+
-	        ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/destroy">Delete</a>'+
-	        ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '">Update</a>'+
-	      '</p>' +
-	    '</div>'
+if ( task.status == "completed" ) {
+	console.log('completed')
+	$('#tasks-complete-container').append(
+		uiHelper.tasksHtml(task, taskListId)
 	);
 
 } else {
-	$('#pendingTasks').show();
-	$('#tasksPending').append(
-          '<div id=' + task_id + '>' +
-            '<p>'+ '- Title: ' + title + ', Notes: ' + notes + ', Due Date: ' + dueDate + '</p>'+
-            '<p>'+
-              ' <a class="btn btn-sm btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/destroy">Delete</a>'+
-              ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '">Update</a>'+
-              ' <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task_id + '/complete">Complete</a>'+
-            '</p>' +
-          '</div>'
+	console.log('NOT completed')
+	$('#tasks-pending-container').append(
+         uiHelper.tasksHtml(task, taskListId)
     );
 
 };
 
+Webflow.require("slider").redraw();

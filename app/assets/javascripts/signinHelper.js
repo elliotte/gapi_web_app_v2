@@ -70,7 +70,7 @@ var helper = (function() {
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
                     '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                    '<a class="btn btn-main-o" onclick="helper.disconnectUser(true);" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                    '<a class="btn" href="#" onclick="helper.disconnectUser(true);" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                 );
 
             } else {
@@ -361,9 +361,6 @@ var helper = (function() {
      * Displays available files in drive retrieved from server.
      */
     appendDrive: function(drive) {
-      var fileCount = 0;
-      var countShared = 0;
-
       containerUser = $('#latest-files-container')
       containerShared = $('#shared-files-container')
       var userShowCount = 0;
@@ -372,47 +369,51 @@ var helper = (function() {
           item = drive.items[file]
           if(!item.explicitlyTrashed) {
               if(item.sharingUser) {
-                  if (sharedShowCount < 5) {
+                  var limit = 4
+                  if (sharedShowCount <= limit) {
                       sharedShowCount++;
                       containerShared.append(uiHelper.filesHtml(item));//end of append
                   };
-                  if (sharedShowCount == 5) {
-                    var moreCard = '<div class="about-employee">' + 
-                                      '<div class="table-cell-wrapper">' + 
-                                        '<p class="user-button-landing action-button">'+ 'view.all' + '</p>' +
-                                      '</div>' + 
-                                    '</div>'
-                     containerUser.append(moreCard);
+                  if (sharedShowCount > limit) {
+                    sharedShowCount++;
+                    $('#landing-shared-files-append').append(uiHelper.filesModalHtml(item));
                   };
               } else {
-                  if (userShowCount < 5) {
+                  var limit = 4
+                  if (userShowCount <= limit) {
                     userShowCount++;
                     containerUser.append(uiHelper.filesHtml(item))
                   };
-                  if (userShowCount == 5) {
-                    var moreCard = '<div class="about-employee">' + 
-                                      '<div class="table-cell-wrapper">' + 
-                                        '<p class="user-button-landing action-button">'+ 'view.all' + '</p>' +
-                                      '</div>' + 
-                                    '</div>'
-                     containerUser.append(moreCard);
-                  };
+                  if (userShowCount > limit) {
+                     userShowCount++;
+                     $('#landing-files-append').append(uiHelper.filesModalHtml(item))
+                  }
               }//end of shared filter
               if(item.exportLinks){
-                var st = "#export-links-"+item.id
-                $(st).html(
-                  'Export: '
-                );
-                Object.keys(item.exportLinks).forEach(function(key) {
-                  $(st).append(
-                    '<a class="capitalize" href="' + item.exportLinks[key] + '" target="_blank">' + item.exportLinks[key].substring(item.exportLinks[key].lastIndexOf("=")+1,item.exportLinks[key].length) + '</a> '
-                  );
-                });
+                 uiHelper.appendExportLinks(item);
               }// end of exportLinks
-
           }//end of Trash Filter
       }//end of For Loop
-
+      var moreCard = '<div class="about-employee">' + 
+                                      '<div class="table-cell-wrapper">' + 
+                                        '<a id="view-all-user-files" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
+                                      '</div>' + 
+                                    '</div>'
+      containerUser.append(moreCard);
+      var sharedMoreCard = '<div class="about-employee">' + 
+                                      '<div class="table-cell-wrapper">' + 
+                                        '<a id="view-all-user-shared-files" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
+                                      '</div>' + 
+                                    '</div>'
+      containerShared.append(sharedMoreCard);
+      var viewButton = document.getElementById('view-all-user-files');
+      viewButton.addEventListener('click', function() {
+           $("#modal-window-user-files").modal("show");
+      });
+      var viewButtonShared = document.getElementById('view-all-user-shared-files');
+      viewButtonShared.addEventListener('click', function() {
+           $("#modal-window-user-shared-files").modal("show");
+      });
     },
     /**
      * Displays available Task Lists retrieved from server.
@@ -423,35 +424,14 @@ var helper = (function() {
       var taskPendingCount = 0;
       for (var taskListIndex in taskLists.items) {
         taskListsCount++;
-        $('#taskLists').show();
         taskList = taskLists.items[taskListIndex];
         $('#task_list_id').val(taskList.id);
-        $('#taskLists').append(
-          '<div class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-tasks"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3>' + taskList.title + '</h3>' +
-                '<p>' + ' <a id="create-task-list-to-do" class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">Task.new</a>' +
-                '<p>'+
-                  ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/destroy"><i class="fa fa-trash-o"></i></a>'+
-                  ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '"><i class="fa fa-edit"></i></a>'+
-                '</p>'+
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
+        $('#new-to-do-button-container').append('<br>' + '<a id="create-task-list-to-do" class="btn no-text-decoration" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">.new</a>');
         helper.tasks(taskList.id);
       }
       if(taskListsCount == 0){
         $('#noTaskLists').show();
       }
-      if(taskListsCount == taskLists.items.length) {
-          
-      }
-      
     },
     /**
      * Displays available Tasks in Task List retrieved from server.
@@ -484,9 +464,11 @@ var helper = (function() {
       //loaderWrapper = $('.loader-wrapper').hide();
       $('.loader-wrapper').hide();
       $('#not-auth-ops').remove();
-      Webflow.require("navbar").ready();
+      Webflow.require("ix").init([{"slug":"open-contact","name":"open contact","value":{"style":{},"triggers":[{"type":"click","selector":".contact","stepsA":[{"display":"block","height":"0px"},{"height":"auto","transition":"height 500ms ease 0ms"}],"stepsB":[{"height":"0px","transition":"height 500ms ease 0ms"},{"display":"none"}]}]}}])
       Webflow.require("slider").redraw();
+
       $('body').removeClass('overflow-hidden');
+
       //foodHelper.loadLandingFeeds();
     },
     /**

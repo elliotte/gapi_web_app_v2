@@ -1,28 +1,27 @@
 <div class="modal-dialog modal-medium-width">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Task Details</h3>
+      <h3 class="pink-header">Task Details</h3>
     </div>
     <div id="js-update-task-modal-body" class="modal-body">
       <%= form_tag(task_list_task_path(task_list_id, task.id), :id => "update_task", :method => "put", remote: true) do %>
         <div class="form-group">
-          Title: <%= text_field_tag "task[title]", task.title, class: "form-control", placeholder: "Title" %>
-          Notes: <%= text_field_tag "task[notes]", task.notes, class: "form-control", placeholder: "Notes" %>
+          Title: <%= text_field_tag "task[title]", task.title, class: "white-pink", placeholder: "Title" %>
+          Notes: <%= text_field_tag "task[notes]", task.notes, class: "white-pink", placeholder: "Notes" %>
           <% if task.status == "completed" %>
-            Completed Date: <%= text_field_tag "task[due]", task.completed, class: "form-control", placeholder: "Completed Date" %>
-            Status: <%= select_tag "task[status]", options_for_select([ ["Complete","completed"], ["Not Complete","needsAction"] ], "completed"), class: "form-control" %>
+            Completed Date: <%= text_field_tag "task[due]", task.completed, class: "white-pink", placeholder: "Completed Date" %>
+            Status: <%= select_tag "task[status]", options_for_select([ ["Complete","completed"], ["Not Complete","needsAction"] ], "completed"), class: "white-pink" %>
           <% else %>
-            Due Date: <%= text_field_tag "task[due]", task.due, class: "form-control", placeholder: "Due Date" %>
-            Status: <%= select_tag "task[status]", options_for_select([ ["Complete","completed"], ["Not Complete","needsAction"] ], "needsAction"), class: "form-control" %>
+            Due Date: <%= text_field_tag "task[due]", task.due, class: "white-pink", placeholder: "Due Date" %>
+            Status: <%= select_tag "task[status]", options_for_select([ ["Complete","completed"], ["Not Complete","needsAction"] ], "needsAction"), class: "" %>
           <% end %>
           <%= hidden_field_tag "task[circle_id]", task.title[/.*\[([^\]]*)/,1] %>
         </div>
-        <%= submit_tag "Update Task", class: 'btn btn-main-o' %>
+        <%= submit_tag "Update", class: 'btn' %>
       <% end %>
     </div>
     <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <p>Press ESC to exit</p>
     </div>
   </div>
 </div>

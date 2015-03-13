@@ -1,25 +1,23 @@
 <div class="modal-dialog modal-medium-width">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Create Task</h3>
+      <h3 class="pink-header">Create Task</h3>
     </div>
     <div id="js-task-create-result-body" class="modal-body">
       <%= form_tag(task_list_tasks_path(task_list_id), :id => "create_task", :method => "post", remote: true) do %>
         <div class="form-group">
           <%= hidden_field_tag "task_list_id", task_list_id %>
-          Title: <%= text_field_tag "task[title]", "", class: "form-control", placeholder: "Title" %>
-          Notes: <%= text_field_tag "task[notes]", "", class: "form-control", placeholder: "Notes" %>
-          Due: <%= text_field_tag "task[due]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "form-control" %>
+          Title: <%= text_field_tag "task[title]", "", class: "white-pink", placeholder: "Title" %>
+          Notes: <%= text_field_tag "task[notes]", "", class: "white-pink", placeholder: "Notes" %>
+          Due: <%= text_field_tag "task[due]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "white-pink" %>
           <%= hidden_field_tag "task[circle_id]", "" %>
-
           <br>
-          <%= submit_tag "Add ToDo", class: "btn btn-main-o" %>
+          <%= submit_tag "Add", class: "btn" %>
         <% end %>
         </div>
     </div>
     <div id="js-task-create-result-footer" class="modal-footer" style="display:none;">
-      <button class="btn btn-main-o" data-dismiss="modal" aria-hidden="true">OK</button>
+      <p>Press ESC to exit</p>
     </div>
   </div>
 </div>

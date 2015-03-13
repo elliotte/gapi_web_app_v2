@@ -39,13 +39,70 @@ var uiHelper = (function() {
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
                             '</p>' + 
+                            //ID tagged for appending exportLinks
                             '<div style="padding-top:5px;"id="export-links-' + item.id + '"></div>'+
                         '</div>' +
                     '</div>'
 
-       
-
         return html
+    },
+
+    filesModalHtml: function(item) {
+        
+       mimeType = item.mimeType
+       imageLink = "";
+
+       if (item.thumbnailLink) {
+         imageLink = item.thumbnailLink;
+         
+       } else {
+         
+          if (mimeType.indexOf('folder') >= -1 ) {
+              imageLink = "http://www.iconhot.com/icon/ico/vista-folder-colors/blue-folder.ico";
+          }
+          if (mimeType == "text/csv" ) {
+              imageLink = "http://www.iconhot.com/icon/ico/vista-folder-colors/blue-folder.ico";
+          }
+          if (mimeType == "application/vnd.google-apps.document" ) {
+              imageLink = "http://blogs.uis.edu/isat/files/2014/03/google_docs.png";
+          } 
+          if (mimeType.mimeType == "application/vnd.google-apps.spreadsheet") {
+              imageLink = "http://icons.iconarchive.com/icons/carlosjj/google-jfk/128/spreadsheets-icon.png";
+          }
+
+       };
+
+      var html =   '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ imageLink +'); height:250px;">' +
+                        '<div class="table-cell-wrapper">' + 
+                            '<div class="cell-settings">' +
+                              '<a href="'+item.alternateLink+'" class="pink-header action-button" target="_blank">'+ item.title + '</a>' +
+                              //ID tagged for appending exportLinks
+                              '<div style="padding-top:5px;" id="export-links-' + item.id + '"></div>'+
+                            '</div>' +
+                        '</div>' +
+                        '<p class="file-card files-modal">' +
+                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">' + 
+                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>' +
+                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">' +
+                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
+                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
+                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
+                        '</p>' + 
+                    '</div>'
+
+      return html
+    },
+
+    appendExportLinks: function(item) {
+        var st = "#export-links-"+item.id
+        $(st).html(
+          'Export: '
+        );
+        Object.keys(item.exportLinks).forEach(function(key) {
+          $(st).append(
+            '<a class="capitalize" href="' + item.exportLinks[key] + '" target="_blank">' + item.exportLinks[key].substring(item.exportLinks[key].lastIndexOf("=")+1,item.exportLinks[key].length) + '</a> '
+          );
+        });
     },
 
     tasksHtml: function(task, taskListId) {
@@ -65,10 +122,12 @@ var uiHelper = (function() {
           } else {
             NotesIfTrue = task.notes
           };
-        var style = ""  
+        var style = ""
+        var completeButton = ""  
         var completeDate = ""
           if ( !task.completed ) {
             completeDate = "not-completed"
+            completeButton = ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/comptask icon.png" alt="asset-error">' + '</a>'
           } else {
             completeDate = task.completed.substring(0,10)
             style = "background-color:#62DF71;"
@@ -81,6 +140,7 @@ var uiHelper = (function() {
                   '<h3>' + NotesIfTrue + '</h3>' +
                   '<h3>' + completeDate + '</h3>' +
                   '<h3>'+
+                    completeButton +
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
                   '</h3>' +

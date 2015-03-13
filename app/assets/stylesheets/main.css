@@ -60,6 +60,10 @@
 	background: #d61579;
 }
 
+.btn.no-text-decoration {
+  text-decoration: none;
+}
+
 input.white-pink {
 	  display: block;
     color: #555;
@@ -106,14 +110,12 @@ textarea.white-pink {
    vertical-align: middle;
    color: #d61579;
 }
-
 /*actionButtons on landing page*/
 .text-buffer {
   padding-top: 10%;
   text-align: center;
 }
-
-/*show people friends modaal*/
+/*show people friends modal*/
 .display-modal-container p {
     text-align: center;
 }
@@ -123,5 +125,17 @@ textarea.white-pink {
   bottom: 0;
 }
 
+.file-card.files-modal {
+  width: 100%;
+  text-align: center;
+}
 
-
+.cell-settings {
+   display: table-cell;
+   text-align: center;
+   vertical-align: middle;
+   color: #d61579;
+}
+div.export-links-* {
+  background-color: red;
+}

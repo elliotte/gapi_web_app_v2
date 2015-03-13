@@ -41,10 +41,8 @@
      <div class="about-div employees">
       <div class="w-clearfix employees-container">
         <div class="about-employee">
-            <div class="employee-bio text-buffer">
-                <p class="bio-text">Ceate a new toDo task</p>
-                <br>
-                <a id="toDo-task" class="btn" href="javascript:void(0)">.new</a>
+            <div id="new-to-do-button-container" class="employee-bio text-buffer">
+                <p class="bio-text">Create a new toDo task</p>
             </div>
             <div class="table-cell-wrapper">
               <p class="user-button-landing"> toDo.new </p>
@@ -59,9 +57,9 @@
         </div>
         <div class="about-employee">
             <div class="employee-bio text-buffer">
-                <p class="bio-text">Ceate a new moneaTeam</p>
+                <p class="bio-text">Create a new moneaTeam</p>
                 <br>
-                <a id="team_new" class="btn" href="javascript:void(0)">.new</a>
+                <a id="team_new" class="btn no-text-decoration" href="javascript:void(0)">.new</a>
             </div>
             <div class="table-cell-wrapper">
               <p class="user-button-landing"> Team.new </p>
@@ -126,14 +124,15 @@
     <!-- completed tasks right box -->
     <div class="about-div title">
       <h1 class="h1-about">
-        <a href=""><img class="contact-icon action-button" src="<%= asset_path('task icon.png') %>" alt="asset error"></a>
+        <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
+        </a>
         completed Tasks
       </h1>
     </div>
     <!-- pending tasks left box -->
     <div class="about-div title">
       <h1 class="h1-about">
-        <a id="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
+        <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
         </a>
         Pending Tasks
       </h1>

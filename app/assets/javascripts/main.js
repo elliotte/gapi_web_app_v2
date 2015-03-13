@@ -29,11 +29,10 @@ $(document).ready(function () {
 	$(".new_doc").click(function() {
 		$("#modal-window-new-doc").modal("show");
 	});
-	// $("#add-to-do").click(function() {
-	// 	var route = $("#create-task-list-to-do").attr('href');
-	// 	$.get(route);
-
-	// });
+	$(".add-to-do").click(function() {
+		var route = $("#create-task-list-to-do").attr('href');
+		$.get(route);
+	});
 	$(".new_ss").click(function() {
 		$("#modal-window-new-ss").modal("show");
 	});
@@ -53,6 +52,10 @@ $(document).ready(function () {
 	$("#create_document").click(function() {
 		$('#modal-window-new-file-import').modal('hide');
 		$("#modal-window-create-document").modal("show");
+	});
+	$('#view-all-files').click(function() {
+		console.log('kjahsdkjahsdkjh')
+		$("#modal-window-user-files").modal("show");
 	});
 	// $("#create_tasklist").click(function() {
 	// 	$("#modal-window-create-tasklist").modal("show");
