@@ -1,0 +1,62 @@
+ <!-- Profile actionBoard left box -->
+<div id="profile" class="about-div image" style="background-image: url(/assets/infinity_3.jpg);">
+    <!-- profile appended here -->
+</div>
+<!-- actionBoard right box -->
+<div class="about-div employees">
+      <div class="w-clearfix employees-container">
+        <div class="about-employee">
+            <div class="table-cell-wrapper">
+                <a class="user-button-landing action-button" href="https://mail.google.com/mail/u/0/?view=cm&ui=2&tf=0&fs=1" target="_blank"> 
+                   <img class="contact-icon" src="<%= asset_path('mailB icon.png') %>" alt="asset-error">
+                  Email.new 
+                </a>
+            </div>
+        </div>
+        <div class="about-employee">
+           <div class="employee-bio text-buffer">
+                <p class="bio-text">Edit your monea settings</p>
+                <br>
+                <a class="btn no-text-decoration" href="javascript:void(0)">.monea</a>
+            </div>
+            <div class="table-cell-wrapper">
+              <p class="user-button-landing">Profile.edit </p>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div class="table-cell-wrapper">
+              <a class="user-button-landing action-button" id="view-teams" href="javascript:void(0)"> 
+                 <img class="contact-icon" src="<%= asset_path('teams icon.png') %>" alt="asset-error">
+                Teams (all) </a>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div id="new-to-do-button-container" class="employee-bio text-buffer">
+                <p class="bio-text">Create a new toDo task</p>
+            </div>
+            <div class="table-cell-wrapper">
+              <p class="user-button-landing"> toDo.new </p>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div class="table-cell-wrapper">
+              <a class="user-button-landing action-button" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples"> 
+                 <img class="contact-icon" src="<%= asset_path('user icon.png') %>" alt="asset-error">
+                Networks (people) </a>
+            </div>
+        </div>
+        <div class="about-employee">
+            <div class="employee-bio text-buffer">
+                <p class="bio-text">Create a new moneaTeam</p>
+                <br>
+                <a id="team_new" class="btn no-text-decoration" href="javascript:void(0)">.new</a>
+            </div>
+            <div class="table-cell-wrapper">
+              <p class="user-button-landing"> Team.new </p>
+            </div>
+        </div>
+
+      </div>
+
+</div>
+

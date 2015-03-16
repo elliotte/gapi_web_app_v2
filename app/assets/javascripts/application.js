@@ -18,4 +18,6 @@
 //= require bootstrapModals
 //= require uiHelper
 //= require main
+//= require userHelper
+//= require circles
 

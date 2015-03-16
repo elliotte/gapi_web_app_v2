@@ -18,8 +18,16 @@
     
     <!-- auth main landing image -->
     <div class="about-hero-container">
-      <h1 class="about-hero-title">we redefine creativity</h1>
+      <h1 class="about-hero-title">monea.Build News</h1>
+      <div id="news-flash-container" class="news-splash">
+          
+      </div>
     </div>
+
+    
+
+    <!-- profile box and actionBoard LANDING/SIGIN partial -->
+    <%= render 'landingActionButtons' %>
 
      <!-- foodNews left box -->
      <div class="about-div">
@@ -34,67 +42,10 @@
     <div class="about-div image">
     </div>
 
-    <!-- actionBoard left box -->
-    <div class="about-div image" style="background-image: url(/assets/infinity_3.jpg);">
-    </div>
-    <!-- actionBoard right box -->
-     <div class="about-div employees">
-      <div class="w-clearfix employees-container">
-        <div class="about-employee">
-            <div id="new-to-do-button-container" class="employee-bio text-buffer">
-                <p class="bio-text">Create a new toDo task</p>
-            </div>
-            <div class="table-cell-wrapper">
-              <p class="user-button-landing"> toDo.new </p>
-            </div>
-        </div>
-        <div class="about-employee">
-            <div class="table-cell-wrapper">
-              <a class="user-button-landing action-button" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples"> 
-                 <img class="contact-icon" src="<%= asset_path('user icon.png') %>" alt="asset-error">
-                Networks (people) </a>
-            </div>
-        </div>
-        <div class="about-employee">
-            <div class="employee-bio text-buffer">
-                <p class="bio-text">Create a new moneaTeam</p>
-                <br>
-                <a id="team_new" class="btn no-text-decoration" href="javascript:void(0)">.new</a>
-            </div>
-            <div class="table-cell-wrapper">
-              <p class="user-button-landing"> Team.new </p>
-            </div>
-        </div>
-        <div class="about-employee">
-        </div>
-        <div class="about-employee">
-           
-        </div>
-        <div class="about-employee">
-            <div class="table-cell-wrapper">
-              <a class="user-button-landing action-button" id="view-teams" href="javascript:void(0)"> 
-                 <img class="contact-icon" src="<%= asset_path('teams icon.png') %>" alt="asset-error">
-                Teams (all) </a>
-            </div>
-        </div>
-      </div>
-    </div>
     <!-- START OF CALENDAR -->
-    <!-- diary ledt box -->
-    <div class="about-div title">
-      <h1 class="h1-about">
-        <a class="w-inline-block action-button" href="#">
-          <img id="quick_add_event" class="grid-button action-button" src="<%= asset_path('qaddevent.png') %>" alt="asset-error">
-        </a>
-        <a class="w-inline-block action-button" href="#">
-          <img id="add_event" class="grid-button" src="<%= asset_path('calendar icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
-        </a>
-        <br>
-        yourDiary
-      </h1>
-    </div>
-    <!-- diary right box -->
-    <div class="about-div slider">
+
+    <!-- diary left box -->
+     <div class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="diary-container" class="w-slider-mask">
           <!-- append calendar events here -->
@@ -106,29 +57,21 @@
         <div class="w-slider-nav w-round slider-about-nav"></div>
       </div>
     </div>
-
-    <!-- START OF TASKS -->
-    <!-- completed tasks left box -->
-    <div class="about-div slider">
-      <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
-        <div id="tasks-complete-container" class="w-slider-mask">
-          <!-- append tasks here -->
-        </div>
-        <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
-        </div>
-        <div class="w-slider-arrow-right slider-left-arrow right"><img class="slider-arrow" src="<%= asset_path('slider arrow right black.png') %>" alt="asset error">
-        </div>
-        <div class="w-slider-nav w-round slider-about-nav"></div>
-      </div>
-    </div>
-    <!-- completed tasks right box -->
+    <!-- diary right box -->
     <div class="about-div title">
       <h1 class="h1-about">
-        <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
+        <a class="w-inline-block action-button" href="#">
+          <img id="quick_add_event" class="grid-button" src="<%= asset_path('qaddevent.png') %>" alt="asset-error">
         </a>
-        completed Tasks
+        <a class="w-inline-block action-button" href="#">
+          <img id="add_event" class="grid-button" src="<%= asset_path('calendar icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        yourDiary
       </h1>
     </div>
+
+    <!-- START OF TASKS -->
     <!-- pending tasks left box -->
     <div class="about-div title">
       <h1 class="h1-about">
@@ -150,30 +93,29 @@
         <div class="w-slider-nav w-round slider-about-nav"></div>
       </div>
     </div>
-    
-    <!-- START of FILES -->
-    <!-- shared files left box -->
-    <div class="about-div employees">
-      <div id="shared-files-container" class="w-clearfix employees-container">
-        <!-- files appended here -->
+    <!-- completed tasks left box -->
+    <div class="about-div slider">
+      <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
+        <div id="tasks-complete-container" class="w-slider-mask">
+          <!-- append tasks here -->
+        </div>
+        <div class="w-slider-arrow-left slider-left-arrow"><img class="slider-arrow left" src="<%= asset_path('slider arrow right black.png') %>" alt="asset-error">
+        </div>
+        <div class="w-slider-arrow-right slider-left-arrow right"><img class="slider-arrow" src="<%= asset_path('slider arrow right black.png') %>" alt="asset error">
+        </div>
+        <div class="w-slider-nav w-round slider-about-nav"></div>
       </div>
     </div>
-    <!-- shared files right box -->
+    <!-- completed tasks right box -->
     <div class="about-div title">
       <h1 class="h1-about">
-        <a class="w-inline-block action-button new_doc" href="#">
-          <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
         </a>
-        <a class="w-inline-block action-button new_file_import" href="#">
-          <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
-        </a>
-        <a class="w-inline-block action-button new_ss" href="#">
-          <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
-        </a>
-        <br>
-        sharedFiles
+        completed Tasks
       </h1>
     </div>
+    
+    <!-- START of FILES -->
     <!-- user files left box -->
     <div id="files-anchor" class="about-div title">
       <h1 class="h1-about">
@@ -196,7 +138,29 @@
         <!-- files appended here -->
       </div>
     </div>
-    
+    <!-- shared files left box -->
+    <div class="about-div employees">
+      <div id="shared-files-container" class="w-clearfix employees-container">
+        <!-- files appended here -->
+      </div>
+    </div>
+    <!-- shared files right box -->
+    <div class="about-div title">
+      <h1 class="h1-about">
+        <a class="w-inline-block action-button new_doc" href="#">
+          <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button new_file_import" href="#">
+          <img class="grid-button" src="<%= asset_path('import icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <a class="w-inline-block action-button new_ss" href="#">
+          <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        sharedFiles
+      </h1>
+    </div>
+     <!-- EEEEEENNNNNNDDDDDDDDD OOOFFFF LLAAANNNNDDDINNG -->
  </div> <!--  end of clearFix authContent container -->
  <br>
  <br>

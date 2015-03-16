@@ -17,6 +17,8 @@
   <!-- webflow in application js -->
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "webfonts" %>
+  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
+  <%= javascript_include_tag "foodFeeds" %>
   <%= javascript_include_tag "signin" %>
   <%= javascript_include_tag "signinHelper" %>
   <%= stylesheet_link_tag "application" %>
@@ -27,7 +29,8 @@
 <body class="overflow-hidden">
   
   <%= yield %>
-  
-  
+<div id="news-feeds-append-container" style="display:none;">
+        
+</div>
 </body>
 </html>

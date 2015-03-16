@@ -9,8 +9,7 @@ var uiHelper = (function() {
 
        if (item.thumbnailLink) {
          imageLink = item.thumbnailLink;
-         console.log(mimeType)
-         console.log(item)
+
        } else {
          
           if (mimeType.indexOf('folder') >= -1 ) {
@@ -38,6 +37,8 @@ var uiHelper = (function() {
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
+                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">' +
+                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/t-add icon.png" alt="asset-error">' + '</a>' +
                             '</p>' + 
                             //ID tagged for appending exportLinks
                             '<div style="padding-top:5px;"id="export-links-' + item.id + '"></div>'+
@@ -87,6 +88,8 @@ var uiHelper = (function() {
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
                              ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
+                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">' +
+                                '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/t-add icon.png" alt="asset-error">' + '</a>' +
                         '</p>' + 
                     '</div>'
 
@@ -199,11 +202,41 @@ var uiHelper = (function() {
 
     },
 
+    teamMessagesHtml: function(msg) {
+      var html = '<div id="message-'+msg.id+'" class="w-slide slide-about">'+
+                        '<div class="about-slide-container">'+
+                            '<img class="about-icon" src="/assets/passion.svg" alt="asset-error">' +
+                            '<h3>' + msg.text + '</h3>'+
+                            '<h3>' + msg.added_by + '</h3>'+
+                            '<h3>'+
+                                  '<a href="#" data-id="'+msg.id+'" data-item="message" class="destroy-item">' + 
+                                    '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + 
+                                  '</a>' +
+                            '</h3>'+
+                      '</div>'+
+                '</div>'
+      return html
+    },
+
+    teamPinsHtml: function(pin) {
+      var html = '<div id="message-'+pin.id+'" class="w-slide slide-about" style="background-color:#62DF71;">'+
+                        '<div class="about-slide-container">'+
+                            '<img class="about-icon" src="/assets/passion.svg" alt="asset-error">' +
+                            '<h3>' + pin.summary + '</h3>'+
+                            '<h3>' + '<a href="'+pin.link+'" target="_blank">' + 'LinkToFile' + '</a>' + '</h3>'+
+                            '<h3 style="font-size:15px;">' + pin.added_by + '</h3>'+
+                            '<h3>'+
+                                  '<a href="#" data-id="'+pin.id+'" data-item="pin" class="destroy-item">' + 
+                                    '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + 
+                                  '</a>' +
+                            '</h3>'+
+                      '</div>'+
+                '</div>'
+      return html
+    },
 
 
-
-
-  };
+  };//END OF RETURN
 
 
 })();

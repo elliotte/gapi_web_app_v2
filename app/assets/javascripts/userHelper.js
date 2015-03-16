@@ -4,8 +4,7 @@ var userHelper = (function() {
 
   return {
     /**
-    * Hides the sign-in button and connects the server-side app after
-    * the user successfully signs in.
+    * appends User Teams to G+ people show modal after button-add click
     */
     addToTeam: function(person) {
       console.log('here')
@@ -21,21 +20,16 @@ var userHelper = (function() {
         dataType: 'json',
         contentType: 'application/json',
         success: function(circles) {
-              
           container = $('#add-to-which-team-container')
-          
           for (c in circles) {
               circle = circles[c]
-              html = '<input name="circle_id" type="checkbox" value="'+circle.id+'" style="margin-right: 7px;">'+
-                     '<p style="margin-right: 7px;">'+circle.name+'</p>'
+              html = '<h3 class="pink-header">' +
+                     '<p style="margin-right: 7px;">' + '<input name="circle_id" type="checkbox" value="'+circle.id+'" style="margin-right: 7px;">' +circle.name+'</p>' + '</h3>'
               container.append(html)
           }
-
-        },
-      
-      });
-
-    },
+        },// end oF SUCCESS
+      });// end of AJAX
+    }, // END OF FUUNCTION
 
     appendPeopleSearch: function(search) {
       $('.search_result').empty();

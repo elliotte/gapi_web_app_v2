@@ -16,7 +16,7 @@ var helper = (function() {
          this.authResult = authResult; 
     },
     /**
-     * Calls the server endpoint to connect the app for the user.
+     * Calls the google server endpoint to signout and revoke the app for the user.
      */
     disconnectUser: function(page_reload) {
 
@@ -70,8 +70,10 @@ var helper = (function() {
                     'We check over 10 steps of authentication on signin, all of which are impacted by browser inactivity.' + 
                     '</p>' +
                     '<p>' + 'Please understand we do this for your utmost data and business protection and security' + '</p>' +
-                    '<a class="btn" href="#" onclick="helper.disconnectUser(true);" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                    '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
                 );
+               helper.disconnectUser();
+               helper.secureLanding();
 
             } else {
                console.log('wooooooooo success valid result returned from serverEndPoint');
@@ -84,6 +86,7 @@ var helper = (function() {
         error: function(e) {
                console.log('ERRORR ERRORRRRR endPoint String Result for connectServer  ::  ' + e);
                helper.disconnectUser(true);
+               helper.secureLanding();
         }
 
       });//end of AJAX Post
@@ -104,6 +107,7 @@ var helper = (function() {
           },
           error: function(e) {
             console.log(e);
+            helper.disconnectUser(true);
           }
         });
     },
@@ -216,89 +220,32 @@ var helper = (function() {
     },
 
     secureLanding: function() {
-           
-            $('#authOps').hide();
+
+            $('body').addClass('overflow-hidden');
+            //$('#authOps').hide();
             signInButton = document.getElementById('gConnect');
-            loaderWheel = document.getElementById('loader-wheel');
+            //loaderWheel = document.getElementById('loader-wheel');
 
             signInButton.style.display = 'block';
-            loaderWheel.style.display = 'none';
+             $('#not-auth-ops').show();
+            //loaderWheel.style.display = 'none';
 
-            var shareButton = document.getElementById('share-button')
-            if (shareButton.style.display = 'block' ) {
-                 shareButton.style.display = 'none';
-            }
+            // var shareButton = document.getElementById('share-button')
+            // if (shareButton.style.display = 'block' ) {
+            //      shareButton.style.display = 'none';
+            // }
     },
 
     appendProfile: function(profile) {
         $('#profile').empty();
+        
         if (profile.error) {
           $('#profile').append(profile.error);
-          return;
         }
-        if (profile.gender == "male") {
-          if (profile.cover && profile.cover.coverPhoto) {
-            $('#profile').append(
-              '<div class="col-md-12">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-male"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + profile.url + '" target="_blank">' + profile.displayName + '</a></h3>'+
-                    '<p><a href="' + profile.url + '" target="_blank"><img src="' + profile.image.url + '"></a></p>'+
-                    '<p><img src="' + profile.cover.coverPhoto.url + '"></p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          } else {
-            $('#profile').append(
-              '<div class="col-md-12">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-male"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + profile.url + '" target="_blank">' + profile.displayName + '</a></h3>'+
-                    '<p><a href="' + profile.url + '" target="_blank"><img src="' + profile.image.url + '"></a></p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          }
-        } else {
-          if (profile.cover && profile.cover.coverPhoto) {
-            $('#profile').append(
-              '<div class="col-md-12">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-female"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + profile.url + '" target="_blank">' + profile.displayName + '</a></h3>'+
-                    '<p><a href="' + profile.url + '" target="_blank"><img src="' + profile.image.url + '"></a></p>'+
-                    '<p><img src="' + profile.cover.coverPhoto.url + '"></p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          } else {
-            $('#profile').append(
-              '<div class="col-md-12">'+
-                '<div class="feature-box-style2">'+
-                  '<div class="feature-box-title">'+
-                    '<i class="fa fa-female"></i>'+
-                  '</div>'+
-                  '<div class="feature-box-containt">'+
-                    '<h3><a href="' + profile.url + '" target="_blank">' + profile.displayName + '</a></h3>'+
-                    '<p><a href="' + profile.url + '" target="_blank"><img src="' + profile.image.url + '"></a></p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
-            );
-          }
-        }
+        $('#profile').append(
+            '<h1 class="h1-about"><a href="' + profile.url + '" target="_blank" class="w-inline-block action-button">' + '<img class="grid-button" src="' + profile.image.url + '">' + '</a>'+ '<br>' +
+            '<a href="' + profile.url + '" target="_blank">'+profile.displayName+'</a></h1>'
+        );
     },
     /**
      * Displays circles retrieved from DB.
@@ -439,10 +386,8 @@ var helper = (function() {
     appendTasks: function(tasks, taskListId) {
       var taskCompletedCount = 0;
       var taskPendingCount = 0;
-
       for (var taskIndex in tasks.items) {
         task = tasks.items[taskIndex];
-
         if (task.status == "completed") {
           taskCompletedCount++;
           $('#tasks-complete-container').append(
@@ -455,21 +400,19 @@ var helper = (function() {
             uiHelper.tasksHtml(task, taskListId)
           );
         }
-
         if(taskCompletedCount == 0 && taskPendingCount == 0){
           $('#noTasks').show();
         }
-
       }
-      //loaderWrapper = $('.loader-wrapper').hide();
       $('.loader-wrapper').hide();
-      $('#not-auth-ops').remove();
-      Webflow.require("ix").init([{"slug":"open-contact","name":"open contact","value":{"style":{},"triggers":[{"type":"click","selector":".contact","stepsA":[{"display":"block","height":"0px"},{"height":"auto","transition":"height 500ms ease 0ms"}],"stepsB":[{"height":"0px","transition":"height 500ms ease 0ms"},{"display":"none"}]}]}}])
+      $('#not-auth-ops').hide();
+      Webflow.require("ix").init([
+          {"slug":"open-contact","name":"open contact","value":{"style":{},"triggers":[{"type":"click","selector":".contact","stepsA":[{"display":"block","height":"0px"},{"height":"auto","transition":"height 500ms ease 0ms"}],"stepsB":[{"height":"0px","transition":"height 500ms ease 0ms"},{"display":"none"}]}]}},
+          {"slug":"logo-hover","name":"logo hover","value":{"style":{},"triggers":[{"type":"hover","selector":".logo-pink","stepsA":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}]},{"type":"hover","selector":".logo-black","stepsA":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}]}]}}
+      ])
       Webflow.require("slider").redraw();
-
       $('body').removeClass('overflow-hidden');
 
-      //foodHelper.loadLandingFeeds();
     },
     /**
      * ENNNNNDDDD OF HELPERS.FUNCTIONS.

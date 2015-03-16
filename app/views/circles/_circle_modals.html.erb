@@ -83,20 +83,19 @@
 	<div class="modal-dialog modal-search-width">
 		<div class="modal-content">
 		    <div class="modal-header">
-		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		      	<h3 id="myModalLabel" style="text-align: center;">Add message</h3>
+		      	<h3 class="pink-header">Add message</h3>
 		    </div>
 		    <div id="modal-body-circle-add-message" class="modal-body">
 		    	<%= form_tag(add_message_circle_path, :method => "post", remote: true) do %>
 					<div class="form-group">
-						Message: <%= text_area_tag "circle[message]", "", class: "form-control", placeholder: "Enter some text as a message", id: "message_text" %>
+						Message: <%= text_area_tag "circle[message]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "message_text" %>
 						<br>
-						<%= submit_tag "Add Message",  class: "btn btn-main-o" %>
+						<%= submit_tag "Post",  class: "btn" %>
 					</div>
 				<% end %>
 		    </div>
 		    <div class="modal-footer">
-		      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+		      <p>Press ESC to exit</p>
 		    </div>
 	  	</div>
 	</div>
@@ -105,20 +104,17 @@
 <div class="modal fade" id="modal-window-destroy-item" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-small-width">
 		<div class="modal-content">
-		    <div class="modal-header">
-		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    </div>
 		    <div id="js-item-delete-result-body" class="modal-body">
-		        <h3 id="myModalLabel">Are you sure?</h3>
+		        <h3 class="pink-header">Are you sure?</h3>
 		        <%= form_tag(delete_item_circle_path, :method => "post", remote: true) do %>
 		        <br>
 		        <%= hidden_field_tag "circle[item_type]", "" %>
 		        <%= hidden_field_tag "circle[item_id]", "" %>
-		        <%= submit_tag "Yes, Delete", class: 'btn btn-main-o' %>
+		        <%= submit_tag "Yes", class: 'btn' %>
 		        <% end %>
 		    </div>
 		    <div class="modal-footer">
-		      <button class="btn btn-main-o" data-dismiss="modal">Close</button>
+		      <p>Press ESC to exit</p>
 		    </div>
 	  	</div>
 	</div>
@@ -128,22 +124,21 @@
 	<div class="modal-dialog modal-search-width">
 		<div class="modal-content">
 		    <div class="modal-header">
-		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		      	<h3 id="myModalLabel" style="text-align: center;">Add message</h3>
+		      	<h3 class="pink-header">Add WallPin</h3>
 		    </div>
 		    <div id="modal-body-circle-add-wallpin" class="modal-body">
 		    	<%= form_tag(add_wallpin_circle_path, :method => "post", remote: true) do %>
 					<div class="form-group">
-						Message: <%= text_area_tag "circle[summary]", "", class: "form-control", placeholder: "Enter some text as a message", id: "wallpin_summary" %>
+						Message: <%= text_area_tag "circle[summary]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "wallpin_summary" %>
 						<br>
-						File Link: <%= text_field_tag "circle[file_link]", "", class: "form-control", placeholder: "Enter a link", id: "wallpin_file_link" %>
+						File Link: <%= text_field_tag "circle[file_link]", "", class: "white-pink", placeholder: "Enter a link", id: "wallpin_file_link" %>
 						<br>
-						<%= submit_tag "Add Pin",  class: "btn btn-main-o" %>
+						<%= submit_tag "Pin",  class: "btn" %>
 					</div>
 				<% end %>
 		    </div>
 		    <div class="modal-footer">
-		      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+		      <p>Press ESC to exit</p>
 		    </div>
 	  	</div>
 	</div>
@@ -267,6 +262,22 @@
 	</div>
 </div>
 
+<!-- modal for append non-displayed files -->
+<div class="modal fade" id="modal-window-view-teamfiles" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">your TeamFiles</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-teamfiles-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 

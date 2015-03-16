@@ -1,4 +1,5 @@
 
+
 $(document).ready(function () {
     
 	//$('#disconnect').click(helper.disconnectServer);
@@ -54,9 +55,15 @@ $(document).ready(function () {
 		$("#modal-window-create-document").modal("show");
 	});
 	$('#view-all-files').click(function() {
-		console.log('kjahsdkjahsdkjh')
 		$("#modal-window-user-files").modal("show");
 	});
+
+	$('view-all-team-files').click(function() {
+		$('#modal-window-view-teamfiles').modal('show')
+	})
+
+
+
 	// $("#create_tasklist").click(function() {
 	// 	$("#modal-window-create-tasklist").modal("show");
 	// });
@@ -64,20 +71,21 @@ $(document).ready(function () {
 	// 	$("#modal-window-add-circle-member").modal("show");
 
 	// });
-	// $("#create_team_message").click(function() {
-	// 	$("#modal-window-circle-add-message").modal("show");
-	// });
-	// $("#create_team_wallpin").click(function() {
-	// 	$("#modal-window-circle-add-wallpin").modal("show");
-	// });
+	$("#create_team_message").click(function() {
+		$("#modal-window-circle-add-message").modal("show");
+	});
+	
+	$("#create-team-wallpin").click(function() {
+		$("#modal-window-circle-add-wallpin").modal("show");
+	});
 	// $("#create_team_file").click(function() {
 	// 	$("#modal-window-create-circle-document").modal("show");
 	// });
-	// $(".destroy-item").click(function() {
-	// 	$("#modal-window-destroy-item").modal("show");
-	// 	$('#circle_item_id').val($(this).data('id'));
-	// 	$('#circle_item_type').val($(this).data('item'));
-	// });
+	$(".destroy-item").click(function() {
+		$("#modal-window-destroy-item").modal("show");
+		$('#circle_item_id').val($(this).data('id'));
+		$('#circle_item_type').val($(this).data('item'));
+	});
 	// // search google Plus profiles
 	// $("#search-glyphicon").on("click", function() {
 	// 	text = $('#search_p').val()
@@ -169,11 +177,7 @@ $(document).ready(function () {
 	// 	var top = $('#tasks-anchor').offset().top - 75
 	// 	$('html, body').animate({ scrollTop: top }, 1000)
 	// });
-	// $('#team-members-view').on('click', function(e) {
-	// 	e.preventDefault();
-	// 	var top = $('#team-members-anchor').offset().top - 75
-	// 	$('html, body').animate({ scrollTop: top }, 1500)
-	// });
+
 
 	
 	// cancelling time option so commented out for now..
