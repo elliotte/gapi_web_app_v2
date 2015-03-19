@@ -1,3 +1,55 @@
+
+<!-- modal for teams append on signin -->
+<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">your Teams</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-teams-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for all files display modal -->
+<div class="modal fade files-display-modal" id="modal-window-user-files" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">your Files</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-files-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for all SHARED files display modal -->
+<div class="modal fade files-display-modal" id="modal-window-user-shared-files" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">your sharedFiles</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-shared-files-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- add a calendar event inclusive of teams -->
 <div class="modal fade" id="modal-window-create-event" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-default-width">
@@ -31,72 +83,7 @@
 	</div>
 </div>
 
-<!-- modal for teams append on signin -->
-<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">yourTeams</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-teams-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- modal for all files display -->
-<div class="modal fade files-display-modal" id="modal-window-user-files" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" style="width:80%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">your Files</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-files-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- modal for all SHARED files display -->
-<div class="modal fade files-display-modal" id="modal-window-user-shared-files" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" style="width:80%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">your sharedFiles</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-shared-files-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- modal for all SHARED files display -->
-<div class="modal fade" id="modal-window-empty" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" style="width:50%;">
-		<div class="modal-content ">
-			<div class="modal-body">
-				<div class="" id="empty-modal-body-container"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- user or team create a new SS -->
+<!-- user or team create a new SS with mimeType set -->
 <div class="modal fade" id="modal-window-new-ss" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -120,7 +107,7 @@
 	</div>
 </div>
 
-<!-- user or team create a new DOC -->
+<!-- user or team create a new DOC with mimeType set -->
 <div class="modal fade" id="modal-window-new-doc" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -140,6 +127,20 @@
 			</div>
 			<div id="new-doc-modal-footer" class="modal-footer" style="display:none;">
 				<p><button id="new-doc-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- EMPTY MODAL IN USE-->
+<div class="modal fade" id="modal-window-empty" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content ">
+			<div class="modal-body">
+				<div class="" id="empty-modal-body-container"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
 			</div>
 		</div>
 	</div>

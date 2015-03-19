@@ -86,6 +86,7 @@
 	</div>
 </div>
 
+<!-- import document or SS user choice modal -->
 <div class="modal fade" id="modal-window-new-file-import" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -109,6 +110,7 @@
 	</div>
 </div>
 
+<!-- modal that sets SS mimeType after import user choice -->
 <div class="modal fade" id="modal-window-create-spreadsheet" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -120,7 +122,7 @@
 				<%= form_tag(files_path, :id => "create_spreadsheet_form", :method => "post", :multipart => true) do %>
 					<div class="form-group">
 						Select Spreadsheet: <%= file_field_tag "file", class: "form-control", :accept => ".csv, .xlsx, .xls" %>
-						<%= hidden_field_tag "circle_id", params[:id] %>
+						<%#= hidden_field_tag "circle_id", params[:id] %>
 					</div>
 				<% end %>
 				<br>
@@ -133,6 +135,7 @@
 	</div>
 </div>
 
+<!-- modal that sets DOC mimeType after import user choice -->
 <div class="modal fade" id="modal-window-create-document" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -144,7 +147,7 @@
 				<%= form_tag(files_path, :id => "create_document_form", :method => "post", :multipart => true) do %>
 					<div class="form-group">
 						Select Document: <%= file_field_tag "file", class: "form-control" %>
-						<%= hidden_field_tag "circle_id", params[:id] %>
+						<%#= hidden_field_tag "circle_id", params[:id] %>
 					</div>
 				<% end %>
 				<br>
@@ -178,7 +181,6 @@
 	  	</div>
 	</div>
 </div>
-
 
 
 

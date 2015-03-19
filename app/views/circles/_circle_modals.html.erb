@@ -1,5 +1,113 @@
+<!-- modal for append non-displayed files -->
+<div class="modal fade" id="modal-window-view-teamfiles" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">your TeamFiles</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-teamfiles-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
 
-<div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!-- modal for teams append on teamSignin -->
+<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">yourTeams</h3>
+			</div>
+			<div class="modal-body">
+				<div class="" id="landing-teams-append"></div>
+			</div>
+			<div class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- add team message modal -->
+<div class="modal fade" id="modal-window-circle-add-message" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-search-width">
+		<div class="modal-content">
+		    <div class="modal-header">
+		      	<h3 class="pink-header">Add message</h3>
+		    </div>
+		    <div id="modal-body-circle-add-message" class="modal-body">
+		    	<%= form_tag(add_message_circle_path, :method => "post", remote: true) do %>
+					<div class="form-group">
+						Message: <%= text_area_tag "circle[message]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "message_text" %>
+						<br>
+						<%= submit_tag "Post",  class: "btn" %>
+					</div>
+				<% end %>
+		    </div>
+		    <div class="modal-footer">
+		      <p>Press ESC to exit</p>
+		    </div>
+	  	</div>
+	</div>
+</div>
+
+<!-- add team wallPin -->
+<div class="modal fade" id="modal-window-circle-add-wallpin" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-search-width">
+		<div class="modal-content">
+		    <div class="modal-header">
+		      	<h3 class="pink-header">Add WallPin</h3>
+		    </div>
+		    <div id="modal-body-circle-add-wallpin" class="modal-body">
+		    	<%= form_tag(add_wallpin_circle_path, :method => "post", remote: true) do %>
+					<div class="form-group">
+						Message: <%= text_area_tag "circle[summary]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "wallpin_summary" %>
+						<br>
+						File Link: <%= text_field_tag "circle[file_link]", "", class: "white-pink", placeholder: "Enter a link", id: "wallpin_file_link" %>
+						<br>
+						<%= submit_tag "Pin",  class: "btn" %>
+					</div>
+				<% end %>
+		    </div>
+		    <div class="modal-footer">
+		      <p>Press ESC to exit</p>
+		    </div>
+	  	</div>
+	</div>
+</div>
+
+<!-- file search user gDrive modal here, and in modals partial on landing -->
+<div class="modal fade" id="modal-window-quick-search-files" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="pink-header">Search your Drive</h3>
+				<p style="font-size:10px;">This searches your drive and does not create a copy when sharing.  Use File.import otherwise.</p>
+			</div>
+			<div id="js-team-share-result-body" class="modal-body">
+				<div class="form-group">
+				      <%= form_tag(share_files_files_path, class: "contactForm", :method => "post", remote: true) do %>
+					        <%= hidden_field_tag "file_id", "" %>
+					        <%= hidden_field_tag "circle_id", params[:id] %>
+					        <div class="form-group">
+					          <div class="controls">
+					            Text: <%= text_field_tag "search_files_box", class: "form-control requiredField" %>
+					          </div>
+					        </div>
+					        <%= submit_tag "Share", class: "btn btn-main-o" %>
+				      <% end %>
+				</div>
+			</div>
+			<div id="" class="modal-footer">
+				<p>Press ESC to exit</p>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- search form new.ppl inside team page, email search -->
 <div class="modal fade" id="modal-window-add-circle-member" tabindex="-1" role="dialog" aria-hidden="true">
@@ -77,27 +185,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modal-window-circle-add-message" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-search-width">
-		<div class="modal-content">
-		    <div class="modal-header">
-		      	<h3 class="pink-header">Add message</h3>
-		    </div>
-		    <div id="modal-body-circle-add-message" class="modal-body">
-		    	<%= form_tag(add_message_circle_path, :method => "post", remote: true) do %>
-					<div class="form-group">
-						Message: <%= text_area_tag "circle[message]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "message_text" %>
-						<br>
-						<%= submit_tag "Post",  class: "btn" %>
-					</div>
-				<% end %>
-		    </div>
-		    <div class="modal-footer">
-		      <p>Press ESC to exit</p>
-		    </div>
-	  	</div>
-	</div>
-</div>
+<!-- delete pin or message modal -->
 
 <div class="modal fade" id="modal-window-destroy-item" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-small-width">
@@ -110,30 +198,6 @@
 		        <%= hidden_field_tag "circle[item_id]", "" %>
 		        <%= submit_tag "Yes", class: 'btn' %>
 		        <% end %>
-		    </div>
-		    <div class="modal-footer">
-		      <p>Press ESC to exit</p>
-		    </div>
-	  	</div>
-	</div>
-</div>
-
-<div class="modal fade" id="modal-window-circle-add-wallpin" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-search-width">
-		<div class="modal-content">
-		    <div class="modal-header">
-		      	<h3 class="pink-header">Add WallPin</h3>
-		    </div>
-		    <div id="modal-body-circle-add-wallpin" class="modal-body">
-		    	<%= form_tag(add_wallpin_circle_path, :method => "post", remote: true) do %>
-					<div class="form-group">
-						Message: <%= text_area_tag "circle[summary]", "", class: "white-pink", placeholder: "Enter some text as a message", id: "wallpin_summary" %>
-						<br>
-						File Link: <%= text_field_tag "circle[file_link]", "", class: "white-pink", placeholder: "Enter a link", id: "wallpin_file_link" %>
-						<br>
-						<%= submit_tag "Pin",  class: "btn" %>
-					</div>
-				<% end %>
 		    </div>
 		    <div class="modal-footer">
 		      <p>Press ESC to exit</p>
@@ -169,91 +233,7 @@
 	</div>
 </div>
 
-<!-- QUICK ADD EVENT CREATE modal here, and in modals partial on landing/sigin page -->
-<div class="modal fade" id="modal-window-quick-create-event" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-medium-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Quickly Add Event</h3>
-				<p>Same principles as google quick add.</p>
-			</div>
-			<div id="quick-events-modal-body" class="modal-body">
-				<%= form_tag("/calendars/primary/events/quick_add", :method => "post", remote: true) do %>
-					<div class="form-group">
-						Text: <%= text_field_tag "event[text]", "", class: "form-control", placeholder: "e.g 10am deliver report", id: "text" %>
-						<%= hidden_field_tag "event[circle_id]", params[:id] %>
-					</div>
-				  <%= submit_tag "Add", class: "btn btn-main-o" %>
-				<% end %>
-			</div>
-			<div id="quick_create_event_footer" class="modal-footer" style="display:none;">
-				<button id="quick_create_button_close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- file search gDrive modal here, and in modals partial on landing -->
-<div class="modal fade" id="modal-window-quick-search-files" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">Search Files</h3>
-				<p style="font-size:10px;">This searches your drive and does not create a copy when sharing.  Use File.import otherwise.</p>
-			</div>
-			<div id="js-team-share-result-body" class="modal-body">
-				<div class="form-group">
-				      <%= form_tag(share_files_files_path, class: "contactForm", :method => "post", remote: true) do %>
-					        <%= hidden_field_tag "file_id", "" %>
-					        <%= hidden_field_tag "circle_id", params[:id] %>
-					        <div class="form-group">
-					          <div class="controls">
-					            Text: <%= text_field_tag "search_files_box", class: "form-control requiredField" %>
-					          </div>
-					        </div>
-					        <%= submit_tag "Share", class: "btn btn-main-o" %>
-				      <% end %>
-				</div>
-			</div>
-			<div id="" class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- modal for append non-displayed files -->
-<div class="modal fade" id="modal-window-view-teamfiles" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">your TeamFiles</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-teamfiles-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- modal for teams append on teamSignin -->
-<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">yourTeams</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-teams-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
