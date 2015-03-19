@@ -12,6 +12,7 @@ var teamHelper = (function() {
         // After loading the Google+ API, render the profile data from Google+.
         this.renderProfile();
 
+
       } else if (authResult['error']) {
         // The user is not signed in.
         console.log('There was an error: ' + authResult['error']);
@@ -20,9 +21,16 @@ var teamHelper = (function() {
     },
     
     renderProfile: function() {
-      //teamMembers
+
       teamHelper.circleFiles();
+      teamHelper.circleMembers();
       teamHelper.teams();
+      teamHelper.setFormCircleIds();
+
+    },
+
+    setFormCircleIds: function() {
+      $('form #circle_id').val($('#circle_id').val())
     },
 
     teams: function() {
@@ -35,16 +43,23 @@ var teamHelper = (function() {
         success: function(circles) {
           for (i = 0; i < 5; i++) {
               circle = circles[i];
-              console.log(circle)
-              $('#side-menu-container').append(
-                '<li><a href="/circles/'+ circle.id +'"><i class="fa fa-users"></i>'+ circle.name +'</a></li>'
-              )
-            };
-            $('.loader-wrapper').hide();
-            $('body').removeClass('overflow-hidden');
-        }
-      });
-    },
+              $('#landing-teams-append').append(
+                '<p>' +
+                    '<a class="grid-button action-button" target="_blank" href="/circles/' + circle.id + '">' + circle.name + '</a>' +
+                '</p>'
+               );
+          }
+          
+        },
+      });//END OF AJAX
+      $('.loader-wrapper').hide();
+      $('body').removeClass('overflow-hidden');
+      Webflow.require("ix").init([
+          {"slug":"open-contact","name":"open contact","value":{"style":{},"triggers":[{"type":"click","selector":".contact","stepsA":[{"display":"block","height":"0px"},{"height":"auto","transition":"height 500ms ease 0ms"}],"stepsB":[{"height":"0px","transition":"height 500ms ease 0ms"},{"display":"none"}]}]}},
+          {"slug":"logo-hover","name":"logo hover","value":{"style":{},"triggers":[{"type":"hover","selector":".logo-pink","stepsA":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}]},{"type":"hover","selector":".logo-black","stepsA":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}]}]}},
+          {"slug":"show-on-scroll","name":"show on scroll","value":{"style":{"opacity":0,"x":"0px","y":"100px"},"triggers":[{"type":"scroll","stepsA":[{"opacity":1,"wait":0,"transition":"transform 500ms ease-in-out-sine 0ms, opacity 500ms ease-in-out-sine 0ms","x":"0px","y":"0px"}],"stepsB":[{"opacity":0,"transition":"transform 1000ms ease-in-out-sine 0ms, opacity 1000ms ease-in-out-sine 0ms","x":"0px","y":"100px"}]}]}}
+      ])
+    },//END OF METHOD
     /**
      * Calls the server endpoint to get the Circle Member.
      */
@@ -54,8 +69,9 @@ var teamHelper = (function() {
         url: '/peoples/circle_peoples',
         dataType: 'json',
         contentType: 'application/json',
-        data: {id: $("#circle_id").text()},
+        data: {id: $("#circle_id").val()},
         success: function(result) {
+          //uses list of userIDs from monea and gets the profiles from G+
           teamHelper.getCircleMembers(result);
         }
       });
@@ -76,7 +92,7 @@ var teamHelper = (function() {
           dataType: 'json',
           contentType: 'application/json',
           success: function(result) {
-            console.log(result);
+            //console.log(result);
             teamHelper.appendCircleMembers(result);
           }
         });
@@ -107,8 +123,6 @@ var teamHelper = (function() {
     getCircleFiles: function(files) {
       var circleFilesCount = 0;
       var limit = 4
-      containerShow = $('#team-latest-files-container')
-      containerModal = $('#landing-teamfiles-append')
       
       for (var f in files) {
             file = files[f];
@@ -119,47 +133,61 @@ var teamHelper = (function() {
               contentType: 'application/json',
               success: function(result) {
                   if (!result.error) {
-                      circleFilesCount++;
                       if (circleFilesCount <= limit) {
-                        teamHelper.appendCircleFile(result, containerShow);
-                      } else {
-                        teamHelper.appendCircleFile(result, containerModal);
+                        circleFilesCount++;
+                        teamHelper.appendCircleFile(result, false);
+                      } 
+                      if (circleFilesCount > limit) {
+                        circleFilesCount++;
+                        teamHelper.appendCircleFile(result, true);
                       }
+                      
                   } else {
                     console.log('moneaMsg TeamFile ' + result.error.message + ' <fileID');
                   }
               },
             });//END OF AJAX
-            if(circleFilesCount == 4) {
-               var moreCard = '<div class="about-employee">' + 
-                            '<div class="table-cell-wrapper">' + 
-                              '<a id="view-all-team-files" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
-                            '</div>' + 
-                          '</div>'
-               containerShow.append(moreCard);
-            }
+
       }//END OF FOR LOOP
+                        // var moreCard = '<div class="about-employee">' + 
+                        //     '<div class="table-cell-wrapper">' + 
+                        //       '<a id="view-all-team-files" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
+                        //     '</div>' + 
+                        //   '</div>'
+                        // $('#team-latest-files-container').append(moreCard);
       if(circleFilesCount == 0){
         $('#noDriveTeamFiles').show();
       }
+      
     },
     /**
      * Displays circle files retrieved from DB.
      */
-    appendCircleFile: function(file,container) {
-        var html = uiHelper.filesHtml(file)
-        container.append(html)
+    appendCircleFile: function(file,modal) {
+
+        containerShow = $('#team-latest-files-container')
+        containerModal = $('#landing-teamfiles-append')
+
+        if (!modal) {
+            var html = uiHelper.filesHtml(file)
+            containerShow.append(html)
+        } else {
+            var html = uiHelper.filesModalHtml(file)
+            containerModal.append(html)
+        }
+       
         if(file.exportLinks){
            uiHelper.appendExportLinks(file);
         }// end of exportLinks
+
     },
 
     removeTeamMember: function(button) {
        
-       var id = $(button).data('id');
+          var id = $(button).data('id');
           $.ajax({
             type: 'POST',
-            url: '/peoples/remove_team_member/?google_id='+ id +'&circle_id='+ $("#circle_id").text(),
+            url: '/peoples/remove_team_member/?google_id='+ id +'&circle_id='+ $("#circle_id").val(),
             dataType: 'json',
             contentType: 'application/json',
             success: function(result) {
@@ -173,53 +201,9 @@ var teamHelper = (function() {
      * Displays circle members retrieved from DB.
      */
     appendCircleMembers: function(member) {
-
-      if(member.gender == "male") {
-        $('#circleMembers').append(
-          '<div id="'+member.id+'" class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-male"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
-                '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-      } else if(member.gender == "female") {
-        $('#circleMembers').append(
-          '<div id="'+member.id+'" class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-female"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
-                '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-      } else {
-        $('#circleMembers').append(
-          '<div id="'+member.id+'" class="col-md-3">'+
-            '<div class="feature-box-style2">'+
-              '<div class="feature-box-title">'+
-                '<i class="fa fa-users"></i>'+
-              '</div>'+
-              '<div class="feature-box-containt">'+
-                '<h3><a href="' + member.url + '" target="_blank">' + member.displayName + '</a></h3>'+
-                '<p><a href="' + member.url + '" target="_blank"><img src="' + member.image.url + '"></a></p>'+
-                '<p class="team-member-delete" style="display:none;"><a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" class="btn btn-main-o destroy-item"><i class="fa fa-trash-o"></i></a><p>' +
-              '</div>'+
-            '</div>'+
-          '</div>'
-        );
-      }
+      containerShow = $('#team-members-container')
+      var html = uiHelper.teamMembersHtml(member)
+      containerShow.append(html)
       var owner = $('#team-owner').data('value');
       if (owner) {
         $('.team-member-delete').show();
@@ -318,15 +302,15 @@ var teamHelper = (function() {
 $(document).ready(function() {
   
   $('#create_button_circle_member').click(function(){
-    $('form#add_circle_member_form .error').remove();
+    //$('form#add_circle_member_form .error').remove();
     var hasError = false;
-    $('form#add_circle_member_form .requiredField').each(function () {
-      if (jQuery.trim($(this).val()) === '') {
-        $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-        $(this).addClass('inputError');
-        hasError = true;
-      }
-    });
+    // $('form#add_circle_member_form .requiredField').each(function () {
+    //   if (jQuery.trim($(this).val()) === '') {
+    //     $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
+    //     $(this).addClass('inputError');
+    //     hasError = true;
+    //   }
+    // });
     if (hasError) {
       return false;
     
@@ -348,20 +332,7 @@ $(document).ready(function() {
   });
   //TeamFiles.new submit html redirect after
   $('#create_button_circle_document').click(function(){
-    $('form#create_circle_document_form .error').remove();
-      var hasError = false;
-      $('form#create_circle_document_form .requiredField').each(function () {
-          if (jQuery.trim($(this).val()) === '') {
-            $(this).parent().append('<span class="error"><i class="fa fa-exclamation-triangle"></i></span>');
-            $(this).addClass('inputError');
-            hasError = true;
-          }
-      });
-      if (hasError) {
-          return false;
-      } else {
         $('#create_circle_document_form').submit();
-      }
   });
 
 });

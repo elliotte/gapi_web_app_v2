@@ -30,7 +30,7 @@
     <%= render 'landingActionButtons' %>
 
      <!-- foodNews left box -->
-     <div class="about-div">
+     <div data-ix="show-on-scroll" class="about-div">
       <p class="about">
         <a class="w-inline-block all-projects-button" href="#">
           <img class="grid-button" src="<%= asset_path('food icon.png') %>" alt="asset error">
@@ -39,13 +39,13 @@
       </p>
     </div>
     <!-- foodNews right box -->
-    <div class="about-div image">
+    <div data-ix="show-on-scroll" class="about-div image">
     </div>
 
     <!-- START OF CALENDAR -->
 
     <!-- diary left box -->
-     <div class="about-div slider">
+     <div data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="diary-container" class="w-slider-mask">
           <!-- append calendar events here -->
@@ -58,7 +58,7 @@
       </div>
     </div>
     <!-- diary right box -->
-    <div class="about-div title">
+    <div data-ix="show-on-scroll" class="about-div title">
       <h1 class="h1-about">
         <a class="w-inline-block action-button" href="#">
           <img id="quick_add_event" class="grid-button" src="<%= asset_path('qaddevent.png') %>" alt="asset-error">
@@ -81,7 +81,7 @@
       </h1>
     </div>
     <!-- pending tasks right box -->
-    <div class="about-div slider">
+    <div data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="tasks-pending-container" class="w-slider-mask">
           <!-- append tasks here -->
@@ -94,7 +94,7 @@
       </div>
     </div>
     <!-- completed tasks left box -->
-    <div class="about-div slider">
+    <div data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="tasks-complete-container" class="w-slider-mask">
           <!-- append tasks here -->
@@ -107,7 +107,7 @@
       </div>
     </div>
     <!-- completed tasks right box -->
-    <div class="about-div title">
+    <div data-ix="show-on-scroll" class="about-div title">
       <h1 class="h1-about">
         <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
         </a>

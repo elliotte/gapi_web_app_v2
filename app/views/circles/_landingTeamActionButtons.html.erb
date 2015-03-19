@@ -7,42 +7,46 @@
       <div class="w-clearfix employees-container">
         <div class="about-employee">
             <div class="table-cell-wrapper">
-                <a class="user-button-landing action-button" href="javascript:void(0)"> 
-                   <img class="contact-icon" src="<%= asset_path('mailB icon.png') %>" alt="asset-error">
-                  xx.new 
+                <a id="add_event" class="user-button-landing action-button" href="javascript:void(0)"> 
+                   <img class="contact-icon" src="<%= asset_path('cal icon.png') %>" alt="asset-error">
+                  Event.new 
                 </a>
             </div>
         </div>
         <div class="about-employee">
            <div class="employee-bio text-buffer">
-                <p class="bio-text">Edit your monea settings</p>
+                <p class="bio-text">Import a new file to share with the team.</p>
                 <br>
-                <a class="btn no-text-decoration" href="javascript:void(0)">.monea</a>
+                <a class="btn no-text-decoration create-team-file" href="javascript:void(0)">.import</a>
             </div>
             <div class="table-cell-wrapper">
-              <p class="user-button-landing">File.import </p>
+              <p class="user-button-landing">File.import</p>
             </div>
         </div>
         <div class="about-employee">
             <div class="table-cell-wrapper">
-              <a class="user-button-landing action-button" id="view-teams" href="javascript:void(0)"> 
-                 <img class="contact-icon" src="<%= asset_path('teams icon.png') %>" alt="asset-error">
-                ProjectList.new </a>
+              <a id="view-teams" class="user-button-landing action-button" id="view-teams" href="javascript:void(0)"> 
+                 <img class="contact-icon" src="<%= asset_path('user icon.png') %>" alt="asset-error">
+                Teams.all </a>
             </div>
         </div>
         <div class="about-employee">
             <div id="new-to-do-button-container" class="employee-bio text-buffer">
-                <p class="bio-text">Create a new wallPin</p>
+                <p class="bio-text">Search your Drive and share a file with the team</p>
+                <br>
+                 <a id="search_files" class="btn no-text-decoration" href="javascript:void(0)">.share</a>
             </div>
             <div class="table-cell-wrapper">
-              <p class="user-button-landing"> xx.new </p>
+              <p class="user-button-landing"> File.share </p>
             </div>
         </div>
         <div class="about-employee">
             <div class="table-cell-wrapper">
-              <a class="user-button-landing action-button" data-toggle="modal" data-target="#modal-window" data-remote=true href="/peoples"> 
-                 <img class="contact-icon" src="<%= asset_path('user icon.png') %>" alt="asset-error">
-                Add (people) </a>
+              <a href="#" class="user-button-landing action-button add-team-member"> 
+                 <img class="contact-icon" src="<%= asset_path('teams icon.png') %>" alt="asset-error">
+                
+                Team.add (people) 
+              </a>
             </div>
         </div>
         <div class="about-employee">

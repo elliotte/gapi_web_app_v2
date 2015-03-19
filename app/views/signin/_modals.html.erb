@@ -1,4 +1,3 @@
-<div id="file_comments_modals"></div>
 
 <div class="modal fade" id="modal-window-signin-error" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-small-width">
@@ -14,9 +13,7 @@
 		</div>
 	</div>
 </div>
-
-<div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-hidden="true"></div>
-					
+		
 <div class="modal fade" id="modal-window-quick-create-event" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -66,38 +63,6 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modal-window-create-event" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-default-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">Create Event</h3>
-				<p>You can now create and share an event using moneaTeams</p>
-			</div>
-			<div id="js-add-event-content-body" class="modal-body">
-				<%= form_tag("/calendars/primary/events", :id => "create_event_form", :method => "post", remote: true) do %>
-					<div class="form-group">
-						Summary: <%= text_field_tag "event[summary]", "", class: "white-pink", placeholder: "Summary" %>
-						Start Time: <%= text_field_tag "event[start_time]", "#{DateTime.now.strftime('%d/%m/%Y %H:%M')}", class: "white-pink", id: "start_time_event" %>
-						End Time: <%= text_field_tag "event[end_time]", "#{(DateTime.now+1.hour).strftime('%d/%m/%Y %H:%M')}", class: "white-pink", placeholder: "End Time", id: "end_time_event" %>
-						Description: <%= text_field_tag "event[description]", "", class: "white-pink", placeholder: "Description" %>
-						Location: <%= text_field_tag "event[location]", "", class: "white-pink", placeholder: "Location" %>
-						Attendee Teams: <%= text_field_tag "event[attendee_team_ids]", "", class: "white-pink", id: "search_calendar_ppl" %>
-						HangoutLink: <%= text_field_tag "event[hangout_link]", "", class: "white-pink", placeholder: "paste Link" %>
-          				<%= hidden_field_tag "event[circle_id]", params[:id] %>
-          				<br>
-          				<%= submit_tag "Add", class: "btn" %>
-					</div>
-				<% end %>
-				
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-				<button id="add-another-event" style="display:none" class="btn" aria-hidden="true">Add Another</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="modal fade" id="modal-window-create-circle" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -144,28 +109,6 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modal-window-new-ss" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-medium-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">New SpreadSheet</h3>
-			</div>
-			<div id="new-ss-modal-body" class="modal-body">
-				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
-					<div class="form-group">
-						Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter a title for your new SS", id: "title" %>
-						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.spreadsheet" %>
-					</div>
-				  <%= submit_tag "Add", class: "btn" %>
-				<% end %>
-			</div>
-			<div id="new-ss-modal-footer" class="modal-footer" style="display:none;">
-				<p><button id="new-ss-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button></p>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="modal fade" id="modal-window-create-spreadsheet" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-medium-width">
 		<div class="modal-content">
@@ -185,29 +128,6 @@
 			<div class="modal-footer">
 				<button class="btn" id="create_button_spreadsheet">Create</button>
 				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="modal-window-new-doc" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-medium-width">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">New Document</h3>
-			</div>
-			<div id="new-doc-modal-body" class="modal-body">
-				<%= form_tag(insert_new_files_path, :method => "post", remote: true) do %>
-					<div class="form-group">
-						Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter a document title", id: "title" %>
-						<%#= hidden_field_tag "event[circle_id]", params[:id] %>
-						<%= hidden_field_tag "mimeType", "application/vnd.google-apps.document" %>
-					</div>
-				  <%= submit_tag "Add", class: "btn" %>
-				<% end %>
-			</div>
-			<div id="new-doc-modal-footer" class="modal-footer" style="display:none;">
-				<p><button id="new-doc-insert-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button></p>
 			</div>
 		</div>
 	</div>
@@ -259,56 +179,8 @@
 	</div>
 </div>
 
-<!-- modal for teams append on signin -->
-<div class="modal fade" id="modal-window-view-teams" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">yourTeams</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-teams-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- modal for all files display -->
-<div class="modal fade files-display-modal" id="modal-window-user-files" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" style="width:80%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">your Files</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-files-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- modal for all SHARED files display -->
-<div class="modal fade files-display-modal" id="modal-window-user-shared-files" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" style="width:80%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="pink-header">your sharedFiles</h3>
-			</div>
-			<div class="modal-body">
-				<div class="" id="landing-shared-files-append"></div>
-			</div>
-			<div class="modal-footer">
-				<p>Press ESC to exit</p>
-			</div>
-		</div>
-	</div>
-</div>
 
 
 

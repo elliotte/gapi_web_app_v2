@@ -1,11 +1,5 @@
 
-$('#js-task-create-result-body').empty();
-
-var html = '<p>' + ' Task added successfully ' + title + 
-			     '</p>' 
-			
-$('#js-task-create-result-footer').show();
-$('#js-task-create-result-body').append(html);
+$('#js-task-create-result-body').empty().fadeOut();
 
 task = {
   id: '<%= @task.id %>',
@@ -15,6 +9,11 @@ task = {
   notes: '<%= @task.notes %>',
   status: '<%= @task.status %>'
 }
+var html = '<p>' + ' Task added successfully ' + task.title + 
+			     '</p>' 
+
+$('#js-task-create-result-footer').show();
+$('#js-task-create-result-body').append(html).fadeIn();
 
 var taskListId = '<%= @task_list_id %>'
 

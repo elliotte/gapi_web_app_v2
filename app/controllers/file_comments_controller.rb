@@ -48,7 +48,14 @@ class FileCommentsController < ApplicationController
 		    :body_object => comment,
 		    :parameters => { 'fileId' => params[:file_id] })
 
-		render json: response.data.to_json
+		if response.data['error'].present?
+			@response = response.data.error['errors'].first['message']
+		else
+			@response = response.data.fileTitle
+		end
+		respond_to do |format|
+	      	format.js { @response }
+	    end
 	end
 
 	def update

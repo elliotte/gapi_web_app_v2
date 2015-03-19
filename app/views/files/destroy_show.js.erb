@@ -1,3 +1,5 @@
-$('.files-display-modal').fadeOut();
-$("#modal-window").html("<%= escape_javascript(render partial: 'file_delete', locals: { file: @file }) %>");
-$("#modal-window").modal("show");
+$('.files-display-modal').modal('hide');
+
+$("#empty-modal-body-container").empty();
+$("#empty-modal-body-container").html("<%= escape_javascript(render partial: 'file_delete', locals: { file: @file }) %>");
+$("#modal-window-empty").modal("show");

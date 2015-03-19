@@ -129,10 +129,9 @@ var uiHelper = (function() {
         var completeButton = ""  
         var completeDate = ""
           if ( !task.completed ) {
-            completeDate = "not-completed"
             completeButton = ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/comptask icon.png" alt="asset-error">' + '</a>'
           } else {
-            completeDate = task.completed.substring(0,10)
+            completeDate = ' Completed: ' + task.completed.substring(0,10)
             style = "background-color:#62DF71;"
           };
 
@@ -140,13 +139,13 @@ var uiHelper = (function() {
               '<div class="about-slide-container">' +
                   '<img class="about-icon" src="/assets/'+iconNames[iconIndex]+'" alt="asset-error">' +
                   '<h3>' + task.title + '</h3>' +
-                  '<h3>' + NotesIfTrue + '</h3>' +
-                  '<h3>' + completeDate + '</h3>' +
+                  '<h3 style="font-size: 15px;">' + NotesIfTrue + '</h3>' +
                   '<h3>'+
                     completeButton +
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
                   '</h3>' +
+                  '<h3 style="font-size: 15px;">' + completeDate + '</h3>' +
               '</div>' +
         '</div>'
 
@@ -174,9 +173,9 @@ var uiHelper = (function() {
         var html = '<div id=' + event.id + ' class="w-slide slide-about" style="background-color:#F9FE45;">' +
               '<div class="about-slide-container">' +
                   '<img class="about-icon" src="/assets/'+iconNames[iconIndex]+'" alt="asset-error">' +
-                  '<h3><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
-                  '<h3>' + attendees_email_list.join(" and ") + '</h3>' +
-                  '<h3>' + eventDate.toLocaleDateString() + ' ,' + eventDate.toLocaleTimeString() + '</h3>' +
+                  '<h3 class="action-button"><a href="' + event.htmlLink + '" target="_blank"> ' + event.summary + '</a></h3>'+
+                  '<h3 style="color:#d61579;">' + attendees_email_list.join(" and ") + '</h3>' +
+                  '<h3 style="color:#d61579;">' + eventDate.toLocaleDateString() + ' ,' + eventDate.toLocaleTimeString() + '</h3>' +
                   '<h3>'+
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
                     ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
@@ -207,7 +206,7 @@ var uiHelper = (function() {
                         '<div class="about-slide-container">'+
                             '<img class="about-icon" src="/assets/passion.svg" alt="asset-error">' +
                             '<h3>' + msg.text + '</h3>'+
-                            '<h3>' + msg.added_by + '</h3>'+
+                            '<h3 style="font-size:15px;">' + msg.added_by + '</h3>'+
                             '<h3>'+
                                   '<a href="#" data-id="'+msg.id+'" data-item="message" class="destroy-item">' + 
                                     '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + 
@@ -234,6 +233,20 @@ var uiHelper = (function() {
                 '</div>'
       return html
     },
+
+    teamMembersHtml: function(member) {
+      var html = '<div id=' + member.id + ' class="about-employee" style="background-image: url('+  member.image.url +');">' +
+                        '<div class="employee-bio">' +
+                            '<a href="'+member.url+'" class="employee-name" target="_blank">' + member.displayName + '</a>' +
+                            '<p class="bio-text file-card">' +
+                             ' <a data-id="'+ member.id +'" onclick="teamHelper.removeTeamMember(this)" href="#">' + 
+                                 '<img class="contact-icon action-button team-member-delete" style="display: none;" src="/assets/trash-white.png" alt="asset-error">' + '</a>' +
+                            '</p>' + 
+                        '</div>' +
+                    '</div>'
+      return html
+    },
+
 
 
   };//END OF RETURN

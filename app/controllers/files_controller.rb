@@ -17,31 +17,31 @@ class FilesController < ApplicationController
 	    render json: @response.data.to_json
 	end
 
+	#why is this here??  from landing?
 	def circle_files
 		@team_files = Circle.find(params[:id]).team_files
 		render json: @team_files
 	end
 
 	def create
-		# Create the file in drive
+		# http only and only import file user and team
 		#need to clean up without impacting main file creates and teamFile.new
+		#and blend in insert_new
+		google = GoogleService.new($client, @drive)
+		org_filename = params[:file].original_filename
+		content_type = params[:file].content_type
+		file_path = params[:file].tempfile.path
+	  	
 	  	file = @drive.files.insert.request_schema.new({
-	    	'title' => params[:file].original_filename,
-    		'mimeType' => params[:file].content_type
+	    	'title' => org_filename,
+    		'mimeType' => content_type
 	  	})
+	  	
+	  	file.properties = [{"key" => "circle_id", "value" => params[:circle_id]}] unless params[:circle_id].blank?
 
-	  	if params[:circle_id].present?
-	  		file.properties = [{"key" => "circle_id", "value" => params[:circle_id]}]
-	  	end
+	  	media = google.load_drive_media(file_path, content_type)
 
-	  	media = Google::APIClient::UploadIO.new(params[:file].tempfile.path, params[:file].content_type)
-	  	response = $client.execute(
-	    	:api_method => @drive.files.insert,
-	    	:body_object => file,
-	    	:media => media,
-	    	:parameters => {
-	      		'uploadType' => 'multipart',
-	      		'alt' => 'json' })
+	  	response = google.execute_cloud_insert(media, file)
 
 	  	if params[:circle_id].present?
 		  	TeamFile.create(circle_id: params[:circle_id], file_id: response.data.id)
@@ -51,62 +51,56 @@ class FilesController < ApplicationController
 		    	team_members.each do |team_member|
 		    		user = User.find_by(google_id: team_member.google_id)
 		    		if user
-		    			new_permission = @drive.permissions.insert.request_schema.new({
-						    'value' => user.email,
-						    'type' => "user",
-						    'role' => "reader"
-						})
-
-						result = $client.execute(:api_method => @drive.permissions.insert,
-											    :body_object => new_permission,
-											    :parameters => { 'fileId' => response.data.id, 'emailMessage' => 'Shared via monea.build' })
+		    			google.insert_new_files_permission(user, response.data.id)
 		    		end
 		    	end
 		    end
 		    unless current_user.id == @circle.user_id
 		    	@circle_owner = User.find(@circle.user_id)
-		    	new_permission = @drive.permissions.insert.request_schema.new({
-						    'value' => @circle_owner.email,
-						    'type' => "user",
-						    'role' => "reader"
-						})
-				result = $client.execute(:api_method => @drive.permissions.insert,
-											    :body_object => new_permission,
-											    :parameters => { 'fileId' => response.data.id })
+		    	google.insert_new_permission(@circle_owner, response.data.id)
 		    end
-		end
-
-	    # render json: response.data.to_json
-	    if params[:circle_id].present?
-	    	redirect_to circle_path(params[:circle_id])
-	    else
+		    redirect_to circle_path(params[:circle_id])
+		else
 	    	redirect_to root_path
 	    end
 	end
 
 	def insert_new
-	  # Insert a template file
+	  #JS only not import only SS or Doc
+	  google = GoogleService.new($client, @drive)
+
 	  file = @drive.files.insert.request_schema.new({
 	    'title' => params[:title],
 	    'mimeType' => params[:mimeType]
 	  })
 	  media = ""
 	  if params[:mimeType] == 'application/vnd.google-apps.spreadsheet'
-	  	media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/monea-build.csv", 'text/csv')
+	  	media = google.load_drive_media("#{Rails.root}/app/files/monea-build.csv", 'text/csv')
 	  else
-	  	media = Google::APIClient::UploadIO.new("#{Rails.root}/app/files/monea-build.txt", 'text/plain')
+	  	media = google.load_drive_media("#{Rails.root}/app/files/monea-build.txt", 'text/plain')
 	  end
-	  result = $client.execute(
-	    :api_method => @drive.files.insert,
-	    :body_object => file,
-	    :media => media,
-	    :parameters => {
-	      'uploadType' => 'multipart',
-	      'alt' => 'json',
-	      'convert' => true })
 
+	  response = google.execute_cloud_insert(media, file)
+
+	  if params[:circle_id].present?
+		  	TeamFile.create(circle_id: params[:circle_id], file_id: response.data.id)
+	  		@circle = Circle.find(params[:circle_id])
+		  	team_members = @circle.team_members
+		    if team_members.present?
+		    	team_members.each do |team_member|
+		    		user = User.find_by(google_id: team_member.google_id)
+		    		if user
+		    			google.insert_new_files_permission(user, response.data.id)
+		    		end
+		    	end
+		    end
+		    unless current_user.id == @circle.user_id
+		    	@circle_owner = User.find(@circle.user_id)
+		    	google.insert_new_permission(@circle_owner, response.data.id)
+		    end
+	  end
       respond_to do |format|
-	      format.js { @file = result.data }
+	      format.js { @file = response.data }
 	   end
 	end
 

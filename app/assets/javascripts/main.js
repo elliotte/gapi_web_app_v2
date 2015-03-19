@@ -62,15 +62,12 @@ $(document).ready(function () {
 		$('#modal-window-view-teamfiles').modal('show')
 	})
 
-
-
 	// $("#create_tasklist").click(function() {
 	// 	$("#modal-window-create-tasklist").modal("show");
 	// });
-	// $("#add_team_member").click(function() {
-	// 	$("#modal-window-add-circle-member").modal("show");
-
-	// });
+	$(".add-team-member").click(function() {
+		$("#modal-window-add-circle-member").modal("show");
+	});
 	$("#create_team_message").click(function() {
 		$("#modal-window-circle-add-message").modal("show");
 	});
@@ -78,9 +75,9 @@ $(document).ready(function () {
 	$("#create-team-wallpin").click(function() {
 		$("#modal-window-circle-add-wallpin").modal("show");
 	});
-	// $("#create_team_file").click(function() {
-	// 	$("#modal-window-create-circle-document").modal("show");
-	// });
+	$(".create-team-file").click(function() {
+		$("#modal-window-create-circle-document").modal("show");
+	});
 	$(".destroy-item").click(function() {
 		$("#modal-window-destroy-item").modal("show");
 		$('#circle_item_id').val($(this).data('id'));
@@ -124,15 +121,15 @@ $(document).ready(function () {
 	// });
 
 	// // two seaerch modals and forms..
-	// $("#search_files").click(function() {
-	// 	$("#modal-window-quick-search-files").modal("show");
-	// 	$("#search_files_box").tokenInput("/files/search_files.json", {
- //      		theme: "facebook",
- //      		crossDomain: false,
- //      		hintText: "Enter search text"
- //    	 });
- //    	$(".token-input-dropdown-facebook").css("z-index","9999")
-	// });
+	$("#search_files").click(function() {
+		$("#modal-window-quick-search-files").modal("show");
+		$("#search_files_box").tokenInput("/files/search_files.json", {
+      		theme: "facebook",
+      		crossDomain: false,
+      		hintText: "Enter search text"
+    	 });
+    	$(".token-input-dropdown-facebook").css("z-index","9999")
+	});
 
 	// $('#quick_create_button_close').click(function(){
 	// 	$('#quick-events-modal-body').empty();

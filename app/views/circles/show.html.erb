@@ -18,8 +18,8 @@
       <h1 class="about-hero-title"><%= @circle.display_name %> teamPage</h1>
       <div id="news-flash-container" class="news-splash">
       	<a style="margin-left:65%;">Owner: <%= User.find(@circle.user_id).email %></a>
-      	<a data-remote="true" href="<%= destroy_show_circle_path(@circle.id) %>">D</a>
-		<a data-remote="true" href="<%= edit_circle_path(@circle.id) %>">U</a>
+      	<a data-remote="true" href="<%= destroy_show_circle_path(@circle.id) %>"><img class="contact-icon action-button" style="display: inline-block;" src="<%= asset_path('trash-white.png') %>" alt="asset-error"></a>
+		    <a data-remote="true" href="<%= edit_circle_path(@circle.id) %>"><img class="contact-icon action-button" style="display: inline-block;" src="<%= asset_path('edit icon.png') %>" alt="asset-error"></a>
       </div>
     </div>
     <!-- profile box and actionBoard LANDING/SIGIN partial -->
@@ -27,7 +27,7 @@
 
     <!-- START OF MESSAGES AND PINS -->
     <!-- pending messages left box -->
-    <div class="about-div title">
+    <div data-ix="show-on-scroll" class="about-div title">
       <h1 class="h1-about">
         <a id="create_team_message" class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('mailB icon.png') %>" alt="asset-error">
         </a>
@@ -37,7 +37,7 @@
 
     <% icon_names = ['passion.svg', 'communication.svg', 'diligence.svg', 'innovation.svg', 'reliability.svg' ] %>
     <!-- messages display slider right box -->
-    <div class="about-div slider">
+    <div data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="team-messages-container" class="w-slider-mask">
         	<% @messages.each do |m| %>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <!-- completed tasks left box -->
-    <div class="about-div slider">
+    <div data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="team-pins-container" class="w-slider-mask">
           <% @wallpins.each do |wp| %>
@@ -86,7 +86,7 @@
       </div>
     </div>
     <!-- completed tasks right box -->
-    <div class="about-div title">
+    <div data-ix="show-on-scroll" class="about-div title">
       <h1 class="h1-about">
       	<a id="create-team-wallpin" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
         </a>
@@ -95,7 +95,9 @@
     </div>
     <!-- START of TEAM FILES -->
     <!-- team files left box -->
-    <div id="files-anchor" class="about-div title">
+   
+
+    <div data-ix="show-on-scroll" id="files-anchor" class="about-div title">
       <h1 class="h1-about">
         <a class="w-inline-block action-button new_doc" href="#">
           <img class="grid-button" src="<%= asset_path('newdoc icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
@@ -107,15 +109,35 @@
           <img class="grid-button" src="<%= asset_path('newss icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
         </a>
         <br>
-        teamFiles
+        team Files
       </h1>
     </div>
     <!-- team files right box -->
-    <div class="about-div employees">
+    <div data-ix="show-on-scroll" class="about-div employees">
       <div id="team-latest-files-container" class="w-clearfix employees-container">
         <!-- files appended here -->
       </div>
     </div>
+
+    <!-- START of TEAM MEMBERS -->
+    <!-- team members left box -->
+    <div class="about-div employees">
+      <div id="team-members-container" class="w-clearfix employees-container">
+        <!-- files appended here -->
+      </div>
+    </div>
+    <!-- team files right box -->
+    <div id="" class="about-div title">
+      <h1 class="h1-about">
+        
+        <a class="w-inline-block action-button add-team-member" href="#">
+          <img class="grid-button" src="<%= asset_path('t-add icon.png') %>" alt="5490da4fafc8621f3f4641f3_grid%20button.svg">
+        </a>
+        <br>
+        team Members
+      </h1>
+    </div>
+    
 
 </div> <!-- end of CLEARFIX CONTENT DIV PART ONE -->
 

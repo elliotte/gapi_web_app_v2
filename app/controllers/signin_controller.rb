@@ -119,10 +119,7 @@ class SigninController < ApplicationController
 
 private
 
-  def check_if_new_user
-     
 
-  end
 
 end
 

@@ -1,24 +1,17 @@
-<div class="modal-dialog modal-medium-width">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="pink-header">Share with Team</h3>
+
+<div id="js-team-share-result-body">
+  <h3 class="pink-header">Share with Team</h3>
+  <%= form_tag(share_files_files_path, :id => "share_team_document_form", class: "contactForm", :method => "post", remote: true) do %>
+    <%= hidden_field_tag "file_id", file_id %>
+    <div class="form-group">
+      <label for="query">Search your teams:</label>
+        <%= text_field_tag "teams", "", class: "white-pink", id: "search_team", placeholder: "Search Team" %>
     </div>
-    <div class="modal-body" id="js-team-share-result-body">
-      <%= form_tag(share_files_files_path, :id => "share_team_document_form", class: "contactForm", :method => "post", remote: true) do %>
-        <%= hidden_field_tag "file_id", file_id %>
-        <div class="form-group">
-          <label for="query">Search your teams:</label>
-            <%= text_field_tag "teams", "", class: "white-pink", id: "search_team", placeholder: "Search Team" %>
-        </div>
-        <%= submit_tag "Share", class: "btn btn-main-o" %>
-      <% end %>
-      <p style="color: #e10707;">This does not create a copy of the file.  To do this use TeamFile.new from inside the team page, or copy this one and share it.</p>
-    </div>
-    <div class="modal-footer">
-      <p>Press ESC to exit</p>
-    </div>
-  </div>
+    <%= submit_tag "Share", class: "btn btn-main-o" %>
+  <% end %>
+  <p style="color: #e10707;">This does not create a copy of the file.  To do this use TeamFile.new from inside the team page, or copy this one and share it.</p>
 </div>
+
 <script type="text/javascript">
   jQuery(document).ready(function () {
     $("#search_team").tokenInput("/circles/circles_names.json", {

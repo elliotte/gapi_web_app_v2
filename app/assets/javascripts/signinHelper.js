@@ -257,7 +257,7 @@ var helper = (function() {
         circle = circles[c];
          $('#landing-teams-append').append(
           '<p>' +
-              '<a class="grid-button action-button" href="/circles/' + circle.id + '">' + circle.name + '</a>' +
+              '<a class="grid-button action-button" target="_blank" href="/circles/' + circle.id + '">' + circle.name + '</a>' +
           '</p>'
          );
       }
@@ -408,7 +408,8 @@ var helper = (function() {
       $('#not-auth-ops').hide();
       Webflow.require("ix").init([
           {"slug":"open-contact","name":"open contact","value":{"style":{},"triggers":[{"type":"click","selector":".contact","stepsA":[{"display":"block","height":"0px"},{"height":"auto","transition":"height 500ms ease 0ms"}],"stepsB":[{"height":"0px","transition":"height 500ms ease 0ms"},{"display":"none"}]}]}},
-          {"slug":"logo-hover","name":"logo hover","value":{"style":{},"triggers":[{"type":"hover","selector":".logo-pink","stepsA":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}]},{"type":"hover","selector":".logo-black","stepsA":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}]}]}}
+          {"slug":"logo-hover","name":"logo hover","value":{"style":{},"triggers":[{"type":"hover","selector":".logo-pink","stepsA":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}]},{"type":"hover","selector":".logo-black","stepsA":[{"opacity":0,"transition":"opacity 500ms ease 0ms"}],"stepsB":[{"opacity":1,"transition":"opacity 500ms ease 0ms"}]}]}},
+          {"slug":"show-on-scroll","name":"show on scroll","value":{"style":{"opacity":0,"x":"0px","y":"100px"},"triggers":[{"type":"scroll","stepsA":[{"opacity":1,"wait":0,"transition":"transform 500ms ease-in-out-sine 0ms, opacity 500ms ease-in-out-sine 0ms","x":"0px","y":"0px"}],"stepsB":[{"opacity":0,"transition":"transform 1000ms ease-in-out-sine 0ms, opacity 1000ms ease-in-out-sine 0ms","x":"0px","y":"100px"}]}]}}
       ])
       Webflow.require("slider").redraw();
       $('body').removeClass('overflow-hidden');

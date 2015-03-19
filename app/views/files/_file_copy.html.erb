@@ -1,21 +1,8 @@
-<div class="modal-dialog modal-medium-width">
-  <div class="modal-content">
-    <div class="modal-body">
-      <h3 class="pink-header">Create a Copy</h3>
-      <%= form_tag(copy_file_path(file.id), :id => "copy_file", :method => "post") do %>
-        <div class="form-group">
-          Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter the title for the copy" %>
-        </div>
-        <p><button class="btn" id="copy_button">OK</button></p>
-      <% end %>
-    </div>
-    <div class="modal-footer">
-      <p>Press ESC to exit</p>
-    </div>
+<h3 class="pink-header">Create a Copy</h3>
+<%= form_tag(copy_file_path(file.id), :id => "copy_file", :method => "post") do %>
+  <div class="form-group">
+    Title: <%= text_field_tag "title", "", class: "white-pink", placeholder: "Enter the title for the copy" %>
   </div>
-</div>
-<script type="text/javascript">
-  $('#copy_button').click(function(){
-    $('#copy_file').submit();
-  });
-</script>
+  <p><button class="btn" id="copy_button">OK</button></p>
+<% end %>
+

@@ -1,3 +1,6 @@
-$('.files-display-modal').fadeOut();
-$("#modal-window").html("<%= escape_javascript(render partial: 'team_share', locals: { file_id: @file_id }) %>");
-$("#modal-window").modal("show");
+$('.files-display-modal').modal('hide');
+
+$("#empty-modal-body-container").empty();
+$("#empty-modal-body-container").html("<%= escape_javascript(render partial: 'team_share', locals: { file_id: @file_id }) %>");
+$("#modal-window-empty").modal("show");
+

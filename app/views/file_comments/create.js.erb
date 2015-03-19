@@ -1,0 +1,3 @@
+$('#comment-add-container-modal').empty();
+var html = '<p>' + '<%= @response %>' + '</p>'
+$('#comment-add-container-modal').append(html).css({'opacity':0}).animate({'opacity':1});

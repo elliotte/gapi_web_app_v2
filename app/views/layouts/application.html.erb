@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html data-wf-site="54fd88fc288772501f7fe823" data-wf-page="54fd88fc288772501f7fe832">
-<head>
-	<title>monea.build</title>
+  <head>
+  	<title>monea.build</title>
 
-  <meta charset="utf-8">
-  <meta name="description" content="Contemplate - simple and elegant template">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
+    <meta charset="utf-8">
+    <meta name="description" content="Contemplate - simple and elegant template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Webflow">
 
-  <link rel="shortcut icon" type="image/x-icon" href="<%= asset_path('favicon.png')%>">
-  <link rel="apple-touch-icon" href="<%= asset_path('webclip.png') %>">
+    <link rel="shortcut icon" type="image/x-icon" href="<%= asset_path('favicon.png')%>">
+    <link rel="apple-touch-icon" href="<%= asset_path('webclip.png') %>">
 
-  <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' %>
-  <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js' %>
-  <%= javascript_include_tag 'https://plus.google.com/js/client:plusone.js' %>
-  <!-- webflow in application js -->
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "webfonts" %>
-  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
-  <%= javascript_include_tag "foodFeeds" %>
-  <%= javascript_include_tag "signin" %>
-  <%= javascript_include_tag "signinHelper" %>
-  <%= stylesheet_link_tag "application" %>
-  <%= csrf_meta_tags %>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' %>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js' %>
+    <%= javascript_include_tag 'https://plus.google.com/js/client:plusone.js' %>
+    <!-- webflow in application js -->
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "webfonts" %>
+    <%= javascript_include_tag 'https://www.google.com/jsapi' %>
+    <%= javascript_include_tag "foodFeeds" %>
+    <%= javascript_include_tag "signin" %>
+    <%= javascript_include_tag "signinHelper" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= csrf_meta_tags %>
 
-</head>
+  </head>
 
-<body class="overflow-hidden">
-  
-  <%= yield %>
-<div id="news-feeds-append-container" style="display:none;">
-        
-</div>
-</body>
+  <body class="overflow-hidden">
+    
+      <%= yield %>
+      <%= render 'layouts/applicationModals'  %>
+      <div id="news-feeds-append-container" style="display:none;">
+      </div>
+
+  </body>
 </html>
