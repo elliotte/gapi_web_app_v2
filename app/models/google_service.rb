@@ -5,6 +5,11 @@ class GoogleService
 		$api = api
 	end
 
+	def load_drive_media file_path, content_type
+		media = Google::APIClient::UploadIO.new(file_path, content_type)
+		return media
+	end
+
 	def execute_cloud_insert media, file
 		response = $client.execute(
 	    	:api_method => $api.files.insert,
@@ -30,11 +35,5 @@ class GoogleService
 
 		return result
 	end
-
-	def load_drive_media file_path, content_type
-		media = Google::APIClient::UploadIO.new(file_path, content_type)
-		return media
-	end
-
 
 end

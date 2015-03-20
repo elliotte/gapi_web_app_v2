@@ -1,9 +1,5 @@
-<div class="modal-dialog modal-medium-width">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="pink-header">Task Details</h3>
-    </div>
-    <div id="js-update-task-modal-body" class="modal-body">
+    <h3 class="pink-header">Task Details</h3>
+    <div id="js-update-task-modal-body">
       <%= form_tag(task_list_task_path(task_list_id, task.id), :id => "update_task", :method => "put", remote: true) do %>
         <div class="form-group">
           Title: <%= text_field_tag "task[title]", task.title, class: "white-pink", placeholder: "Title" %>
@@ -20,8 +16,4 @@
         <%= submit_tag "Update", class: 'btn' %>
       <% end %>
     </div>
-    <div class="modal-footer">
-      <p>Press ESC to exit</p>
-    </div>
-  </div>
-</div>
+    

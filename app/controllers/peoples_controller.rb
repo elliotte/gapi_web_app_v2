@@ -45,34 +45,6 @@ class PeoplesController < ApplicationController
 	    render json: JSON.parse(response).to_json
 	end
 
-	def circle_peoples
-		@team_members = Circle.find(params[:id]).team_members
-		render json: @team_members
-	end
-
-	def add_friend_to_team
-		team = Circle.find(params[:circle_id])
-		person_g_id = params[:person_google_id]
-		user = User.find_by(google_id: person_g_id)
-		teamfiles = team.team_files
-		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
-		files_shared = false
-		
-		if team_member.present?
-			team_member
-		else
-			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
-            if teamfiles.present?
-            	Circle.share_team_files($client, user, teamfiles)
-            end
-        end
-	    respond_to do |format|
-	      	format.js { @team_member = team_member }
-	    end
-
-	end
-
-
 	def monea_email_search
 		# Search all emails in monea
 		response = User.find(:all, :conditions => ["email LIKE ?", "#{params[:query]}%"])
@@ -80,7 +52,7 @@ class PeoplesController < ApplicationController
 	end
 
 	def add_people
-		## used for add user by email inside tam page
+		## used for add user by email inside tam page, move to circle?
 		team = Circle.find(params[:circle_id])
 		user = User.find_by(id: params[:user_id])
 		person_g_id = user.google_id
@@ -102,17 +74,6 @@ class PeoplesController < ApplicationController
 	    end
 
 	end
-
-	def remove_team_member
-		@member = TeamMember.find_by(circle_id: params[:circle_id], google_id: params[:google_id])
-		if @member.destroy 
-			@message = "Success".to_json
-			render json: @message
-		else
-			@message = "Failure".to_json
-			render json: @message
-		end
-	end	
 
 	private
 

@@ -186,13 +186,12 @@
 </div>
 
 <!-- delete pin or message modal -->
-
 <div class="modal fade" id="modal-window-destroy-item" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-small-width">
 		<div class="modal-content">
 		    <div id="js-item-delete-result-body" class="modal-body">
 		        <h3 class="pink-header">Are you sure?</h3>
-		        <%= form_tag(delete_item_circle_path, :method => "post", remote: true) do %>
+		        <%= form_tag(delete_item_circle_path, :method => "delete", remote: true) do %>
 		        <br>
 		        <%= hidden_field_tag "circle[item_type]", "" %>
 		        <%= hidden_field_tag "circle[item_id]", "" %>

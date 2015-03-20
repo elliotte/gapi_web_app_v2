@@ -1,6 +1,6 @@
 class CirclesController < ApplicationController
 
-	before_action :get_circle, except: [:index, :create, :circles_names]
+	before_action :get_circle, except: [:index, :create, :circles_names, :add_friend_to_team]
 	before_filter :authorize_user, only: :show
 
 	def index
@@ -10,25 +10,55 @@ class CirclesController < ApplicationController
 		  	format.json { render json: @circles }
 		end
 	end
-
+	#retrieve users circle names
 	def circles_names
-		user = User.find_by(google_id: session[:user_google_id])
-	    circle_names = []
+		gSession_id = session[:user_google_id]
+		user = User.find_by(google_id: gSession_id)
 	    if user.present?
-	    	#fetch teams user owns
-		    circles = user.circles.where("display_name ilike ?", "%#{params[:q]}%").order('display_name ASC')
-		    circles.each do |circle|
-		      circle_names.push({ id: circle.id, name: circle.display_name})
-		    end
-			#fetch teams user is a member of
-		    memberCircles = TeamMember.find(:all, :conditions => ["google_id LIKE ?", "%#{session[:user_google_id]}%"])
-			circle_ids = []
-			memberCircles.each do |c|
-				name = Circle.find(c.circle_id).display_name
-				circle_names.push({id: c.circle_id, name: name})
-			end
+	    	circle_names = user.load_my_team_names(params[:q], gSession_id)
 		end
 	    render json: circle_names.to_json
+  	end
+  	# retrieves a circles teamFiles
+  	def circle_files
+  		@team_files = @circle.team_files
+		render json: @team_files
+  	end
+    ##retrieves for landing, AJAX fetch
+  	def circle_peoples
+  		@team_members = @circle.team_members
+		render json: @team_members
+  	end
+    # post request for adding G+ friends to a moneateam
+  	def add_friend_to_team
+  		team = Circle.find(params[:circle_id])
+		person_g_id = params[:person_google_id]
+		user = User.find_by(google_id: person_g_id)
+		teamfiles = team.team_files
+		team_member = TeamMember.find_by(circle_id: team.id, google_id: person_g_id) 
+		#files_shared = false
+		if team_member.present?
+			team_member
+		else
+			team_member = TeamMember.create(circle_id: team.id, google_id: person_g_id)
+            if teamfiles.present?
+            	Circle.share_team_files($client, user, teamfiles)
+            end
+        end
+	    respond_to do |format|
+	      	format.js { @team_member = team_member }
+	    end
+  	end
+
+  	def remove_team_member
+  		@member = TeamMember.find_by(circle_id: params[:id], google_id: params[:google_id])
+		if @member.destroy 
+			@message = "Success".to_json
+			render json: @message
+		else
+			@message = "Failure".to_json
+			render json: @message
+		end
   	end
 
 	def new
@@ -100,7 +130,6 @@ class CirclesController < ApplicationController
 
 	def add_message
 		@message = @circle.messages.new(text: params[:circle][:message], added_by: session[:user_email])
-		#{"utf8"=>"✓", "circle"=>{"message"=>""}, "commit"=>"Add Message", "action"=>"add_message", "controller"=>"circles", "id"=>"5"}
 		if @message.save
 			respond_to do |format|
 	    		format.js { @message }
@@ -133,8 +162,14 @@ class CirclesController < ApplicationController
 		when params[:circle][:item_type] == "message" 
 			@item = @circle.messages.find_by(id: params[:circle][:item_id])
 			@type = "message"
+		when params[:circle][:item_type] == "team-file" 
+			@item = @circle.team_files.find_by(file_id: params[:circle][:item_id])
+			@type = "team-file"
 		end
 		@div_id = @type + '-' + @item.id.to_s
+		if params[:circle][:item_type] == "team-file"
+			@div_id = params[:circle][:item_id]
+		end
 		if @item.destroy
 			respond_to do |format|
 	    		format.js { @div_id }

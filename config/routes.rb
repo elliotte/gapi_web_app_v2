@@ -37,12 +37,16 @@ GooglePlay::Application.routes.draw do
   resources :circles do
     member do
       get :destroy_show, path: 'destroy'
+      get :circle_files
       post :add_message
       post :add_wallpin
-      post :delete_item
+      delete :delete_item
+      get :circle_peoples
+      post :remove_team_member
     end
     collection do
       get :circles_names
+      post :add_friend_to_team
     end
   end
 
@@ -72,7 +76,7 @@ GooglePlay::Application.routes.draw do
     collection do
       post :insert_new
       post :share_files
-      get :circle_files
+     
       get :search_files
     end
   end
@@ -82,10 +86,7 @@ GooglePlay::Application.routes.draw do
       get :search
       get :monea_email_search
       get :list_by_activity
-      get :circle_peoples
       post :add_people
-      post :add_friend_to_team
-      post :remove_team_member
     end
   end
 

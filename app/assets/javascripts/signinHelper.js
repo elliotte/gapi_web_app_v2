@@ -373,7 +373,7 @@ var helper = (function() {
         taskListsCount++;
         taskList = taskLists.items[taskListIndex];
         $('#task_list_id').val(taskList.id);
-        $('#new-to-do-button-container').append('<br>' + '<a id="create-task-list-to-do" class="btn no-text-decoration" data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">.new</a>');
+        $('#new-to-do-button-container').append('<br>' + '<a id="create-task-list-to-do" class="btn no-text-decoration" data-remote=true href="/task_lists/' + taskList.id + '/tasks/new">.new</a>');
         helper.tasks(taskList.id);
       }
       if(taskListsCount == 0){

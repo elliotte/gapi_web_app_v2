@@ -61,7 +61,6 @@ $(document).ready(function () {
 	$('view-all-team-files').click(function() {
 		$('#modal-window-view-teamfiles').modal('show')
 	})
-
 	// $("#create_tasklist").click(function() {
 	// 	$("#modal-window-create-tasklist").modal("show");
 	// });
@@ -78,6 +77,7 @@ $(document).ready(function () {
 	$(".create-team-file").click(function() {
 		$("#modal-window-create-circle-document").modal("show");
 	});
+
 	$(".destroy-item").click(function() {
 		$("#modal-window-destroy-item").modal("show");
 		$('#circle_item_id').val($(this).data('id'));

@@ -17,12 +17,6 @@ class FilesController < ApplicationController
 	    render json: @response.data.to_json
 	end
 
-	#why is this here??  from landing?
-	def circle_files
-		@team_files = Circle.find(params[:id]).team_files
-		render json: @team_files
-	end
-
 	def create
 		# http only and only import file user and team
 		#need to clean up without impacting main file creates and teamFile.new
@@ -57,7 +51,7 @@ class FilesController < ApplicationController
 		    end
 		    unless current_user.id == @circle.user_id
 		    	@circle_owner = User.find(@circle.user_id)
-		    	google.insert_new_permission(@circle_owner, response.data.id)
+		    	google.insert_new_files_permission(@circle_owner, response.data.id)
 		    end
 		    redirect_to circle_path(params[:circle_id])
 		else
@@ -96,7 +90,7 @@ class FilesController < ApplicationController
 		    end
 		    unless current_user.id == @circle.user_id
 		    	@circle_owner = User.find(@circle.user_id)
-		    	google.insert_new_permission(@circle_owner, response.data.id)
+		    	google.insert_new_files_permission(@circle_owner, response.data.id)
 		    end
 	  end
       respond_to do |format|
@@ -175,7 +169,7 @@ class FilesController < ApplicationController
   	end
 
   	def share_files
-  		
+  		##used for share from landing fileClick choose team, and search inside teamPage and share file
   		if params[:teams].present?
 	        teams = params[:teams].split(',')
 	        teams.each do |team|
@@ -239,7 +233,6 @@ class FilesController < ApplicationController
 		# Restores a file from the trash.
 		response = $client.execute(:api_method => @drive.files.untrash,
     							:parameters => { 'fileId' => params[:id] })
-
 	    render json: response.data.to_json
 	end
 
@@ -247,7 +240,7 @@ class FilesController < ApplicationController
 		response = $client.execute(:api_method => @drive.files.list, :parameters => {"q" => "title contains '#{params[:q]}'" })
 		files = []
 		response.data.items.each do |file|
-			files.push({ id: file.id, name: file.title})
+			files.push({ id: file.id, name: file.title}) unless file.labels.trashed
 		end
 		render json: files.to_json
 	end

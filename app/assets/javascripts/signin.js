@@ -24,7 +24,7 @@ function onSignInCallback(authResult) {
                 $('#modal-window-signin-error').modal('show');
                 $('#signin-in-error-modal-body').append( 
                   '<p>' + 'User Signed Out :: Reload Page if you want to sign in' + '</p>' + 
-                  '<a class="btn btn-main-o" href="/signin/refresh_connection" ><i class="fa fa-exchange"></i>' + 'Refresh' + '</a>'
+                  '<a class="btn no-text-decoration" href="/signin/refresh_connection" >' + 'Refresh' + '</a>'
                 );
                 // catch for legacy signin..
                 if (helper.authResult) {

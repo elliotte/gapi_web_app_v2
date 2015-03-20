@@ -26,18 +26,25 @@ var uiHelper = (function() {
           }
 
        };
-
+       deleteButton = ""
+       var route = window.location.href
+       if (route.indexOf('circle') > -1) {
+         deleteButton = '<a href="javscript:void(0)" onclick="teamHelper.removeCircleFile(this)" data-id="'+item.id+'">' + 
+                           '<img class="contact-icon action-button destroy-team-file" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">'
+       } else {
+         deleteButton =  ' <a data-remote=true href="/files/' + item.id + '/destroy">' + 
+                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>'
+       }
        var html =   '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ imageLink +');">' +
                         '<div class="employee-bio">' +
                             '<a href="'+item.alternateLink+'" class="employee-name" target="_blank">' + item.title + '</a>' +
                             '<p class="bio-text file-card">' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">' + 
-                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">' +
+                             deleteButton +
+                             ' <a data-remote=true href="/files/' + item.id + '/copy">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
+                             ' <a data-remote=true href="/files/' + item.id + '/comments/show">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">' +
+                             ' <a data-remote=true href="/files/' + item.id + '/share">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/t-add icon.png" alt="asset-error">' + '</a>' +
                             '</p>' + 
                             //ID tagged for appending exportLinks
@@ -208,12 +215,13 @@ var uiHelper = (function() {
                             '<h3>' + msg.text + '</h3>'+
                             '<h3 style="font-size:15px;">' + msg.added_by + '</h3>'+
                             '<h3>'+
-                                  '<a href="#" data-id="'+msg.id+'" data-item="message" class="destroy-item">' + 
+                                  '<a href="javascript:void(0)" data-id="'+msg.id+'" data-item="message" class="destroy-item">' + 
                                     '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + 
                                   '</a>' +
                             '</h3>'+
                       '</div>'+
-                '</div>'
+                '</div>';
+      
       return html
     },
 
@@ -245,6 +253,21 @@ var uiHelper = (function() {
                         '</div>' +
                     '</div>'
       return html
+    },
+    // for teampage search monea email for teamAdd
+    userSearchEmailHtml: function(person) {
+        var html = '<div style="margin: 0 0 5px 0;">'+
+                        '<div style="margin-top: 0px;padding: 5px 0px 0;">'+
+                          '<h3 style="padding-bottom: 5px;">'+
+                            '<div class="form-group" style="margin-bottom: 0px;">'+
+                              '<input name="user_id" type="checkbox" value="'+person.id+'" style="margin-right: 7px;">'+
+                              '<input value="'+person.google_id+'" style="display:none;">'+
+                              '<p style="margin-right: 7px;">'+person.email+'</p>'+
+                            '</div'+
+                          '</h3>'+
+                        '</div>'+
+                      '</div>'
+        return html
     },
 
 
