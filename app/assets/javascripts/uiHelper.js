@@ -80,6 +80,16 @@ var uiHelper = (function() {
 
        };
 
+       deleteButton = ""
+       var route = window.location.href
+       if (route.indexOf('circle') > -1) {
+         deleteButton = '<a href="javscript:void(0)" onclick="teamHelper.removeCircleFile(this)" data-id="'+item.id+'">' + 
+                           '<img class="contact-icon action-button destroy-team-file" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">'
+       } else {
+         deleteButton =  ' <a data-remote=true href="/files/' + item.id + '/destroy">' + 
+                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>'
+       }
+
       var html =   '<div id=' + item.id + ' class="about-employee" style="background-image: url('+ imageLink +'); height:250px;">' +
                         '<div class="table-cell-wrapper">' + 
                             '<div class="cell-settings">' +
@@ -89,13 +99,12 @@ var uiHelper = (function() {
                             '</div>' +
                         '</div>' +
                         '<p class="file-card files-modal">' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/destroy">' + 
-                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash-white.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/copy">' +
+                             deleteButton +
+                             ' <a data-remote=true href="/files/' + item.id + '/copy">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/copy icon.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/comments/show">' +
+                             ' <a data-remote=true href="/files/' + item.id + '/comments/show">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>' +
-                             ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/files/' + item.id + '/share">' +
+                             ' <a data-remote=true href="/files/' + item.id + '/share">' +
                                 '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/t-add icon.png" alt="asset-error">' + '</a>' +
                         '</p>' + 
                     '</div>'
@@ -136,7 +145,7 @@ var uiHelper = (function() {
         var completeButton = ""  
         var completeDate = ""
           if ( !task.completed ) {
-            completeButton = ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/comptask icon.png" alt="asset-error">' + '</a>'
+            completeButton = ' <a data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/complete">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/comptask icon.png" alt="asset-error">' + '</a>'
           } else {
             completeDate = ' Completed: ' + task.completed.substring(0,10)
             style = "background-color:#62DF71;"
@@ -149,8 +158,8 @@ var uiHelper = (function() {
                   '<h3 style="font-size: 15px;">' + NotesIfTrue + '</h3>' +
                   '<h3>'+
                     completeButton +
-                    ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
-                    ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
+                    ' <a data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
+                    ' <a data-remote=true href="/task_lists/' + taskListId + '/tasks/' + task.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
                   '</h3>' +
                   '<h3 style="font-size: 15px;">' + completeDate + '</h3>' +
               '</div>' +
@@ -175,6 +184,13 @@ var uiHelper = (function() {
           attendees_email_list.push("No attendees");
         }//END attendees prepare
         
+        var hangoutLink = ""
+        // if (event.hangoutLink) {
+        //   hangoutLink = ' <a href="' + event.hangoutLink + '" target="_blank">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/white-comment.png" alt="asset-error">' + '</a>'
+        // } else {
+        //   hangoutLink;
+        // }
+
         eventDate = new Date(event.start.dateTime)
 
         var html = '<div id=' + event.id + ' class="w-slide slide-about" style="background-color:#F9FE45;">' +
@@ -184,27 +200,15 @@ var uiHelper = (function() {
                   '<h3 style="color:#d61579;">' + attendees_email_list.join(" and ") + '</h3>' +
                   '<h3 style="color:#d61579;">' + eventDate.toLocaleDateString() + ' ,' + eventDate.toLocaleTimeString() + '</h3>' +
                   '<h3>'+
-                    ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
-                    ' <a data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
+                    ' <a data-remote=true href="/calendars/primary/events/' + event.id + '/destroy">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/trash icon.png" alt="asset-error">' + '</a>' +
+                    ' <a data-remote=true href="/calendars/primary/events/' + event.id + '">' + '<img class="contact-icon action-button" style="display: inline-block;" src="/assets/edit icon.png" alt="asset-error">' + '</a>' +
+                    hangoutLink +
                   '</h3>' +
+
               '</div>' +
         '</div>'
 
         return html
-              // '<div class="feature-box-style2">'+
-              //   '<div class="feature-box-title">'+
-              //     '<i class="fa fa-calendar"></i>'+
-              //   '</div>'+
-              //   '<div class="feature-box-containt" style="height:250px; overflow:scroll;">'+
-              //     '<p>' + attendees_email_list.join(" and ") + '</p>'+
-              //     '<p>' + eventDate.toLocaleDateString() + ' ,' + eventDate.toLocaleTimeString() + '</p>'+
-              //     '<p>'+
-              //       ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"><i></a>'+
-              //       ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
-              //       ' <a class="btn btn-primary" href="' + event.hangoutLink + '" target="_blank">Hangout</a>'+
-              //     '</p>'+
-              //   '</div>'+
-              // '</div>'+
 
     },
 
@@ -269,7 +273,6 @@ var uiHelper = (function() {
                       '</div>'
         return html
     },
-
 
 
   };//END OF RETURN

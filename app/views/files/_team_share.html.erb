@@ -4,12 +4,12 @@
   <%= form_tag(share_files_files_path, :id => "share_team_document_form", class: "contactForm", :method => "post", remote: true) do %>
     <%= hidden_field_tag "file_id", file_id %>
     <div class="form-group">
-      <label for="query">Search your teams:</label>
-        <%= text_field_tag "teams", "", class: "white-pink", id: "search_team", placeholder: "Search Team" %>
+      <p><label for="query">Search your teams:</label>
+        <%= text_field_tag "teams", "", class: "white-pink", id: "search_team", placeholder: "Search Team" %></p>
     </div>
-    <%= submit_tag "Share", class: "btn btn-main-o" %>
+    <p><%= submit_tag "Share", class: "btn" %></p>
   <% end %>
-  <p style="color: #e10707;">This does not create a copy of the file.  To do this use TeamFile.new from inside the team page, or copy this one and share it.</p>
+  <p style="color: #e10707; font-size:10px;">This does not create a copy of the file.  To do this use TeamFile.new from inside the team page, or copy this one and share it.</p>
 </div>
 
 <script type="text/javascript">

@@ -287,9 +287,9 @@ var helper = (function() {
                   '<p>' + attendees_email_list.join(" and ") + '</p>'+
                   '<p>' + eventDate.toLocaleDateString() + ' ,' + eventDate.toLocaleTimeString() + '</p>'+
                   '<p>'+
-                    ' <a class="btn btn-main-o" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"><i></a>'+
-                    ' <a class="btn btn-primary" data-toggle="modal" data-target="#modal-window" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
-                    ' <a class="btn btn-primary" href="' + event.hangoutLink + '" target="_blank">Hangout</a>'+
+                    ' <a class="btn" data-remote=true href="/calendars/primary/events/' + event.id + '/destroy"><i class="fa fa-trash-o"><i></a>'+
+                    ' <a class="btn" data-remote=true href="/calendars/primary/events/' + event.id + '"><i class="fa fa-edit"></i></a>'+
+                    ' <a class="btn" href="' + event.hangoutLink + '" target="_blank">Hangout</a>'+
                   '</p>'+
                 '</div>'+
               '</div>'+

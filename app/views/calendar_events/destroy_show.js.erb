@@ -1,3 +1,3 @@
-$("#modal-window").html("<%= escape_javascript(render partial: 'event_delete', locals: { event: @event }) %>");
-$("#modal-window").modal("show");
-console.log('here')
+$("#empty-modal-body-container").empty();
+$("#empty-modal-body-container").html("<%= escape_javascript(render partial: 'event_delete', locals: { event: @event }) %>");
+$("#modal-window-empty").modal("show");

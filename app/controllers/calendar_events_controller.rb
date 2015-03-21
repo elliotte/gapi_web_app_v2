@@ -108,7 +108,6 @@ class CalendarEventsController < ApplicationController
                                               'text' => params[:event][:text]})
     respond_to do |format|
       format.js { @event = response.data }
-      format.html { redirect_to root_path }
     end
    
   end

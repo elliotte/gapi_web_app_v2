@@ -22,7 +22,7 @@ var teamHelper = (function() {
     renderProfile: function() {
       teamHelper.circleFiles();
       teamHelper.circleMembers();
-      teamHelper.userteams();
+      teamHelper.loadUserTeams();
       teamHelper.setFormCircleIds();
     },
 
@@ -32,7 +32,7 @@ var teamHelper = (function() {
 
     // --------------------------START OF ALL AJAXREQUESTS
 
-    userteams: function() {
+    loadUserTeams: function() {
       //no google_id uses session - call fired after auth and sess set
       $.ajax({
         type: 'GET',
@@ -129,6 +129,8 @@ var teamHelper = (function() {
             file = files[f];
             $.ajax({
               type: 'GET',
+              //need for moreCard append in right order..mmmmm!!
+              async: false,
               url: '/files/'+file.file_id,
               dataType: 'json',
               contentType: 'application/json',
@@ -150,16 +152,20 @@ var teamHelper = (function() {
             });//END OF AJAX
 
       }//END OF FOR LOOP
-      // var moreCard = '<div class="about-employee">' + 
-      //     '<div class="table-cell-wrapper">' + 
-      //       '<a id="view-all-team-files" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
-      //     '</div>' + 
-      //   '</div>'
-      // $('#team-latest-files-container').append(moreCard);
+
+      showModal = function(){
+        $('#modal-window-view-teamfiles').modal('show')
+      }
+      var moreCard = '<div class="about-employee">' + 
+          '<div class="table-cell-wrapper">' + 
+            '<a onclick="showModal()" href="#" class="user-button-landing action-button">'+ 'view.all' + '</a>' +
+          '</div>' + 
+        '</div>'
+      $('#team-latest-files-container').append(moreCard);
       if(circleFilesCount == 0){
         $('#noDriveTeamFiles').show();
       }
-      
+     
     },
 
     // --------------------------END OF ALL AJAXREQUESTS
@@ -204,7 +210,6 @@ var teamHelper = (function() {
           return;
       }
     },
-
 
     // --------------------------END OF ONCLICK LISTENERS AJAX
 

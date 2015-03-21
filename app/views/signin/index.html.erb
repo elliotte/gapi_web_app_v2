@@ -24,8 +24,6 @@
       </div>
     </div>
 
-    
-
     <!-- profile box and actionBoard LANDING/SIGIN partial -->
     <%= render 'landingActionButtons' %>
 
@@ -45,7 +43,7 @@
     <!-- START OF CALENDAR -->
 
     <!-- diary left box -->
-     <div data-ix="show-on-scroll" class="about-div slider">
+     <div id="calendar-anchor" data-ix="show-on-scroll" class="about-div slider">
       <div class="w-slider slider-about" data-animation="slide" data-duration="500" data-infinite="1">
         <div id="diary-container" class="w-slider-mask">
           <!-- append calendar events here -->
@@ -73,7 +71,7 @@
 
     <!-- START OF TASKS -->
     <!-- pending tasks left box -->
-    <div class="about-div title">
+    <div id="tasks-anchor" class="about-div title">
       <h1 class="h1-about">
         <a class="add-to-do" href="javascript:void(0)"><img class="contact-icon action-button" src="<%= asset_path('ntask icon.png') %>" alt="asset-error">
         </a>

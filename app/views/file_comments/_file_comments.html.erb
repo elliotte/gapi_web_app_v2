@@ -1,12 +1,13 @@
 <div>
-  <h3 class="pink-header">Comments</h3>
-  <% if comments.present? %>
-    <p>Total Comments: <%= comments.size %></p>
-  <% end %>
+    <h3 class="pink-header">Comments
+        <% if comments.present? %>
+          (<%= comments.size %>)
+        <% end %>
+    </h3>
     <div class="form-group">
       <% if comments.present? %>
         <% comments.each do |comment| %>
-          Comment: <%= text_field_tag "comment", comment.content, class: "white-pink", placeholder: "Title", readonly: "readonly" %>
+          <h3 class="pink-header" style="font-size:14px;"><%= comment.content %> .  <span style="font-size:8px;color:grey;">Authored by:<%= comment.author.displayName %></span></h3>
           <% if comment.replies.length > 0 %>
             <% comment.replies.each do |reply| %>
               <div style="padding-left: 10px;">
@@ -22,7 +23,7 @@
           <% end %>
         <% end %>
       <% else %>
-        <div class="modal-text-center">No Comments!!!!</div>
+        <h3 class="pink-header">No File comments, post one below.</h3>
       <% end %>
     </div>
 </div>

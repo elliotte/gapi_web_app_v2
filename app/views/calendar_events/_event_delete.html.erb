@@ -1,16 +1,9 @@
-<div class="modal-dialog modal-small-width">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div id="js-event-delete-result-body">
-        <h3 class="pink-header">Are you sure?</h3>
-      </div>
-    </div>
-    <div class="modal-body">
-       <%= form_tag(calendar_event_path("primary", event.id), :id => "delete_event", :method => "delete", remote: true) do %>
-        <br>
-        <%= submit_tag "Yes", class: 'btn' %>
-        <% end %>
-        <p>Press ESC to exit delete</p>
-    </div>
-  </div>
+
+<div id="js-event-delete-result-body">
+  <h3 class="pink-header">Are you sure?</h3>
 </div>
+<%= form_tag(calendar_event_path("primary", event.id), :id => "delete_event", :method => "delete", remote: true) do %>
+  <br>
+  <%= submit_tag "Yes", class: 'btn' %>
+  <% end %>
+  <p>Press ESC to exit delete</p>
